@@ -35,7 +35,7 @@ export function Nav() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
     >
-      <div className="text-xl font-black tracking-[0.5em] uppercase">FUSION</div>
+      <img src="/logo.webp" alt="Fusion Creative" className="h-16 w-auto" />
 
       <div className="hidden md:flex gap-8">
         {sections.map((s) => (

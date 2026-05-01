@@ -8,6 +8,7 @@ import { PortfolioSection } from './components/PortfolioSection'
 import { CtaSection } from './components/CtaSection'
 import { Footer } from './components/Footer'
 import { VideoLightbox } from './components/VideoLightbox'
+import { NoiseOverlay, FloatingDots } from './components/Background'
 import { sections } from './data/portfolio'
 import type { VideoItem } from './data/portfolio'
 
@@ -32,6 +33,8 @@ export default function App() {
   return (
     <MotionConfig reducedMotion="user">
       <div style={{ background: '#0D0E14', minHeight: '100vh' }}>
+        <NoiseOverlay />
+        <FloatingDots />
         <Nav />
         <Hero />
         <ToolsMarquee />

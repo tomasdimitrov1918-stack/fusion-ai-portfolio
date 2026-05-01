@@ -1,137 +1,62 @@
-export type Category = 'animated-ads' | 'ugc-ads' | 'clothing' | 'from-photos'
+export type Category = 'animated' | 'ugc' | 'product'
+export type GridLayout = '5-col' | '4-col' | '3-col' | '2-col'
 
 export interface VideoItem {
-  id: number
+  id: string
   category: Category
-  thumbnailUrl: string
-  tools: string[]
+  videoUrl: string
+  poster?: string
   label: string
 }
 
 export interface Section {
-  id: Category
+  id: string
   number: string
   title: string
-  tools: string[]
-  gridLayout: '3-col' | '2-col' | 'wide-single' | 'split'
+  description: string
+  gridLayout: GridLayout
   items: VideoItem[]
 }
 
-// NOTE: Canva thumbnail URLs expire (~24h). Refresh via Canva MCP:
-// get-design-pages({ design_id: "DAHG8aHFQDY" }) and replace URL params.
-const CANVA_BASE = 'https://document-export.canva.com/HFQDY/DAHG8aHFQDY'
+// ── helpers ───────────────────────────────────────────────────────────────────
+function makeVideos(category: Category, folder: string, count: number): VideoItem[] {
+  return Array.from({ length: count }, (_, i) => {
+    const n = String(i + 1).padStart(2, '0')
+    return {
+      id: `${category}-${n}`,
+      category,
+      videoUrl: `/videos/${folder}/${n}.mp4`,
+      label: `${n}`,
+    }
+  })
+}
 
-export const videoItems: VideoItem[] = [
-  {
-    id: 2,
-    category: 'animated-ads',
-    thumbnailUrl: `${CANVA_BASE}/4/thumbnail/0002.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Animated Ad',
-  },
-  {
-    id: 3,
-    category: 'animated-ads',
-    thumbnailUrl: `${CANVA_BASE}/11/thumbnail/0003.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Animated Ad',
-  },
-  {
-    id: 4,
-    category: 'animated-ads',
-    thumbnailUrl: `${CANVA_BASE}/4/thumbnail/0004.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Animated Ad',
-  },
-  {
-    id: 5,
-    category: 'animated-ads',
-    thumbnailUrl: `${CANVA_BASE}/11/thumbnail/0005.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Animated Ad',
-  },
-  {
-    id: 6,
-    category: 'animated-ads',
-    thumbnailUrl: `${CANVA_BASE}/11/thumbnail/0006.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Animated Ad',
-  },
-  {
-    id: 7,
-    category: 'ugc-ads',
-    thumbnailUrl: `${CANVA_BASE}/13/thumbnail/0007.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI UGC Ad',
-  },
-  {
-    id: 8,
-    category: 'ugc-ads',
-    thumbnailUrl: `${CANVA_BASE}/13/thumbnail/0008.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI UGC Ad',
-  },
-  {
-    id: 9,
-    category: 'ugc-ads',
-    thumbnailUrl: `${CANVA_BASE}/4/thumbnail/0006.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0', 'Sora Pro'],
-    label: 'AI UGC Ad',
-  },
-  {
-    id: 10,
-    category: 'ugc-ads',
-    thumbnailUrl: `${CANVA_BASE}/4/thumbnail/0007.png`,
-    tools: ['Nano Banana Pro', 'VEO 3.1'],
-    label: 'AI UGC Ad',
-  },
-  {
-    id: 11,
-    category: 'clothing',
-    thumbnailUrl: `${CANVA_BASE}/3/thumbnail/0008.png`,
-    tools: ['Nano Banana Pro', 'VEO 3.1'],
-    label: 'AI Clothing Video',
-  },
-  {
-    id: 12,
-    category: 'from-photos',
-    thumbnailUrl: `${CANVA_BASE}/3/thumbnail/0009.png`,
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    label: 'AI Video from Photos',
-  },
-]
-
+// ── sections ──────────────────────────────────────────────────────────────────
 export const sections: Section[] = [
   {
     id: 'animated-ads',
     number: '01',
     title: 'AI Animated Ads',
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    gridLayout: '3-col',
-    items: videoItems.filter((v) => v.category === 'animated-ads'),
+    description: 'Cinematic, motion-rich ads generated entirely with AI.',
+    gridLayout: '5-col',
+    items: makeVideos('animated', 'animated', 20).map((v) =>
+      v.id === 'animated-13' ? { ...v, poster: '/videos/animated/13-poster.webp' } : v
+    ),
   },
   {
     id: 'ugc-ads',
     number: '02',
     title: 'AI UGC Ads',
-    tools: ['Nano Banana Pro', 'Kling 3.0', 'Sora Pro', 'VEO 3.1'],
-    gridLayout: '2-col',
-    items: videoItems.filter((v) => v.category === 'ugc-ads'),
+    description: 'Authentic-feel user-generated content — zero filming needed.',
+    gridLayout: '4-col',
+    items: makeVideos('ugc', 'ugc', 10),
   },
   {
-    id: 'clothing',
+    id: 'product-ads',
     number: '03',
-    title: 'AI Videos for Clothing',
-    tools: ['Nano Banana Pro', 'VEO 3.1'],
-    gridLayout: 'wide-single',
-    items: videoItems.filter((v) => v.category === 'clothing'),
-  },
-  {
-    id: 'from-photos',
-    number: '04',
-    title: 'AI Videos Only from Photos',
-    tools: ['Nano Banana Pro', 'Kling 3.0'],
-    gridLayout: 'split',
-    items: videoItems.filter((v) => v.category === 'from-photos'),
+    title: 'AI Product Ads',
+    description: 'High-quality product showcases built from a single photo.',
+    gridLayout: '2-col',
+    items: makeVideos('product', 'product', 4),
   },
 ]

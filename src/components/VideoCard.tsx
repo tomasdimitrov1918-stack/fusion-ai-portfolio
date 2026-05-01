@@ -1,17 +1,28 @@
+import { useRef } from 'react'
 import { motion, useMotionTemplate } from 'motion/react'
 import type { VideoItem } from '../data/portfolio'
 import { useTilt } from '../hooks/useTilt'
 
 interface VideoCardProps {
   item: VideoItem
-  aspectRatio?: string
   onClick: (item: VideoItem) => void
 }
 
-export function VideoCard({ item, aspectRatio = '9/16', onClick }: VideoCardProps) {
-  const { rotateX, rotateY, shineX, shineY, onMouseMove, onMouseLeave } = useTilt()
+export function VideoCard({ item, onClick }: VideoCardProps) {
+  const { rotateX, rotateY, shineX, shineY, onMouseMove, onMouseLeave: tiltLeave } = useTilt()
+  const videoRef = useRef<HTMLVideoElement>(null)
 
   const shineBackground = useMotionTemplate`radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.1) 0%, transparent 50%)`
+
+  function handleMouseEnter() {
+    videoRef.current?.play()
+  }
+
+  function handleMouseLeave(_e: React.MouseEvent<HTMLDivElement>) {
+    tiltLeave()
+    const v = videoRef.current
+    if (v) { v.pause(); v.currentTime = 0 }
+  }
 
   return (
     <motion.div
@@ -26,16 +37,21 @@ export function VideoCard({ item, aspectRatio = '9/16', onClick }: VideoCardProp
       }}
       whileHover={{ borderColor: 'rgba(176,16,32,0.55)' }}
       onMouseMove={onMouseMove}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
       onClick={() => onClick(item)}
     >
-      {/* Thumbnail */}
-      <div style={{ aspectRatio }} className="relative overflow-hidden">
-        <img
-          src={item.thumbnailUrl}
-          alt={item.label}
-          className="w-full h-full object-cover transition-[filter] duration-300 brightness-85 group-hover:brightness-100"
-          loading="lazy"
+      {/* Video */}
+      <div style={{ aspectRatio: '9/16' }} className="relative overflow-hidden">
+        <video
+          ref={videoRef}
+          src={item.videoUrl}
+          poster={item.poster}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="w-full h-full object-cover transition-[filter] duration-300 brightness-75 group-hover:brightness-100"
         />
 
         {/* Shine overlay */}
@@ -46,13 +62,11 @@ export function VideoCard({ item, aspectRatio = '9/16', onClick }: VideoCardProp
           transition={{ duration: 0.2 }}
         />
 
-        {/* Play button */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <motion.div
+        {/* Play icon — hidden on hover since video plays */}
+        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-200 group-hover:opacity-0">
+          <div
             className="w-11 h-11 rounded-full flex items-center justify-center"
-            style={{ border: '2px solid rgba(224,16,32,0.6)' }}
-            whileHover={{ background: '#B01020', borderColor: '#B01020' }}
-            transition={{ duration: 0.2 }}
+            style={{ border: '2px solid rgba(224,16,32,0.7)', background: 'rgba(0,0,0,0.3)' }}
           >
             <div
               className="ml-0.5"
@@ -64,17 +78,14 @@ export function VideoCard({ item, aspectRatio = '9/16', onClick }: VideoCardProp
                 borderColor: 'transparent transparent transparent rgba(224,16,32,0.9)',
               }}
             />
-          </motion.div>
+          </div>
         </div>
       </div>
 
       {/* Label row */}
       <div className="flex justify-between items-center px-4 py-3">
-        <span
-          className="text-[9px] tracking-[3px] uppercase"
-          style={{ color: 'rgba(176,16,32,0.7)' }}
-        >
-          {item.label}
+        <span className="text-[9px] tracking-[3px] uppercase" style={{ color: 'rgba(176,16,32,0.7)' }}>
+          {item.category} · {item.label}
         </span>
         <span style={{ color: 'rgba(255,255,255,0.2)', fontSize: 14 }}>↗</span>
       </div>

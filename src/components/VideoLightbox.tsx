@@ -1,10 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import type { VideoItem } from '../data/portfolio'
-import {
-  lightboxBackdropVariants,
-  lightboxPanelVariants,
-} from '../lib/animations'
+import { lightboxBackdropVariants, lightboxPanelVariants } from '../lib/animations'
 
 interface VideoLightboxProps {
   item: VideoItem | null
@@ -12,6 +9,8 @@ interface VideoLightboxProps {
 }
 
 export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
   useEffect(() => {
     function handleKey(e: KeyboardEvent) {
       if (e.key === 'Escape') onClose()
@@ -21,8 +20,15 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
   }, [onClose])
 
   useEffect(() => {
-    if (item) document.body.style.overflow = 'hidden'
-    else document.body.style.overflow = ''
+    if (item) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+      if (videoRef.current) {
+        videoRef.current.pause()
+        videoRef.current.currentTime = 0
+      }
+    }
     return () => { document.body.style.overflow = '' }
   }, [item])
 
@@ -32,7 +38,7 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
         <motion.div
           key="lightbox-backdrop"
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
-          style={{ background: 'rgba(0,0,0,0.88)' }}
+          style={{ background: 'rgba(0,0,0,0.92)' }}
           variants={lightboxBackdropVariants}
           initial="hidden"
           animate="visible"
@@ -49,7 +55,7 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
             exit="exit"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
+            {/* Close */}
             <button
               className="absolute top-3 right-4 text-xl z-10 transition-colors duration-200"
               style={{ color: 'rgba(255,255,255,0.4)' }}
@@ -61,27 +67,25 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
               ×
             </button>
 
-            {/* Thumbnail */}
-            <img
-              src={item.thumbnailUrl}
-              alt={item.label}
+            {/* Video */}
+            <video
+              ref={videoRef}
+              key={item.videoUrl}
+              src={item.videoUrl}
+              controls
+              autoPlay
+              playsInline
               className="w-full block"
               style={{ aspectRatio: '9/16', objectFit: 'cover' }}
             />
 
             {/* Info */}
             <div className="px-6 py-4">
-              <p
-                className="text-[9px] tracking-[4px] uppercase mb-1"
-                style={{ color: '#B01020' }}
-              >
-                {item.label}
+              <p className="text-[9px] tracking-[4px] uppercase mb-1" style={{ color: '#B01020' }}>
+                {item.category}
               </p>
-              <p
-                className="text-[10px] tracking-[2px] uppercase"
-                style={{ color: 'rgba(255,255,255,0.3)' }}
-              >
-                {item.tools.join(' + ')}
+              <p className="text-[10px] tracking-[2px] uppercase" style={{ color: 'rgba(255,255,255,0.3)' }}>
+                Fusion AI Creative
               </p>
             </div>
           </motion.div>
