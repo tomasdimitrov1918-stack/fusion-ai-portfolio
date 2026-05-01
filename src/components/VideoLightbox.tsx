@@ -66,7 +66,7 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
               src={item.thumbnailUrl}
               alt={item.label}
               className="w-full block"
-              style={{ aspectRatio: '16/9', objectFit: 'cover' }}
+              style={{ aspectRatio: '9/16', objectFit: 'cover' }}
             />
 
             {/* Info */}

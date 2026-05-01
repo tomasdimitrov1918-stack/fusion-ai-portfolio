@@ -8,7 +8,7 @@ interface VideoCardProps {
   onClick: (item: VideoItem) => void
 }
 
-export function VideoCard({ item, aspectRatio = '16/9', onClick }: VideoCardProps) {
+export function VideoCard({ item, aspectRatio = '9/16', onClick }: VideoCardProps) {
   const { rotateX, rotateY, shineX, shineY, onMouseMove, onMouseLeave } = useTilt()
 
   const shineBackground = useMotionTemplate`radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.1) 0%, transparent 50%)`

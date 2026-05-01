@@ -20,7 +20,6 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
   const { ref, x } = useParallax()
 
   const isSplit = section.gridLayout === 'split'
-  const isWideSingle = section.gridLayout === 'wide-single'
 
   return (
     <section
@@ -98,7 +97,7 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
               <motion.div key={item.id} variants={cardItemVariants}>
                 <VideoCard
                   item={item}
-                  aspectRatio={isWideSingle ? '21/9' : '16/9'}
+                  aspectRatio="9/16"
                   onClick={onVideoClick}
                 />
               </motion.div>
