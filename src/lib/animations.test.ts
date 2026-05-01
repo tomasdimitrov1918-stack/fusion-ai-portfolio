@@ -30,4 +30,13 @@ describe('animation constants', () => {
   it('cardItemVariants hidden state has opacity 0', () => {
     expect(cardItemVariants.hidden).toMatchObject({ opacity: 0 })
   })
+
+  it('heroItemVariants hidden state has opacity 0', () => {
+    expect(heroItemVariants.hidden).toMatchObject({ opacity: 0 })
+  })
+
+  it('cardContainerVariants has hidden and visible states', () => {
+    expect(cardContainerVariants.hidden).toBeDefined()
+    expect(cardContainerVariants.visible).toBeDefined()
+  })
 })
