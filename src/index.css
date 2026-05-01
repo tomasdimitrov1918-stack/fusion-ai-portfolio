@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --color-bg: #0D0E14;
+    --color-surface: #191B26;
+    --color-red: #B01020;
+    --color-red-accent: #E01020;
+  }
+
+  html { scroll-behavior: auto; } /* Lenis handles smooth scroll */
+  body { background: var(--color-bg); color: #fff; font-family: system-ui, sans-serif; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee var(--marquee-duration, 18s) linear infinite;
+}
+.animate-marquee:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
