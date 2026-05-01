@@ -12,22 +12,28 @@ export function VideoCard({ item, onClick }: VideoCardProps) {
   const { rotateX, rotateY, shineX, shineY, onMouseMove, onMouseLeave: tiltLeave } = useTilt()
   const videoRef = useRef<HTMLVideoElement>(null)
   const [src, setSrc] = useState<string | undefined>(undefined)
+  const hovering = useRef(false)
 
   const shineBackground = useMotionTemplate`radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.1) 0%, transparent 50%)`
 
+  // Only play if mouse is still over the card when video is ready
   const handleCanPlay = useCallback(() => {
-    videoRef.current?.play().catch(() => {})
+    if (hovering.current) {
+      videoRef.current?.play().catch(() => {})
+    }
   }, [])
 
   function handleMouseEnter() {
+    hovering.current = true
     if (!src) {
-      setSrc(item.videoUrl) // triggers load → onCanPlay → play
+      setSrc(item.videoUrl)
     } else {
       videoRef.current?.play().catch(() => {})
     }
   }
 
   function handleMouseLeave(_e: React.MouseEvent<HTMLDivElement>) {
+    hovering.current = false
     tiltLeave()
     const v = videoRef.current
     if (v) { v.pause(); v.currentTime = 0 }
@@ -64,16 +70,16 @@ export function VideoCard({ item, onClick }: VideoCardProps) {
           className="w-full h-full object-cover transition-[filter] duration-300 brightness-75 group-hover:brightness-100"
         />
 
-        {/* Shine overlay */}
+        {/* Shine overlay — desktop only */}
         <motion.div
-          className="absolute inset-0 pointer-events-none"
+          className="absolute inset-0 pointer-events-none hidden md:block"
           style={{ background: shineBackground, opacity: 0 }}
           whileHover={{ opacity: 1 }}
           transition={{ duration: 0.2 }}
         />
 
-        {/* Play icon — hidden on hover since video plays */}
-        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-200 group-hover:opacity-0">
+        {/* Play icon — always visible on mobile, hidden on desktop hover */}
+        <div className="absolute inset-0 flex items-center justify-center transition-opacity duration-200 md:group-hover:opacity-0">
           <div
             className="w-11 h-11 rounded-full flex items-center justify-center"
             style={{ border: '2px solid rgba(224,16,32,0.7)', background: 'rgba(0,0,0,0.3)' }}

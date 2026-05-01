@@ -28,6 +28,7 @@ function makeVideos(category: Category, folder: string, count: number): VideoIte
       id: `${category}-${n}`,
       category,
       videoUrl: `${CDN}/${folder}/${n}.mp4`,
+      poster: `${CDN}/${folder}/${n}-poster.webp`,
       label: `${n}`,
     }
   })
