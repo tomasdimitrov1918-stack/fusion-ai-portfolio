@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { useScroll, useTransform } from 'motion/react'
-import type { MotionValue, RefObject } from 'motion/react'
+import type { MotionValue } from 'motion/react'
+import type { RefObject } from 'react'
 
 const PARALLAX_RANGE_PX = 80
 
