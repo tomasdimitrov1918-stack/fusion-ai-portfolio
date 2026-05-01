@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Effects</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#060608; color:#fff; font-family:system-ui,sans-serif; padding:40px 32px; }
+h2 { font-size:28px; font-weight:900; letter-spacing:-0.5px; margin-bottom:8px; }
+.sub { font-size:13px; color:rgba(255,255,255,0.4); margin-bottom:40px; }
+
+.effect-grid { display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+.effect-card {
+  background:#0D0E14; border:1px solid rgba(255,255,255,0.07);
+  border-radius:8px; overflow:hidden; cursor:pointer;
+  transition: border-color .2s;
+  position:relative;
+}
+.effect-card.selected { border-color:#B01020; }
+.effect-card.selected::after {
+  content:'✓ Selected';
+  position:absolute; top:10px; right:10px;
+  background:#B01020; color:#fff; font-size:9px;
+  font-weight:700; letter-spacing:2px; padding:4px 10px;
+  text-transform:uppercase;
+}
+.effect-demo { height:180px; position:relative; overflow:hidden; }
+.effect-info { padding:16px 20px; border-top:1px solid rgba(255,255,255,0.05); }
+.effect-name { font-size:14px; font-weight:700; margin-bottom:4px; }
+.effect-desc { font-size:11px; color:rgba(255,255,255,0.35); line-height:1.5; }
+.effect-where { font-size:9px; color:#B01020; letter-spacing:2px; text-transform:uppercase; margin-top:8px; }
+
+/* ── EFFECT 1: Hero text glitch/split reveal ── */
+@keyframes glitch1 {
+  0%,100% { clip-path:inset(0 0 100% 0); transform:translateY(0); }
+  10% { clip-path:inset(0 0 60% 0); transform:translateY(-4px); }
+  20% { clip-path:inset(30% 0 40% 0); transform:translateY(2px); }
+  30% { clip-path:inset(60% 0 0 0); transform:translateY(-2px); }
+  40% { clip-path:inset(0 0 0 0); transform:translateY(0); }
+}
+@keyframes heroReveal {
+  0% { transform:translateY(100%); opacity:0; }
+  100% { transform:translateY(0); opacity:1; }
+}
+.hero-demo {
+  background:linear-gradient(135deg,#0D0E14 0%,#191B26 100%);
+  height:100%; display:flex; flex-direction:column;
+  justify-content:center; padding:24px;
+  position:relative; overflow:hidden;
+}
+.hero-demo::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 70% 30%, rgba(176,16,32,0.15) 0%, transparent 60%);
+  animation:pulse-glow 3s ease-in-out infinite;
+}
+@keyframes pulse-glow {
+  0%,100% { opacity:0.6; }
+  50% { opacity:1; }
+}
+.hero-line { overflow:hidden; }
+.hero-word {
+  display:inline-block;
+  font-size:32px; font-weight:900; text-transform:uppercase;
+  letter-spacing:-1px; line-height:1;
+  animation: heroReveal 0.7s cubic-bezier(0.16,1,0.3,1) both;
+}
+.hero-word.red { color:#E01020; animation-delay:0.15s; }
+.hero-word.w3 { animation-delay:0.3s; }
+.hero-eyebrow-demo {
+  font-size:9px; color:#B01020; letter-spacing:4px;
+  text-transform:uppercase; margin-bottom:12px;
+  animation:fadeUp 0.5s ease both;
+}
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(8px); }
+  to { opacity:1; transform:translateY(0); }
+}
+
+/* ── EFFECT 2: Tilt + shine on video cards ── */
+.tilt-demo { background:#191B26; height:100%; display:flex; align-items:center; justify-content:center; padding:20px; gap:16px; }
+.tilt-card {
+  width:110px; height:72px; background:#0D0E14;
+  border:1px solid rgba(176,16,32,0.2); border-radius:4px;
+  position:relative; overflow:hidden; cursor:pointer;
+  transition:transform 0.15s ease, border-color 0.2s;
+  transform-style:preserve-3d;
+}
+.tilt-card:hover {
+  border-color:rgba(176,16,32,0.6);
+  transform:perspective(600px) rotateX(-8deg) rotateY(8deg) scale(1.06);
+}
+.tilt-card::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 60%);
+  opacity:0; transition:opacity 0.2s;
+}
+.tilt-card:hover::after { opacity:1; }
+.play-mini {
+  position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+}
+.play-mini-btn {
+  width:24px; height:24px; border:1.5px solid rgba(224,16,32,0.5);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  transition:all 0.2s;
+}
+.tilt-card:hover .play-mini-btn { background:#B01020; border-color:#B01020; }
+.play-tri {
+  width:0;height:0;border-style:solid;
+  border-width:5px 0 5px 8px;
+  border-color:transparent transparent transparent rgba(224,16,32,0.8);
+  margin-left:2px;transition:border-color 0.2s;
+}
+.tilt-card:hover .play-tri { border-color:transparent transparent transparent #fff; }
+.tilt-label { font-size:8px; color:rgba(255,255,255,0.2); letter-spacing:2px; text-transform:uppercase; text-align:center; margin-top:10px; }
+
+/* ── EFFECT 3: Scroll-linked parallax section title ── */
+.parallax-demo { background:#0D0E14; height:100%; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.parallax-bg-text {
+  position:absolute; font-size:80px; font-weight:900;
+  color:rgba(176,16,32,0.04); text-transform:uppercase;
+  letter-spacing:-2px; white-space:nowrap;
+  animation:driftLeft 6s linear infinite;
+}
+@keyframes driftLeft {
+  from { transform:translateX(0); }
+  to { transform:translateX(-50%); }
+}
+.parallax-fg {
+  position:relative; z-index:2; text-align:center;
+}
+.parallax-eyebrow { font-size:8px; color:#B01020; letter-spacing:4px; text-transform:uppercase; margin-bottom:8px; }
+.parallax-title { font-size:26px; font-weight:900; text-transform:uppercase; letter-spacing:-0.5px; }
+.parallax-subtitle { font-size:10px; color:rgba(255,255,255,0.3); letter-spacing:2px; margin-top:6px; }
+
+/* ── EFFECT 4: Marquee tools strip ── */
+.marquee-demo { background:#191B26; height:100%; display:flex; align-items:center; overflow:hidden; }
+.marquee-track {
+  display:flex; gap:32px; align-items:center;
+  animation:marquee 8s linear infinite; white-space:nowrap;
+}
+@keyframes marquee {
+  from { transform:translateX(0); }
+  to { transform:translateX(-50%); }
+}
+.marquee-item { font-size:11px; color:rgba(255,255,255,0.3); letter-spacing:1px; flex-shrink:0; }
+.marquee-dot { width:4px; height:4px; background:rgba(176,16,32,0.4); border-radius:50%; flex-shrink:0; }
+
+/* ── EFFECT 5: Section stagger reveal ── */
+.stagger-demo { background:#0D0E14; height:100%; padding:20px; display:flex; flex-direction:column; justify-content:center; gap:8px; }
+.stagger-row {
+  display:flex; gap:8px;
+}
+.stagger-card {
+  flex:1; height:52px; background:#191B26;
+  border:1px solid rgba(176,16,32,0.15); border-radius:3px;
+  animation:staggerReveal 0.5s cubic-bezier(0.16,1,0.3,1) both;
+}
+.stagger-card:nth-child(1) { animation-delay:0.1s; }
+.stagger-card:nth-child(2) { animation-delay:0.2s; }
+.stagger-card:nth-child(3) { animation-delay:0.3s; }
+.stagger-card.row2:nth-child(1) { animation-delay:0.4s; }
+.stagger-card.row2:nth-child(2) { animation-delay:0.5s; }
+@keyframes staggerReveal {
+  from { opacity:0; transform:translateY(20px) scale(0.97); }
+  to { opacity:1; transform:translateY(0) scale(1); }
+}
+.stagger-label { font-size:8px; color:rgba(255,255,255,0.15); letter-spacing:3px; text-transform:uppercase; text-align:center; margin-top:8px; }
+
+/* ── EFFECT 6: CTA grain/noise overlay + red pulse ── */
+.cta-demo {
+  background:linear-gradient(135deg,#191B26 0%,#0D0E14 100%);
+  height:100%; display:flex; flex-direction:column;
+  align-items:center; justify-content:center; position:relative; overflow:hidden;
+}
+.cta-pulse {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 50%, rgba(176,16,32,0.2) 0%, transparent 65%);
+  animation:ctaPulse 2s ease-in-out infinite;
+}
+@keyframes ctaPulse {
+  0%,100% { transform:scale(0.95); opacity:0.6; }
+  50% { transform:scale(1.05); opacity:1; }
+}
+.cta-demo-title { font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:-0.5px; position:relative; z-index:1; }
+.cta-demo-title span { color:#E01020; }
+.cta-demo-btn {
+  margin-top:14px; background:#B01020; padding:10px 24px;
+  font-size:9px; font-weight:700; letter-spacing:3px; text-transform:uppercase;
+  position:relative; z-index:1;
+  animation:btnBreath 3s ease-in-out infinite;
+}
+@keyframes btnBreath {
+  0%,100% { box-shadow:0 0 0 0 rgba(176,16,32,0.4); }
+  50% { box-shadow:0 0 0 12px rgba(176,16,32,0); }
+}
+.noise-overlay {
+  position:absolute; inset:0; z-index:0; opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+}
+
+/* Selection bar */
+.select-bar { display:flex; gap:10px; align-items:center; margin-top:10px; }
+.select-btn {
+  font-size:9px; letter-spacing:2px; text-transform:uppercase; font-weight:700;
+  padding:6px 14px; border:1px solid rgba(176,16,32,0.3); color:rgba(255,255,255,0.4);
+  cursor:pointer; transition:all .2s; background:transparent;
+}
+.select-btn.active { background:#B01020; border-color:#B01020; color:#fff; }
+
+.section-header { font-size:11px; color:rgba(255,255,255,0.25); letter-spacing:4px; text-transform:uppercase; margin-bottom:16px; margin-top:32px; }
+</style>
+</head>
+<body>
+
+<h2>Motion Effects Menu</h2>
+<p class="sub">Hover the cards to preview. These will all be built into the landing page.</p>
+
+<div class="section-header">Hero & Entry</div>
+<div class="effect-grid">
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="hero-demo">
+        <div class="hero-eyebrow-demo">Portfolio 2026 — Monika & Tomas</div>
+        <div class="hero-line"><span class="hero-word">AI</span></div>
+        <div class="hero-line"><span class="hero-word red">Creative</span></div>
+        <div class="hero-line"><span class="hero-word w3">Specialists</span></div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">Hero Word-by-Word Reveal</div>
+      <div class="effect-desc">Each word slides up from a clip mask on page load. Eyebrow fades in first, then each line with 150ms stagger. Repeats every 4s in preview.</div>
+      <div class="effect-where">Hero section</div>
+    </div>
+  </div>
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="parallax-demo">
+        <div class="parallax-bg-text">FUSION FUSION FUSION FUSION FUSION FUSION </div>
+        <div class="parallax-fg">
+          <div class="parallax-eyebrow">01 — AI Animated Ads</div>
+          <div class="parallax-title">AI Animated<br/>Ads</div>
+          <div class="parallax-subtitle">Kling 3.0 + Nano Banana Pro</div>
+        </div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">Parallax Ghost Text</div>
+      <div class="effect-desc">Giant low-opacity brand name drifts slowly behind each section title as you scroll. Adds depth and cinematic texture without competing with content.</div>
+      <div class="effect-where">Each section header</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Video Cards</div>
+<div class="effect-grid">
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="tilt-demo">
+        <div>
+          <div class="tilt-card">
+            <div class="play-mini"><div class="play-mini-btn"><div class="play-tri"></div></div></div>
+          </div>
+          <div class="tilt-label">Hover me →</div>
+        </div>
+        <div>
+          <div class="tilt-card">
+            <div class="play-mini"><div class="play-mini-btn"><div class="play-tri"></div></div></div>
+          </div>
+          <div class="tilt-label">And me →</div>
+        </div>
+        <div>
+          <div class="tilt-card">
+            <div class="play-mini"><div class="play-mini-btn"><div class="play-tri"></div></div></div>
+          </div>
+          <div class="tilt-label">Me too →</div>
+        </div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">3D Tilt + Shine on Hover</div>
+      <div class="effect-desc">Video cards tilt in 3D toward the cursor. A light glare sweeps across the surface. Play button turns solid red. Lift effect on hover. Spring-physics snap back on leave.</div>
+      <div class="effect-where">All video cards</div>
+    </div>
+  </div>
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="stagger-demo">
+        <div class="stagger-row">
+          <div class="stagger-card"></div>
+          <div class="stagger-card"></div>
+          <div class="stagger-card"></div>
+        </div>
+        <div class="stagger-row">
+          <div class="stagger-card row2"></div>
+          <div class="stagger-card row2"></div>
+        </div>
+        <div class="stagger-label">Fires when section enters viewport</div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">Staggered Scroll Reveal</div>
+      <div class="effect-desc">Cards fade up and scale in with 80ms stagger between each when scrolled into view. Fires once. Smooth cubic-bezier easing — not linear.</div>
+      <div class="effect-where">All video grids</div>
+    </div>
+  </div>
+
+</div>
+
+<div class="section-header">Ambient & CTA</div>
+<div class="effect-grid">
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="marquee-demo">
+        <div class="marquee-track">
+          <span class="marquee-item">Kling 3.0</span><span class="marquee-dot"></span>
+          <span class="marquee-item">VEO 3.1</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Sora Pro</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Nano Banana Pro</span><span class="marquee-dot"></span>
+          <span class="marquee-item">ElevenLabs</span><span class="marquee-dot"></span>
+          <span class="marquee-item">CapCut</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Kling 3.0</span><span class="marquee-dot"></span>
+          <span class="marquee-item">VEO 3.1</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Sora Pro</span><span class="marquee-dot"></span>
+          <span class="marquee-item">Nano Banana Pro</span><span class="marquee-dot"></span>
+          <span class="marquee-item">ElevenLabs</span><span class="marquee-dot"></span>
+          <span class="marquee-item">CapCut</span><span class="marquee-dot"></span>
+        </div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">Infinite Marquee Strip</div>
+      <div class="effect-desc">Tools scroll continuously left, infinite loop. Slows down on hover. Pauses for reduced-motion users. Subtle separator dots between items.</div>
+      <div class="effect-where">Tools strip</div>
+    </div>
+  </div>
+
+  <div class="effect-card selected" onclick="this.classList.toggle('selected')">
+    <div class="effect-demo">
+      <div class="cta-demo">
+        <div class="noise-overlay"></div>
+        <div class="cta-pulse"></div>
+        <div class="cta-demo-title">Реален<br/><span>растеж</span></div>
+        <div class="cta-demo-btn">Разкажи ни →</div>
+      </div>
+    </div>
+    <div class="effect-info">
+      <div class="effect-name">Breathing Red Glow + Pulse CTA</div>
+      <div class="effect-desc">Radial red glow behind CTA section breathes slowly. Button pulses with a ring-expand animation. Noise texture overlay adds premium grit to the dark background.</div>
+      <div class="effect-where">CTA section</div>
+    </div>
+  </div>
+
+</div>
+
+<div style="margin-top:32px;padding:20px;background:rgba(176,16,32,0.08);border:1px solid rgba(176,16,32,0.2);border-radius:6px;">
+  <div style="font-size:11px;font-weight:700;margin-bottom:6px;letter-spacing:1px;">All 6 effects are included. Click any card to deselect if you don't want it.</div>
+  <div style="font-size:11px;color:rgba(255,255,255,0.35);line-height:1.6;">Built with: Framer Motion (React) — scroll-triggered via <code style="color:#B01020">whileInView</code>, 3D tilt via <code style="color:#B01020">useMotionValue</code>, parallax via <code style="color:#B01020">useScroll + useTransform</code>. All animations respect <code style="color:#B01020">prefers-reduced-motion</code>.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fusion Portfolio — Full Page Design</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #060608; color: #fff; font-family: 'Inter', system-ui, sans-serif; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 20px 48px;
+    background: rgba(6,6,8,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .nav-logo { font-size: 20px; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; color: #fff; }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-link { font-size: 10px; color: rgba(255,255,255,0.4); letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: color .2s; }
+  .nav-link:hover { color: #fff; }
+  .nav-cta {
+    background: #B01020; padding: 10px 22px;
+    font-size: 9px; font-weight: 700; color: #fff;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+    transition: background .2s;
+  }
+  .nav-cta:hover { background: #E01020; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; padding: 120px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-glow {
+    position: absolute; top: -100px; right: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(ellipse, rgba(176,16,32,0.12) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-glow2 {
+    position: absolute; bottom: -50px; left: -50px;
+    width: 400px; height: 400px;
+    background: radial-gradient(ellipse, rgba(176,16,32,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 10px; color: #B01020; letter-spacing: 5px;
+    text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero-title {
+    font-size: clamp(52px, 8vw, 96px); font-weight: 900;
+    line-height: 0.95; letter-spacing: -2px; text-transform: uppercase;
+    color: #fff; max-width: 900px;
+  }
+  .hero-title .red { color: #E01020; }
+  .hero-subtitle {
+    font-size: 14px; color: rgba(255,255,255,0.4);
+    margin-top: 28px; max-width: 480px; line-height: 1.7;
+    letter-spacing: 0.3px;
+  }
+  .hero-actions { display: flex; gap: 16px; margin-top: 40px; align-items: center; }
+  .btn-primary {
+    background: #B01020; padding: 14px 32px;
+    font-size: 10px; font-weight: 700; color: #fff;
+    letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
+  }
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.15); padding: 14px 32px;
+    font-size: 10px; color: rgba(255,255,255,0.5);
+    letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
+  }
+  .hero-scroll-hint {
+    position: absolute; bottom: 40px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .scroll-line { width: 40px; height: 1px; background: rgba(176,16,32,0.5); }
+  .scroll-text { font-size: 9px; color: rgba(255,255,255,0.25); letter-spacing: 3px; text-transform: uppercase; }
+
+  /* ── TOOLS STRIP ── */
+  .tools-strip {
+    background: #191B26; border-top: 1px solid rgba(176,16,32,0.15);
+    border-bottom: 1px solid rgba(176,16,32,0.15);
+    padding: 18px 48px; display: flex; align-items: center; gap: 40px;
+    overflow: hidden;
+  }
+  .tools-label { font-size: 8px; color: rgba(255,255,255,0.2); letter-spacing: 4px; text-transform: uppercase; white-space: nowrap; }
+  .tool-name { font-size: 11px; color: rgba(255,255,255,0.35); letter-spacing: 1px; white-space: nowrap; }
+  .tool-sep { width: 1px; height: 14px; background: rgba(255,255,255,0.08); flex-shrink: 0; }
+
+  /* ── SECTION ── */
+  .portfolio-section { padding: 100px 48px; }
+  .portfolio-section + .portfolio-section { border-top: 1px solid rgba(255,255,255,0.04); }
+
+  .section-meta { display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .section-number { font-size: 11px; color: rgba(176,16,32,0.6); letter-spacing: 3px; font-weight: 700; }
+  .section-line { flex: 1; height: 1px; background: rgba(176,16,32,0.15); max-width: 40px; }
+
+  .section-title {
+    font-size: clamp(28px, 4vw, 48px); font-weight: 900;
+    text-transform: uppercase; letter-spacing: -0.5px; color: #fff;
+    line-height: 1; margin-bottom: 12px;
+  }
+  .section-tools {
+    font-size: 9px; color: rgba(255,255,255,0.25);
+    letter-spacing: 3px; text-transform: uppercase; margin-bottom: 48px;
+  }
+  .section-tools span { color: rgba(176,16,32,0.7); }
+
+  /* ── VIDEO GRID ── */
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .grid-1 { display: grid; grid-template-columns: 1fr; gap: 12px; max-width: 640px; }
+
+  .video-card {
+    position: relative; background: #191B26;
+    border: 1px solid rgba(176,16,32,0.15);
+    overflow: hidden; cursor: pointer;
+    transition: border-color .25s, transform .25s;
+  }
+  .video-card:hover { border-color: rgba(176,16,32,0.5); transform: translateY(-3px); }
+  .video-thumb {
+    width: 100%; aspect-ratio: 16/9;
+    object-fit: cover; display: block;
+    filter: brightness(0.85);
+    transition: filter .25s;
+  }
+  .video-card:hover .video-thumb { filter: brightness(1); }
+  .video-thumb-placeholder {
+    width: 100%; aspect-ratio: 16/9;
+    background: #191B26;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .play-btn {
+    width: 44px; height: 44px;
+    border: 2px solid rgba(224,16,32,0.6); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .2s;
+  }
+  .video-card:hover .play-btn { background: #B01020; border-color: #B01020; }
+  .play-icon {
+    width: 0; height: 0;
+    border-style: solid; border-width: 8px 0 8px 14px;
+    border-color: transparent transparent transparent rgba(224,16,32,0.9);
+    margin-left: 3px; transition: border-color .2s;
+  }
+  .video-card:hover .play-icon { border-color: transparent transparent transparent #fff; }
+
+  .video-label {
+    padding: 12px 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .video-cat { font-size: 9px; color: rgba(176,16,32,0.7); letter-spacing: 3px; text-transform: uppercase; }
+  .video-arrow { font-size: 14px; color: rgba(255,255,255,0.2); }
+
+  /* ── CTA SECTION ── */
+  .cta-section {
+    background: #191B26;
+    border-top: 1px solid rgba(176,16,32,0.2);
+    padding: 100px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .cta-glow {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse, rgba(176,16,32,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cta-eyebrow { font-size: 9px; color: #B01020; letter-spacing: 5px; text-transform: uppercase; margin-bottom: 20px; }
+  .cta-title {
+    font-size: clamp(32px, 5vw, 64px); font-weight: 900;
+    text-transform: uppercase; letter-spacing: -1px; line-height: 1;
+    margin-bottom: 20px;
+  }
+  .cta-sub { font-size: 14px; color: rgba(255,255,255,0.35); max-width: 440px; margin: 0 auto 40px; line-height: 1.7; }
+  .cta-btn {
+    display: inline-block; background: #B01020; padding: 18px 48px;
+    font-size: 11px; font-weight: 700; color: #fff;
+    letter-spacing: 3px; text-transform: uppercase; cursor: pointer;
+    transition: background .2s;
+  }
+  .cta-btn:hover { background: #E01020; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #060608; padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 1px solid rgba(255,255,255,0.04);
+  }
+  .footer-logo { font-size: 14px; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; color: rgba(255,255,255,0.3); }
+  .footer-copy { font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px; }
+
+  /* ── SCROLL ANNOTATION ── */
+  .annotation {
+    background: rgba(176,16,32,0.08);
+    border: 1px dashed rgba(176,16,32,0.3);
+    border-radius: 4px; padding: 8px 14px;
+    font-size: 10px; color: rgba(176,16,32,0.8);
+    letter-spacing: 1px; display: inline-block; margin-bottom: 24px;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Fusion</div>
+  <div class="nav-links">
+    <div class="nav-link">AI Animated Ads</div>
+    <div class="nav-link">AI UGC Ads</div>
+    <div class="nav-link">Clothing</div>
+    <div class="nav-link">From Photos</div>
+  </div>
+  <div class="nav-cta">Разкажи ни →</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-eyebrow">Portfolio 2026 — Monika & Tomas</div>
+  <h1 class="hero-title">AI<br/>Creative<br/><span class="red">Specialists</span></h1>
+  <p class="hero-subtitle">Реален растеж. Стратегия, AI и лично отношение.<br/>We make AI video ads that actually perform.</p>
+  <div class="hero-actions">
+    <div class="btn-primary">Виж работата ни ↓</div>
+    <div class="btn-secondary">За нас</div>
+  </div>
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    <div class="scroll-text">Scroll to explore</div>
+  </div>
+</section>
+
+<!-- TOOLS STRIP -->
+<div class="tools-strip">
+  <div class="tools-label">Tools we use</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">Kling 3.0</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">VEO 3.1</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">Sora Pro</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">Nano Banana Pro</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">ElevenLabs</div>
+  <div class="tool-sep"></div>
+  <div class="tool-name">CapCut</div>
+</div>
+
+<!-- SECTION 1: AI ANIMATED ADS -->
+<section class="portfolio-section" id="animated-ads">
+  <div class="annotation">↓ Fade-up on scroll — Framer Motion</div>
+  <div class="section-meta">
+    <div class="section-number">01</div>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title">AI Animated Ads</h2>
+  <div class="section-tools">Tools: <span>Nano Banana Pro</span> + <span>Kling 3.0</span></div>
+  <div class="grid-3">
+    <div class="video-card">
+      <img class="video-thumb" src="https://document-export.canva.com/HFQDY/DAHG8aHFQDY/5/thumbnail/0002.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAQYCGKMUHWEOTUD6Q%2F20260430%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260430T223103Z&X-Amz-Expires=24366&X-Amz-Signature=45496a311a771344716d354bbc6ad7444ad7630d96dc959d1f88256f7bd3f792&X-Amz-SignedHeaders=host" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+      <div class="video-thumb-placeholder" style="display:none"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Animated Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Animated Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Animated Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Animated Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Animated Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: AI UGC ADS -->
+<section class="portfolio-section" id="ugc-ads">
+  <div class="annotation">↓ Staggered card reveal — 80ms delay per card</div>
+  <div class="section-meta">
+    <div class="section-number">02</div>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title">AI UGC Ads</h2>
+  <div class="section-tools">Tools: <span>Nano Banana Pro</span> + <span>Kling 3.0</span> + <span>Sora Pro</span> + <span>VEO 3.1</span></div>
+  <div class="grid-2">
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">UGC Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">UGC Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">UGC Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">UGC Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: CLOTHING -->
+<section class="portfolio-section" id="clothing">
+  <div class="annotation">↓ Wide featured card — cinematic aspect ratio</div>
+  <div class="section-meta">
+    <div class="section-number">03</div>
+    <div class="section-line"></div>
+  </div>
+  <h2 class="section-title">AI Videos<br/>for Clothing</h2>
+  <div class="section-tools">Tools: <span>Nano Banana Pro</span> + <span>VEO 3.1</span></div>
+  <div style="max-width:800px;">
+    <div class="video-card">
+      <div class="video-thumb-placeholder" style="aspect-ratio:21/9"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Clothing Ad</span><span class="video-arrow">↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: FROM PHOTOS -->
+<section class="portfolio-section" id="from-photos">
+  <div class="annotation">↓ Split layout — text left, video right</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;">
+    <div>
+      <div class="section-meta">
+        <div class="section-number">04</div>
+        <div class="section-line"></div>
+      </div>
+      <h2 class="section-title">AI Videos<br/>Only from<br/><span style="color:#E01020;">Photos</span></h2>
+      <div class="section-tools" style="margin-bottom:24px;">Tools: <span>Nano Banana Pro</span> + <span>Kling 3.0</span></div>
+      <p style="font-size:13px;color:rgba(255,255,255,0.35);line-height:1.8;max-width:360px;">Send us a photo. We turn it into a high-quality video ad. No filming. No studio. Just results.</p>
+    </div>
+    <div class="video-card">
+      <div class="video-thumb-placeholder"><div class="play-btn"><div class="play-icon"></div></div></div>
+      <div class="video-label"><span class="video-cat">Photo → Video</span><span class="video-arrow">↗</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="cta-eyebrow">Работим само с избрани клиенти</div>
+  <h2 class="cta-title">Реален<br/><span style="color:#E01020;">растеж</span></h2>
+  <p class="cta-sub">Мислим преди да действаме. Без компромис с качеството.</p>
+  <div class="cta-btn">Разкажи ни за бизнеса ти →</div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Fusion</div>
+  <div class="footer-copy">© 2026 Monika & Tomas — Fusion AI Creative</div>
+</footer>
+
+</body>
+</html>
