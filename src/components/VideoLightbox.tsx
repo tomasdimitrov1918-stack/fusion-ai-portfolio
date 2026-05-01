@@ -31,7 +31,7 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
       {item && (
         <motion.div
           key="lightbox-backdrop"
-          className="fixed inset-0 z-[100] flex items-center justify-center p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6"
           style={{ background: 'rgba(0,0,0,0.88)' }}
           variants={lightboxBackdropVariants}
           initial="hidden"
@@ -41,7 +41,7 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
         >
           <motion.div
             key={`lightbox-panel-${item.id}`}
-            className="relative w-full max-w-3xl"
+            className="relative w-full max-w-[min(90vw,360px)] sm:max-w-sm"
             style={{ background: '#191B26', border: '1px solid rgba(176,16,32,0.2)' }}
             variants={lightboxPanelVariants}
             initial="hidden"

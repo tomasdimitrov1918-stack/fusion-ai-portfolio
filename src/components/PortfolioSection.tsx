@@ -10,8 +10,8 @@ interface PortfolioSectionProps {
 }
 
 const GRID_CLASSES: Record<Section['gridLayout'], string> = {
-  '3-col': 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3',
-  '2-col': 'grid grid-cols-1 sm:grid-cols-2 gap-3',
+  '3-col': 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-3',
+  '2-col': 'grid grid-cols-2 sm:grid-cols-2 gap-2 sm:gap-3',
   'wide-single': 'max-w-3xl',
   split: 'grid grid-cols-1 lg:grid-cols-2 gap-16 items-center',
 }
@@ -25,7 +25,7 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
     <section
       id={section.id}
       ref={ref as React.RefObject<HTMLElement>}
-      className="relative px-12 py-24 overflow-hidden border-t"
+      className="relative px-4 sm:px-12 py-16 sm:py-24 overflow-hidden border-t"
       style={{ borderColor: 'rgba(255,255,255,0.04)' }}
     >
       {/* Parallax ghost text */}
