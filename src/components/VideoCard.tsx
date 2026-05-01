@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { motion, useMotionTemplate } from 'motion/react'
 import type { VideoItem } from '../data/portfolio'
 import { useTilt } from '../hooks/useTilt'
@@ -11,11 +11,20 @@ interface VideoCardProps {
 export function VideoCard({ item, onClick }: VideoCardProps) {
   const { rotateX, rotateY, shineX, shineY, onMouseMove, onMouseLeave: tiltLeave } = useTilt()
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [src, setSrc] = useState<string | undefined>(undefined)
 
   const shineBackground = useMotionTemplate`radial-gradient(circle at ${shineX} ${shineY}, rgba(255,255,255,0.1) 0%, transparent 50%)`
 
+  const handleCanPlay = useCallback(() => {
+    videoRef.current?.play().catch(() => {})
+  }, [])
+
   function handleMouseEnter() {
-    videoRef.current?.play()
+    if (!src) {
+      setSrc(item.videoUrl) // triggers load → onCanPlay → play
+    } else {
+      videoRef.current?.play().catch(() => {})
+    }
   }
 
   function handleMouseLeave(_e: React.MouseEvent<HTMLDivElement>) {
@@ -45,12 +54,13 @@ export function VideoCard({ item, onClick }: VideoCardProps) {
       <div style={{ aspectRatio: '9/16' }} className="relative overflow-hidden">
         <video
           ref={videoRef}
-          src={item.videoUrl}
+          src={src}
           poster={item.poster}
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
+          onCanPlay={handleCanPlay}
           className="w-full h-full object-cover transition-[filter] duration-300 brightness-75 group-hover:brightness-100"
         />
 

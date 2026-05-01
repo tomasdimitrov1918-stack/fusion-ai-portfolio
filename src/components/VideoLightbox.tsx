@@ -73,7 +73,6 @@ export function VideoLightbox({ item, onClose }: VideoLightboxProps) {
               key={item.videoUrl}
               src={item.videoUrl}
               controls
-              autoPlay
               playsInline
               className="w-full block"
               style={{ aspectRatio: '9/16', objectFit: 'cover' }}

@@ -18,6 +18,8 @@ export interface Section {
   items: VideoItem[]
 }
 
+const CDN = 'https://fusion-creative-assets.b-cdn.net'
+
 // ── helpers ───────────────────────────────────────────────────────────────────
 function makeVideos(category: Category, folder: string, count: number): VideoItem[] {
   return Array.from({ length: count }, (_, i) => {
@@ -25,7 +27,7 @@ function makeVideos(category: Category, folder: string, count: number): VideoIte
     return {
       id: `${category}-${n}`,
       category,
-      videoUrl: `/videos/${folder}/${n}.mp4`,
+      videoUrl: `${CDN}/${folder}/${n}.mp4`,
       label: `${n}`,
     }
   })
@@ -40,7 +42,7 @@ export const sections: Section[] = [
     description: 'Cinematic, motion-rich ads generated entirely with AI.',
     gridLayout: '5-col',
     items: makeVideos('animated', 'animated', 20).map((v) =>
-      v.id === 'animated-13' ? { ...v, poster: '/videos/animated/13-poster.webp' } : v
+      v.id === 'animated-13' ? { ...v, poster: `${CDN}/animated/13-poster.webp` } : v
     ),
   },
   {
