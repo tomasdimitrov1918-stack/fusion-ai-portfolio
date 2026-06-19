@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Static Ads — Design Preview</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #0D0E14; color: #fff; font-family: system-ui, sans-serif; }
+  .section-header { padding: 64px 48px 40px; }
+  .section-label { font-size: 10px; letter-spacing: 5px; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 16px; }
+  .section-title { font-size: clamp(32px,5vw,64px); font-weight: 900; text-transform: uppercase; letter-spacing: -1px; line-height: 1; }
+  .section-title span { color: #B01020; }
+  .accent-line { width: 64px; height: 1px; margin-top: 20px; background: linear-gradient(90deg,#B01020,transparent); }
+  .tabs-bar { display: flex; overflow-x: auto; padding: 0 48px; border-bottom: 1px solid rgba(255,255,255,0.07); scrollbar-width: none; }
+  .tabs-bar::-webkit-scrollbar { display: none; }
+  .tab-btn { padding: 14px 22px; font-size: 10px; letter-spacing: 3px; text-transform: uppercase; background: none; border: none; color: rgba(255,255,255,0.35); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; transition: all .2s; }
+  .tab-btn:hover { color: rgba(255,255,255,0.7); }
+  .tab-btn.active { color: #fff; border-bottom-color: #B01020; }
+  .tab-content { display: none; padding: 48px; }
+  .tab-content.active { display: block; }
+  .brand-row { margin-bottom: 52px; }
+  .brand-row-header { display: flex; align-items: center; gap: 20px; margin-bottom: 20px; }
+  .brand-name { font-size: 13px; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.9); white-space: nowrap; }
+  .brand-row-line { flex: 1; height: 1px; background: rgba(255,255,255,0.06); }
+  .brand-count { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.2); white-space: nowrap; }
+  .brand-grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); }
+  .img-ph { width: 100%; aspect-ratio: 1/1; border-radius: 3px; border: 1px solid rgba(255,255,255,0.05); transition: opacity .25s, transform .25s; opacity: 0.8; }
+  .img-ph:hover { opacity: 1; transform: scale(1.025); }
+  .c-barkly    { background: linear-gradient(135deg,#1a2a1a,#0f1f0f); }
+  .c-bioherba  { background: linear-gradient(135deg,#0d1a2a,#081422); }
+  .c-coffee    { background: linear-gradient(135deg,#2a1a0a,#1a0e04); }
+  .c-divbalkan { background: linear-gradient(135deg,#1e2800,#141c00); }
+  .c-drfit     { background: linear-gradient(135deg,#1c1c1c,#0a0a0a); }
+  .c-leya      { background: linear-gradient(135deg,#2a1020,#180a14); }
+  .c-manicure  { background: linear-gradient(135deg,#200f1a,#100810); }
+  .c-nordics   { background: linear-gradient(135deg,#0a1e14,#06140e); }
+  .c-ptg       { background: linear-gradient(135deg,#0a1224,#060c18); }
+  .c-sosimple  { background: linear-gradient(135deg,#241e00,#181400); }
+</style>
+</head>
+<body>
+
+<div class="section-header">
+  <p class="section-label">Портфолио</p>
+  <h2 class="section-title">Статични <span>Рекламни</span><br>Криейтиви</h2>
+  <div class="accent-line"></div>
+</div>
+
+<div class="tabs-bar">
+  <button class="tab-btn active"  onclick="showTab('c-diary',      this)">Day-by-Day Diary</button>
+  <button class="tab-btn"         onclick="showTab('c-before',     this)">Before / After</button>
+  <button class="tab-btn"         onclick="showTab('c-ugc',        this)">UGC / Testimonial</button>
+  <button class="tab-btn"         onclick="showTab('c-offer',      this)">Price Offer</button>
+  <button class="tab-btn"         onclick="showTab('c-ingredient', this)">Ingredient Spotlight</button>
+  <button class="tab-btn"         onclick="showTab('c-social',     this)">Social Proof</button>
+  <button class="tab-btn"         onclick="showTab('c-myth',       this)">Myth Busting</button>
+  <button class="tab-btn"         onclick="showTab('c-hook',       this)">Problem Hook</button>
+  <button class="tab-btn"         onclick="showTab('c-infographic',this)">Infographic</button>
+  <button class="tab-btn"         onclick="showTab('c-lifestyle',  this)">Lifestyle</button>
+  <button class="tab-btn"         onclick="showTab('c-character',  this)">AI Character</button>
+</div>
+
+<div id="c-diary" class="tab-content active">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Barkly</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Leya</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-leya"></div><div class="img-ph c-leya"></div></div></div>
+</div>
+
+<div id="c-before" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Dr. Fit</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Nordics</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-nordics"></div><div class="img-ph c-nordics"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+</div>
+
+<div id="c-ugc" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Barkly</span><div class="brand-row-line"></div><span class="brand-count">4 creatives</span></div><div class="brand-grid"><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Coffee Doss</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-coffee"></div><div class="img-ph c-coffee"></div></div></div>
+</div>
+
+<div id="c-offer" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Dr. Fit</span><div class="brand-row-line"></div><span class="brand-count">4 creatives</span></div><div class="brand-grid"><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Barkly</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">ManicureZone</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-manicure"></div><div class="img-ph c-manicure"></div></div></div>
+</div>
+
+<div id="c-ingredient" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Bioherba</span><div class="brand-row-line"></div><span class="brand-count">5 creatives</span></div><div class="brand-grid"><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Barkly</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-barkly"></div><div class="img-ph c-barkly"></div></div></div>
+</div>
+
+<div id="c-social" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Coffee Doss</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-coffee"></div><div class="img-ph c-coffee"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Bioherba</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div></div></div>
+</div>
+
+<div id="c-myth" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Dr. Fit</span><div class="brand-row-line"></div><span class="brand-count">5 creatives</span></div><div class="brand-grid"><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div></div></div>
+</div>
+
+<div id="c-hook" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Leya</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-leya"></div><div class="img-ph c-leya"></div><div class="img-ph c-leya"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Dr. Fit</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-drfit"></div><div class="img-ph c-drfit"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Nordics</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-nordics"></div><div class="img-ph c-nordics"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+</div>
+
+<div id="c-infographic" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Bioherba</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div><div class="img-ph c-bioherba"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Coffee Doss</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-coffee"></div><div class="img-ph c-coffee"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">ManicureZone</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-manicure"></div><div class="img-ph c-manicure"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Nordics</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-nordics"></div><div class="img-ph c-nordics"></div></div></div>
+</div>
+
+<div id="c-lifestyle" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Див Балкан</span><div class="brand-row-line"></div><span class="brand-count">5 creatives</span></div><div class="brand-grid"><div class="img-ph c-divbalkan"></div><div class="img-ph c-divbalkan"></div><div class="img-ph c-divbalkan"></div><div class="img-ph c-divbalkan"></div><div class="img-ph c-divbalkan"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">4 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">PTG Engineering</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-ptg"></div><div class="img-ph c-ptg"></div><div class="img-ph c-ptg"></div></div></div>
+</div>
+
+<div id="c-character" class="tab-content">
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">So Simple</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div><div class="img-ph c-sosimple"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Leya</span><div class="brand-row-line"></div><span class="brand-count">2 creatives</span></div><div class="brand-grid"><div class="img-ph c-leya"></div><div class="img-ph c-leya"></div></div></div>
+  <div class="brand-row"><div class="brand-row-header"><span class="brand-name">Nordics</span><div class="brand-row-line"></div><span class="brand-count">3 creatives</span></div><div class="brand-grid"><div class="img-ph c-nordics"></div><div class="img-ph c-nordics"></div><div class="img-ph c-nordics"></div></div></div>
+</div>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+</script>
+</body>
+</html>

@@ -40,25 +40,31 @@ export const sections: Section[] = [
     id: 'animated-ads',
     number: '01',
     title: 'AI Animated Ads',
-    description: 'Cinematic, motion-rich ads generated entirely with AI.',
+    description: 'Кинематографични, динамични реклами — създадени изцяло с AI.',
     gridLayout: '5-col',
-    items: makeVideos('animated', 'animated', 20).map((v) =>
-      v.id === 'animated-13' ? { ...v, poster: `${CDN}/animated/13-poster.webp` } : v
-    ),
+    items: makeVideos('animated', 'animated', 38).map((v) => {
+      if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
+      if (v.id === 'animated-31') return { ...v, poster: `${CDN}/animated/31-poster.webp` }
+      if (v.id === 'animated-32') return { ...v, poster: `${CDN}/animated/32-poster.webp` }
+      if (v.id === 'animated-33') return { ...v, poster: `${CDN}/animated/33-poster.webp` }
+      if (v.id === 'animated-34') return { ...v, poster: `${CDN}/animated/34-poster.webp` }
+      if (v.id === 'animated-35') return { ...v, poster: `${CDN}/animated/35-poster.webp` }
+      return v
+    }),
   },
   {
     id: 'ugc-ads',
     number: '02',
     title: 'AI UGC Ads',
-    description: 'Authentic-feel user-generated content — zero filming needed.',
+    description: 'Реклами с усещане за истинско съдържание от потребители — без заснемане.',
     gridLayout: '4-col',
-    items: makeVideos('ugc', 'ugc', 10),
+    items: makeVideos('ugc', 'ugc', 13),
   },
   {
     id: 'product-ads',
     number: '03',
     title: 'AI Product Ads',
-    description: 'High-quality product showcases built from a single photo.',
+    description: 'Висококачествени продуктови реклами, създадени от една-единствена снимка.',
     gridLayout: '2-col',
     items: makeVideos('product', 'product', 4),
   },

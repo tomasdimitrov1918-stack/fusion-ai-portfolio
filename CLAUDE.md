@@ -14,6 +14,7 @@ Access at http://localhost:5174
 ```bash
 /opt/homebrew/bin/vercel --prod
 ```
+If deploys get stuck in "Queued", cancel them all with `vercel remove <url> --yes` then trigger a fresh one.
 Production URL: https://portfolio.fusioncreative.net
 Vercel project: `tomasdimitrov1918-3311s-projects/fusion-ai-portfolio`
 GitHub repo: https://github.com/tomasdimitrov1918-stack/fusion-ai-portfolio
@@ -37,53 +38,105 @@ GitHub repo: https://github.com/tomasdimitrov1918-stack/fusion-ai-portfolio
 ## Project structure
 ```
 src/
-  App.tsx                  — Lenis init, MotionConfig, global layout
+  App.tsx                  — Lenis init, MotionConfig, LanguageProvider, global layout
+  context/
+    LanguageContext.tsx    — LanguageProvider, useLanguage hook, Lang type ('bg' | 'en')
   components/
-    Background.tsx         — NoiseOverlay (SVG feTurbulence) + FloatingDots (fixed, site-wide)
+    Background.tsx         — NoiseOverlay (SVG feTurbulence) + FloatingDots (fixed, zIndex:1, site-wide)
     Hero.tsx               — Full-screen cinematic hero, letter-by-letter blur reveal
-    Nav.tsx                — Fixed nav with logo + section links + CTA
-    ToolsMarquee.tsx       — Infinite marquee of AI tools
+    Nav.tsx                — Fixed nav with logo + section links + BG/EN toggle button
+    ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
+    BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
     PortfolioSection.tsx   — Section wrapper with parallax ghost text + video grid
     VideoCard.tsx          — 9:16 video card, lazy-loads src on hover, tilt+shine effect
     VideoLightbox.tsx      — Modal with video player (controls, no autoplay)
+    StaticAdsSection.tsx   — Static image ads section with concept filters + lightbox
+    MidCtaSection.tsx      — Compact horizontal CTA bar between portfolio and static ads
+    ProcessSection.tsx     — 6-step numbered process with connector line + stat boxes (Variant A)
     CtaSection.tsx         — Breathing glow CTA section
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections, 34 videos, VideoItem/Section types
+    portfolio.ts           — 3 sections, 38 animated + 13 ugc + 4 product videos, VideoItem/Section types
+    staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
     useParallax.ts         — Scroll parallax for section ghost text
   lib/
     animations.ts          — All named constants + Framer Motion variants
+    i18n.ts                — All UI strings in BG and EN (see Internationalisation below)
 public/
   favicon.jpg              — Fusion F logo (red on black)
   logo.webp                — Fusion Creative logo (transparent bg, 500x200)
   founders.webp            — Monika & Tomas photo (570x760, used in hero bg)
+  og-image.jpg             — 1200×630 OG/social sharing thumbnail (hero screenshot)
+  logos/                   — Brand logos (WebP, transparent bg)
+    barkly.webp, coffeedoss.webp, biolek.webp, vitaminita.webp, zhivara.webp
+    cubez.webp, elexira.webp, whiteme.webp, butikabg.webp, leya.webp
+    ludi-glavi.webp, nutrizima.webp, the-couple-challenge.webp, yakite-podartsi.webp
+    manicurezone.webp, mazzo.webp (w:160 h:52), juun.webp (w:140 h:84)
+  ads/                     — Static ad images (WebP), served from Vercel
+    barkly/                — 01-NN.webp
+    bioherba/
+    coffee-doss/
+    dr-fit/
+    juun/                  — 01-18.webp
+    leya/
+    manicurezone/
+    nordics/
+    ptg-engineering/
+    so-simple/
+    div-balkan/
   videos/                  — LOCAL ONLY, not in git, not on Vercel (see CDN below)
-    animated/01-20.mp4     — 20 AI Animated Ads
-    animated/13-poster.webp — Custom poster for video 13 (first frame was black)
-    ugc/01-10.mp4          — 10 AI UGC Ads
+    animated/01-38.mp4     — 38 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira; H.264 web-optimized)
+    animated/13-poster.webp — Custom posters (first frame was black)
+    animated/31-poster.webp
+    animated/32-poster.webp
+    animated/33-poster.webp
+    animated/34-poster.webp
+    animated/35-poster.webp
+    ugc/01-13.mp4          — 13 AI UGC Ads
+    ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
 ```
+
+## Page layout order (App.tsx)
+1. `<Hero />` — full-screen hero
+2. `<ToolsMarquee />` — AI tools chips
+3. `<BrandsMarquee />` — client logos
+4. `{sections.map(...)}` — 3× `<PortfolioSection />` (animated, ugc, product)
+5. `<ProcessSection />` — how we work, 6 steps
+6. `<MidCtaSection />` — compact CTA bar
+7. `<StaticAdsSection />` — static ad creatives
+8. `<CtaSection />` — full CTA section
+9. `<Footer />`
 
 ## Portfolio sections
 | # | ID | Title | Videos | Grid |
 |---|-----|-------|---------|------|
-| 01 | animated-ads | AI Animated Ads | 20 | 5-col |
-| 02 | ugc-ads | AI UGC Ads | 10 | 4-col |
+| 01 | animated-ads | AI Animated Ads | 38 | 5-col |
+| 02 | ugc-ads | AI UGC Ads | 13 | 4-col |
 | 03 | product-ads | AI Product Ads | 4 | 2-col |
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).
 
-- **Storage zone:** `fusion-videos` (Frankfurt region)
+- **Storage zone:** `fusion-video-assets` (Frankfurt region)
 - **CDN hostname:** `https://fusion-creative-assets.b-cdn.net`
+- **Storage API endpoint:** `https://storage.bunnycdn.com/fusion-video-assets`
+- **API key:** `a1c5397c-07f0-41db-9f5256cea9fe-95a1-4759`
 - **URL pattern:** `https://fusion-creative-assets.b-cdn.net/{category}/{nn}.mp4`
   - e.g. `https://fusion-creative-assets.b-cdn.net/animated/01.mp4`
 - **CDN constant:** defined as `CDN` in `src/data/portfolio.ts`
 - `public/videos/` is in `.gitignore` and `.vercelignore` — never committed or deployed
 
-To add/replace videos: upload to Bunny storage zone under the correct folder (`animated/`, `ugc/`, `product/`), keeping the same zero-padded filename format.
+To upload a file to Bunny:
+```bash
+curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{path}" \
+  -H "AccessKey: a1c5397c-07f0-41db-9f5256cea9fe-95a1-4759" \
+  -H "Content-Type: video/mp4" --data-binary @localfile.mp4
+```
+
+To add new videos: rename to zero-padded format (e.g. `14.mp4`), generate poster with `qlmanage`, convert with sharp, upload video + poster to Bunny, update count in `portfolio.ts`.
 
 ## Video lazy loading
 `VideoCard` does NOT set `src` on mount. The `src` is injected only on first `mouseEnter`, then `onCanPlay` triggers `play()`. This keeps page load fast (zero video bytes on initial load).
@@ -95,14 +148,43 @@ To add/replace videos: upload to Bunny storage zone under the correct folder (`a
 ## Hero section features
 - Letter-by-letter blur reveal: AI / Creative (red) / Specialists
 - Founders image (`/founders.webp`) — full-height, behind text (z-index 2), radial mask to fade edges, slow float animation
+- Mobile: `124vw` width via `@media (max-width: 767px)` in inline `<style>` tag (JS window.innerWidth unreliable in DevTools)
 - 3 breathing red glow orbs
 - SVG noise + 50 floating red dots (site-wide, fixed)
 - Animated horizontal beam
-- Stats bar at bottom: 50+ клиента · 200+ видеа · 6 AI инструмента · Реален растеж
-- Shimmer CTA button
+- Stats bar at bottom (translated via i18n)
+- Shimmer CTA button — links to contact URL from `tr.cta.contactUrl`
 
 ## Tools marquee
-Tools: Kling 3.0, VEO 3.1, Sora Pro, Nano Banana Pro, ElevenLabs, CapCut, Seedance 2.0, ChatGPT Image 2.0
+Tools: Kling 3.0, VEO 3.1, Sora Pro, Nano Banana Pro, ElevenLabs, CapCut, Seedance 2.0, ChatGPT Image 2.0, Higgsfield
+Animation: Border Draw (clipPath) + Typewriter (setInterval) — triggers on scroll into view via `useInView`
+
+## Internationalisation (BG / EN)
+All UI strings live in `src/lib/i18n.ts`. Components access them via `useLanguage()` from `src/context/LanguageContext.tsx`.
+
+```ts
+const { lang, toggle, tr } = useLanguage()
+// tr.hero.subtext, tr.cta.button, tr.staticAds.filterLabel, tr.process.steps, etc.
+```
+
+- **Toggle button** is in `Nav.tsx` — shows "EN" when BG active, "BG" when EN active
+- **URL sync:** language is reflected in the URL as `?lang=en`. Opening `https://portfolio.fusioncreative.net?lang=en` loads English directly. BG is the default (no param). Toggling updates the URL via `window.history.replaceState`.
+- **Shareable EN link:** `https://portfolio.fusioncreative.net?lang=en`
+- **Contact URLs** are language-specific in `tr.cta.contactUrl`:
+  - BG → `https://fusioncreative.net/kontakti`
+  - EN → `https://fusioncreative.net/en/contacts`
+- Section titles (AI Animated Ads etc.) and concept filter names stay in English in both modes
+- `LanguageContext` `tr` type is `typeof t[Lang]` (union) — do NOT type it as `typeof t['bg']` (causes build error)
+
+## i18n keys in use
+- `tr.nav` — staticAds
+- `tr.hero` — portfolioLabel, subtext, stats[], ctaPrimary, ctaSecondary
+- `tr.brands` — heading
+- `tr.sections` — keyed by section id
+- `tr.staticAds` — portfolioLabel, heading[], filterLabel, countSingular, countPlural, empty, hoverHint, navHint, prev, next, close
+- `tr.cta` — eyebrow, line1, line2, bullet1, bullet2, button, contactUrl
+- `tr.midCta` — eyebrow, headline, button
+- `tr.process` — eyebrow, line1, line2, steps[], statDeadlineLabel/Value, statCapacityLabel/Value, statRevisionsLabel/Value
 
 ## Key conventions
 - Named exports only (no default exports except App)
@@ -111,10 +193,28 @@ Tools: Kling 3.0, VEO 3.1, Sora Pro, Nano Banana Pro, ElevenLabs, CapCut, Seedan
 - `import type` for type-only imports
 - Images → `public/` folder, convert to WebP with sharp
 - Videos → Bunny CDN (see above), never committed to git
-- To add a custom video poster: generate with `qlmanage -t -s 600`, convert with sharp, upload to Bunny, add `poster` field to VideoItem in portfolio.ts
+- Always run `npx tsc -b` before deploying — catches unused variable errors that `tsc --noEmit` misses
 
 ## If videos show black thumbnails
-Upload a poster image to Bunny at `animated/NN-poster.webp` and add `poster` field to the VideoItem in `portfolio.ts`. Run: `qlmanage -t -s 600 -o /tmp/ "public/videos/{category}/NN.mp4"` then convert `/tmp/NN.mp4.png` to webp with sharp.
+Upload a poster image to Bunny at `{category}/NN-poster.webp` and add `poster` field to the VideoItem in `portfolio.ts`. Run: `qlmanage -t -s 600 -o /tmp/ "public/videos/{category}/NN.mp4"` then convert `/tmp/NN.mp4.png` to webp with sharp.
+
+## Static Ads Section
+`StaticAdsSection` sits after `ProcessSection` and `MidCtaSection` in App.tsx, before `CtaSection`.
+
+- **Data:** `src/data/staticAds.ts` — `AdConcept` union type, `CONCEPTS` array, `ADS` array (152 entries)
+- **Brands:** Barkly, Bioherba, Coffee Doss, Dr. Fit, Juun, Leya, ManicureZone, Nordics, PTG Engineering, So Simple, Див Балкан
+- **Concepts (15):** Day-by-Day Diary, Before / After, UGC / Testimonial, Price Offer, Bundle Offer, Ingredient Spotlight, Benefits / Features, Social Proof, Myth Busting, Problem Hook, Problem / Solution, Problem / Pain Hook, Big Number / Hero Stat, Infographic, Lifestyle
+- **Filter chips:** wrap layout (no horizontal scroll), concepts with 0 ads are hidden
+- **Lightbox:** clicking any ad opens a full-screen lightbox; navigate with ← → arrow keys or on-screen buttons; close with Escape or clicking the backdrop; body scroll is locked while open; navigation is cross-brand within the active concept tab
+- **z-index:** section has `position: relative; zIndex: 2` to sit above the fixed FloatingDots (zIndex:1)
+
+### Adding ads
+Add entries to `ADS` array in `staticAds.ts`. Put images in `public/ads/{brand}/NN.webp`. If a concept has 0 ads it auto-hides from filters. If you add a new concept string, also add it to the `AdConcept` union type AND the `CONCEPTS` array.
+
+## SEO / Social sharing
+- OG image: `public/og-image.jpg` (1200×630 hero screenshot)
+- Meta tags in `index.html`: og:title, og:description, og:image, og:url, twitter:card
+- To regenerate OG image: screenshot the hero at 1200×630 with Playwright, convert with sharp
 
 ## Domain & hosting
 - **Production:** https://portfolio.fusioncreative.net
@@ -128,8 +228,62 @@ Upload a poster image to Bunny at `animated/NN-poster.webp` and add `poster` fie
 - Vercel plugin — installed
 - Canva MCP — design ID `DAHG8aHFQDY` (thumbnails expire ~24h)
 
+## Reusable Background dots pattern
+`src/components/Background.tsx` (`FloatingDots` + `NoiseOverlay`) is self-contained and reusable in other projects. Standalone React version:
+
+```tsx
+const DOTS = Array.from({ length: 50 }, (_, i) => ({
+  id: i,
+  x: (i * 37.3 + 13.7) % 100,
+  y: (i * 53.1 + 7.3) % 100,
+  delay: (i * 0.23) % 2,
+  duration: 3 + (i * 0.17) % 2,
+}))
+
+export function FloatingDots({ color = '#B01020', count = 50 }) {
+  return (
+    <>
+      <style>{`
+        .floating-dot { position: absolute; width: 4px; height: 4px; border-radius: 50%; background: ${color};
+          animation: float-dot var(--dot-duration, 4s) ease-in-out infinite; animation-delay: var(--dot-delay, 0s); }
+        @keyframes float-dot { 0%,100%{transform:translateY(0);opacity:.22} 50%{transform:translateY(-18px);opacity:.45} }
+        @media (prefers-reduced-motion:reduce){ .floating-dot{animation:none;opacity:.22} }
+      `}</style>
+      <div aria-hidden style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}>
+        {DOTS.slice(0, count).map(d => (
+          <div key={d.id} className="floating-dot"
+            style={{ left: `${d.x}%`, top: `${d.y}%`,
+              '--dot-duration': `${d.duration}s`, '--dot-delay': `${d.delay}s` } as React.CSSProperties} />
+        ))}
+      </div>
+    </>
+  )
+}
+```
+
+Tunables: `color`, `count`, `translateY(-18px)` (float distance), `opacity 0.22→0.45` (visibility). Positions use a deterministic formula so they don't re-randomize on re-render.
+
+## Adding new videos — quick recipe
+```bash
+# 1. Save video to public/videos/{category}/NN.mp4 (zero-padded)
+# 2. Generate poster
+qlmanage -t -s 600 -o /tmp/ "public/videos/{category}/NN.mp4"
+node -e "require('sharp')('/tmp/NN.mp4.png').webp({quality:85}).toFile('public/videos/{category}/NN-poster.webp')"
+
+# 3. Upload both to Bunny
+curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{category}/NN.mp4" \
+  -H "AccessKey: a1c5397c-07f0-41db-9f5256cea9fe-95a1-4759" \
+  -H "Content-Type: video/mp4" --data-binary @"public/videos/{category}/NN.mp4"
+curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{category}/NN-poster.webp" \
+  -H "AccessKey: a1c5397c-07f0-41db-9f5256cea9fe-95a1-4759" \
+  -H "Content-Type: image/webp" --data-binary @"public/videos/{category}/NN-poster.webp"
+
+# 4. Bump count in src/data/portfolio.ts (makeVideos call) — DON'T need poster override unless first frame is bad
+# 5. tsc -b && vercel --prod
+```
+
 ## What's left / ideas
-- Poster images for all 34 videos (currently show black on load)
+- Poster images for any remaining videos that show black on load
+- FAQ section (concepts already drafted in conversation history — pricing, AI legitimacy on Meta/TikTok, process/timeline, fit)
 - Contact form or mailto link
 - Mobile nav (hamburger menu)
-- SEO / meta tags

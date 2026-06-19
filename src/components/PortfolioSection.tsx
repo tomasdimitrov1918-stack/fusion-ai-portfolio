@@ -1,8 +1,10 @@
 import { motion } from 'motion/react'
+import type React from 'react'
 import type { Section, VideoItem } from '../data/portfolio'
 import { VideoCard } from './VideoCard'
 import { cardContainerVariants, cardItemVariants } from '../lib/animations'
 import { useParallax } from '../hooks/useParallax'
+import { useLanguage } from '../context/LanguageContext'
 
 interface PortfolioSectionProps {
   section: Section
@@ -18,6 +20,8 @@ const GRID_CLASSES: Record<Section['gridLayout'], string> = {
 
 export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProps) {
   const { ref, x } = useParallax()
+  const { tr } = useLanguage()
+  const description = tr.sections[section.id as keyof typeof tr.sections] ?? section.description
 
   return (
     <section
@@ -60,7 +64,7 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
         </h2>
 
         <p className="text-[11px] tracking-[2px] mb-12" style={{ color: 'rgba(255,255,255,0.25)' }}>
-          {section.description}
+          {description}
         </p>
 
         <motion.div

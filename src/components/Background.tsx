@@ -1,4 +1,4 @@
-import { motion } from 'motion/react'
+import type React from 'react'
 
 // Pre-seeded stable dot positions (avoids re-randomizing on render)
 const DOTS = Array.from({ length: 50 }, (_, i) => ({
@@ -36,28 +36,18 @@ export function FloatingDots() {
   return (
     <div
       aria-hidden="true"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        overflow: 'hidden',
-        pointerEvents: 'none',
-        zIndex: 1,
-      }}
+      style={{ position: 'fixed', inset: 0, overflow: 'hidden', pointerEvents: 'none', zIndex: 1 }}
     >
       {DOTS.map((dot) => (
-        <motion.div
+        <div
           key={dot.id}
+          className="floating-dot"
           style={{
-            position: 'absolute',
             left: `${dot.x}%`,
             top: `${dot.y}%`,
-            width: 4,
-            height: 4,
-            borderRadius: '50%',
-            background: '#B01020',
-          }}
-          animate={{ y: [0, -18, 0], opacity: [0.22, 0.45, 0.22] }}
-          transition={{ duration: dot.duration, repeat: Infinity, delay: dot.delay, ease: 'easeInOut' }}
+            '--dot-duration': `${dot.duration}s`,
+            '--dot-delay': `${dot.delay}s`,
+          } as React.CSSProperties}
         />
       ))}
     </div>

@@ -1,27 +1,33 @@
 import { useEffect, useState } from 'react'
 import { motion } from 'motion/react'
 import { sections } from '../data/portfolio'
+import { useLanguage } from '../context/LanguageContext'
 
 const NAV_BG = 'rgba(6,6,8,0.85)'
 
 export function Nav() {
   const [activeId, setActiveId] = useState<string>('')
+  const { lang, toggle, tr } = useLanguage()
+
+  const navLinks = [
+    ...sections.map(s => ({ id: s.id, title: s.title })),
+    { id: 'static-ads', title: tr.nav.staticAds },
+  ]
 
   useEffect(() => {
-    const observers = sections.map((section) => {
-      const el = document.getElementById(section.id)
+    const observers = navLinks.map(({ id }) => {
+      const el = document.getElementById(id)
       if (!el) return null
       const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveId(section.id)
-        },
+        ([entry]) => { if (entry.isIntersecting) setActiveId(id) },
         { threshold: 0.4 },
       )
       observer.observe(el)
       return observer
     })
     return () => observers.forEach((o) => o?.disconnect())
-  }, [])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lang])
 
   function scrollTo(id: string) {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -37,8 +43,8 @@ export function Nav() {
     >
       <img src="/logo.webp" alt="Fusion Creative" className="h-16 w-auto" />
 
-      <div className="hidden md:flex gap-8">
-        {sections.map((s) => (
+      <div className="hidden md:flex gap-8 items-center">
+        {navLinks.map((s) => (
           <button
             key={s.id}
             onClick={() => scrollTo(s.id)}
@@ -48,17 +54,19 @@ export function Nav() {
             {s.title}
           </button>
         ))}
-      </div>
 
-      <a
-        href="mailto:hello@fusion.ai"
-        className="text-[9px] font-bold tracking-[2px] uppercase px-5 py-2.5 transition-colors duration-200"
-        style={{ background: '#B01020' }}
-        onMouseEnter={(e) => (e.currentTarget.style.background = '#E01020')}
-        onMouseLeave={(e) => (e.currentTarget.style.background = '#B01020')}
-      >
-        Разкажи ни →
-      </a>
+        {/* Language toggle */}
+        <button
+          onClick={toggle}
+          className="text-[10px] tracking-[3px] uppercase transition-colors duration-200 border rounded-full px-3 py-1"
+          style={{
+            borderColor: 'rgba(255,255,255,0.15)',
+            color: 'rgba(255,255,255,0.55)',
+          }}
+        >
+          {lang === 'bg' ? 'EN' : 'BG'}
+        </button>
+      </div>
     </motion.nav>
   )
 }

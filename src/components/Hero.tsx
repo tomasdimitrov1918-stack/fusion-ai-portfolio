@@ -1,4 +1,6 @@
 import { motion } from 'motion/react'
+import type React from 'react'
+import { useLanguage } from '../context/LanguageContext'
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const HERO_LINES: { text: string; red?: boolean }[] = [
@@ -6,8 +8,6 @@ const HERO_LINES: { text: string; red?: boolean }[] = [
   { text: 'Creative', red: true },
   { text: 'Specialists' },
 ]
-
-const STATS = ['50+ клиента', '200+ видеа', '6 AI инструмента', 'Реален растеж']
 
 const WORD_STAGGER_S = 0.28
 const LETTER_STAGGER_S = 0.045
@@ -29,21 +29,17 @@ function HeroOrbs() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       {ORB_CONFIGS.map((orb, i) => (
-        <motion.div
+        <div
           key={i}
+          className="hero-orb"
           style={{
-            position: 'absolute',
             width: orb.size,
             height: orb.size,
             left: orb.left,
             top: orb.top,
-            transform: 'translate(-50%, -50%)',
-            borderRadius: '50%',
-            background: 'radial-gradient(circle, rgba(176,16,32,0.38) 0%, rgba(176,16,32,0.08) 45%, transparent 70%)',
-            filter: 'blur(80px)',
-          }}
-          animate={{ scale: [1, 1.22, 1], opacity: [0.45, 0.7, 0.45] }}
-          transition={{ duration: orb.duration, delay: orb.delay, repeat: Infinity, ease: 'easeInOut' }}
+            '--orb-duration': `${orb.duration}s`,
+            '--orb-delay': `${orb.delay}s`,
+          } as React.CSSProperties}
         />
       ))}
     </div>
@@ -92,8 +88,11 @@ function LetterReveal({ text, wordIndex, red }: LetterRevealProps) {
   )
 }
 
+
 // ── Component ─────────────────────────────────────────────────────────────
 export function Hero() {
+  const { tr } = useLanguage()
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center px-6 sm:px-12 pt-28 pb-28 overflow-hidden">
       <HeroOrbs />
@@ -150,15 +149,13 @@ export function Hero() {
 
         {/* Subtext */}
         <motion.p
-          className="text-sm mt-6 max-w-sm leading-relaxed"
-          style={{ color: 'rgba(255,255,255,0.36)' }}
+          className="text-base mt-6 max-w-md leading-relaxed"
+          style={{ color: 'rgba(255,255,255,0.55)' }}
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: SUBTEXT_DELAY_S, duration: 0.6, ease: 'easeOut' }}
         >
-          Реален растеж. Стратегия, AI и лично отношение.
-          <br />
-          We make AI video ads that actually perform.
+          {tr.hero.subtext}
         </motion.p>
 
         {/* CTAs */}
@@ -172,9 +169,9 @@ export function Hero() {
           <button
             className="relative overflow-hidden text-[10px] font-bold tracking-[3px] uppercase px-8 py-3.5 text-white"
             style={{ background: '#B01020' }}
-            onClick={() => document.getElementById('animated-ads')?.scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')}
           >
-            <span className="relative z-10">Виж работата ни ↓</span>
+            <span className="relative z-10">{tr.hero.ctaPrimary}</span>
             <motion.div
               style={{
                 position: 'absolute',
@@ -198,13 +195,20 @@ export function Hero() {
               e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
               e.currentTarget.style.color = 'rgba(255,255,255,0.45)'
             }}
+            onClick={() => document.getElementById('animated-ads')?.scrollIntoView({ behavior: 'smooth' })}
           >
-            За нас
+            {tr.hero.ctaSecondary}
           </button>
         </motion.div>
       </div>
 
       {/* ── Founders image — full-height background ── */}
+      <style>{`
+        .founders-img { height: 127%; width: auto; max-width: 95vw; }
+        @media (max-width: 767px) {
+          .founders-img { width: 124vw !important; height: auto !important; max-width: none !important; }
+        }
+      `}</style>
       <motion.div
         style={{
           position: 'absolute',
@@ -222,10 +226,8 @@ export function Hero() {
         <motion.img
           src="/founders.webp"
           alt="Monika & Tomas — Fusion AI Creative"
+          className="founders-img"
           style={{
-            height: '127%',
-            width: 'auto',
-            maxWidth: '90vw',
             objectFit: 'contain',
             WebkitMaskImage: 'radial-gradient(ellipse 70% 82% at 50% 50%, black 25%, transparent 85%)',
             maskImage: 'radial-gradient(ellipse 70% 82% at 50% 50%, black 25%, transparent 85%)',
@@ -253,7 +255,7 @@ export function Hero() {
         transition={{ delay: STATS_DELAY_S, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="flex items-center justify-center flex-wrap gap-x-8 gap-y-2 py-4 px-6">
-          {STATS.map((stat, i) => (
+          {tr.hero.stats.map((stat, i) => (
             <div key={stat} className="flex items-center gap-8">
               <motion.span
                 className="text-[10px] tracking-[3px] uppercase whitespace-nowrap"
@@ -264,7 +266,7 @@ export function Hero() {
               >
                 {stat}
               </motion.span>
-              {i < STATS.length - 1 && (
+              {i < tr.hero.stats.length - 1 && (
                 <span style={{ width: 4, height: 4, borderRadius: '50%', background: '#B01020', flexShrink: 0, display: 'inline-block' }} />
               )}
             </div>

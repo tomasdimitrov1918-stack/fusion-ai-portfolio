@@ -1,7 +1,10 @@
 import { motion } from 'motion/react'
 import { GLOW_PULSE_DURATION_S, CTA_RING_DURATION_S } from '../lib/animations'
+import { useLanguage } from '../context/LanguageContext'
 
 export function CtaSection() {
+  const { tr } = useLanguage()
+
   return (
     <section
       className="relative px-12 py-24 text-center overflow-hidden border-t"
@@ -27,26 +30,28 @@ export function CtaSection() {
 
       <div className="relative z-10">
         <p className="text-[9px] tracking-[5px] uppercase mb-5" style={{ color: '#B01020' }}>
-          Работим само с избрани клиенти
+          {tr.cta.eyebrow}
         </p>
 
         <h2
           className="text-[clamp(32px,5vw,64px)] font-black uppercase leading-none tracking-tight mb-5"
           style={{ color: '#fff' }}
         >
-          Реален
+          {tr.cta.line1}
           <br />
-          <span style={{ color: '#E01020' }}>растеж</span>
+          <span style={{ color: '#E01020' }}>{tr.cta.line2}</span>
         </h2>
 
         <p className="text-sm max-w-sm mx-auto mb-10 leading-relaxed" style={{ color: 'rgba(255,255,255,0.35)' }}>
-          Мислим преди да действаме.
+          {tr.cta.bullet1}
           <br />
-          Без компромис с качеството.
+          {tr.cta.bullet2}
         </p>
 
         <motion.a
-          href="mailto:hello@fusion.ai"
+          href={tr.cta.contactUrl}
+          target="_blank"
+          rel="noopener noreferrer"
           className="inline-block text-[11px] font-bold tracking-[3px] uppercase px-12 py-4 text-white"
           style={{ background: '#B01020' }}
           animate={{
@@ -62,7 +67,7 @@ export function CtaSection() {
           }}
           whileHover={{ background: '#E01020' }}
         >
-          Разкажи ни за бизнеса ти →
+          {tr.cta.button}
         </motion.a>
       </div>
     </section>

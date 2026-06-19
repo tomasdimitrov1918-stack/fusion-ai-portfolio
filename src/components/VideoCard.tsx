@@ -65,7 +65,7 @@ export function VideoCard({ item, onClick }: VideoCardProps) {
           muted
           loop
           playsInline
-          preload="auto"
+          preload="none"
           onCanPlay={handleCanPlay}
           className="w-full h-full object-cover transition-[filter] duration-300 brightness-75 group-hover:brightness-100"
         />
