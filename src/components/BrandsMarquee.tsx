@@ -7,7 +7,6 @@ import { useLanguage } from '../context/LanguageContext'
 const BRANDS = [
   { src: '/logos/barkly.webp',     alt: 'Barkly',        h: 40 },
   { src: '/logos/coffeedoss.webp', alt: 'CoffeeDoss',    h: 40 },
-  { src: '/logos/biolek.webp',     alt: 'BioLek',        h: 40 },
   { src: '/logos/vitaminita.webp', alt: 'Vitaminita',    h: 38 },
   { src: '/logos/zhivara.webp',    alt: 'Zhivara',       h: 30 },
   { src: '/logos/cubez.webp',      alt: 'Cubez',         h: 28 },
@@ -24,6 +23,8 @@ const BRANDS = [
   { src: '/logos/oros.webp',       alt: 'Oros',          h: 44 },
   { src: '/logos/zehira.webp',     alt: 'Zehira',        h: 44 },
   { src: '/logos/pampersi.webp',   alt: 'Памперси.бг',   h: 42 },
+  { src: '/logos/gifto.webp',      alt: 'gifto',         h: 34 },
+  { src: '/logos/brainchai.webp',  alt: 'BrainChai',     h: 22 },
 ]
 
 export function BrandsMarquee() {

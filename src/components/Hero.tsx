@@ -55,8 +55,8 @@ interface LetterRevealProps {
 
 function LetterReveal({ text, wordIndex, red }: LetterRevealProps) {
   return (
-    <div className="overflow-hidden">
-      <div
+    <span className="overflow-hidden" style={{ display: 'block' }}>
+      <span
         style={{
           display: 'block',
           fontSize: 'clamp(54px,9vw,112px)',
@@ -83,8 +83,8 @@ function LetterReveal({ text, wordIndex, red }: LetterRevealProps) {
             {char}
           </motion.span>
         ))}
-      </div>
-    </div>
+      </span>
+    </span>
   )
 }
 
@@ -127,12 +127,17 @@ export function Hero() {
           Portfolio 2026 — Monika &amp; Tomas
         </motion.p>
 
-        {/* Headline — letter-by-letter blur reveal */}
-        <div className="mb-8">
-          {HERO_LINES.map((line, i) => (
-            <LetterReveal key={line.text} text={line.text} wordIndex={i} red={line.red} />
-          ))}
-        </div>
+        {/* Headline — letter-by-letter blur reveal.
+            Single page <h1>; a spaced sr-only title carries the clean accessible
+            name / SEO text, while the split-letter visual is aria-hidden. */}
+        <h1 className="mb-8">
+          <span className="sr-only">AI Creative Specialists</span>
+          <span aria-hidden="true">
+            {HERO_LINES.map((line, i) => (
+              <LetterReveal key={line.text} text={line.text} wordIndex={i} red={line.red} />
+            ))}
+          </span>
+        </h1>
 
         {/* Red rule */}
         <motion.div

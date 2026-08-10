@@ -12,6 +12,7 @@ import { MidCtaSection } from './components/MidCtaSection'
 import { ProcessSection } from './components/ProcessSection'
 import { CtaSection } from './components/CtaSection'
 import { Footer } from './components/Footer'
+import { MobileCta } from './components/MobileCta'
 import { VideoLightbox } from './components/VideoLightbox'
 import { NoiseOverlay, FloatingDots } from './components/Background'
 import { sections } from './data/portfolio'
@@ -57,6 +58,7 @@ export default function App() {
         <StaticAdsSection />
         <CtaSection />
         <Footer />
+        <MobileCta />
         <VideoLightbox item={activeVideo} onClose={() => setActiveVideo(null)} />
       </div>
     </MotionConfig>

@@ -44,7 +44,8 @@ src/
   components/
     Background.tsx         — NoiseOverlay (SVG feTurbulence) + FloatingDots (fixed, zIndex:1, site-wide)
     Hero.tsx               — Full-screen cinematic hero, letter-by-letter blur reveal
-    Nav.tsx                — Fixed nav with logo + section links + BG/EN toggle button
+    Nav.tsx                — Fixed nav: logo + section links (anchors, href="#id") + BG/EN toggle; below md a hamburger opens a compact dropdown menu (rendered as a sibling of the nav so `fixed` maps to the viewport, not the transformed nav)
+    MobileCta.tsx          — Sticky mobile-only "Get a quote" anchor → #contact; auto-hides via IntersectionObserver once the contact section is in view
     ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
     BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
     PortfolioSection.tsx   — Section wrapper with parallax ghost text + video grid
@@ -53,10 +54,11 @@ src/
     StaticAdsSection.tsx   — Static image ads section with concept filters + lightbox
     MidCtaSection.tsx      — Compact horizontal CTA bar between portfolio and static ads
     ProcessSection.tsx     — 6-step numbered process with connector line + stat boxes (Variant A)
-    CtaSection.tsx         — Breathing glow CTA section
+    CtaSection.tsx         — Breathing glow CTA section (renders <Contacts /> under the CTA button)
+    Contacts.tsx           — Centered Viber + Facebook buttons for Tomas & Monika (viber:// deep link + FB profile)
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections, 38 animated + 13 ugc + 4 product videos, VideoItem/Section types
+    portfolio.ts           — 3 sections, 49 animated + 18 ugc + 4 product videos, VideoItem/Section types
     staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
@@ -69,11 +71,17 @@ public/
   logo.webp                — Fusion Creative logo (transparent bg, 500x200)
   founders.webp            — Monika & Tomas photo (570x760, used in hero bg)
   og-image.jpg             — 1200×630 OG/social sharing thumbnail (hero screenshot)
-  logos/                   — Brand logos (WebP, transparent bg)
-    barkly.webp, coffeedoss.webp, biolek.webp, vitaminita.webp, zhivara.webp
-    cubez.webp, elexira.webp, whiteme.webp, butikabg.webp, leya.webp
-    ludi-glavi.webp, nutrizima.webp, the-couple-challenge.webp, yakite-podartsi.webp
-    manicurezone.webp, mazzo.webp (w:160 h:52), juun.webp (w:140 h:84)
+  logos/                   — Brand logos (WebP, transparent bg), shown in BrandsMarquee
+    barkly, coffeedoss, biolek, vitaminita, zhivara, cubez, elexira, whiteme,
+    butikabg, leya, ludi-glavi, nutrizima, manicurezone, mazzo, juun,
+    cirelle, oros, zehira, pampersi, gifto, brainchai   (so-simple.webp + biolek.webp present but unused)
+    NOTE: all marquee logos are now normalised to WHITE/monochrome (transparent bg) for the dark strip.
+    The previously-colored ones (barkly, butikabg, coffeedoss, cubez, elexira, leya, manicurezone, mazzo,
+    pampersi, whiteme, zhivara) were recolored to white via Higgsfield (nano_banana_pro: recolor to white on
+    black → key luminance→alpha). ludi-glavi is a white comic burst badge with near-black (#0D0E14) text.
+    Sources/backups kept in ~/Desktop/non-white-logos/ as edit-white-*.webp.
+    NOTE: marquee normalises by display HEIGHT — each BRANDS entry has an `h` (px),
+    width is intrinsic (no distortion). Optimize new logos: WebP q80, cap height ~160px.
   ads/                     — Static ad images (WebP), served from Vercel
     barkly/                — 01-NN.webp
     bioherba/
@@ -87,14 +95,14 @@ public/
     so-simple/
     div-balkan/
   videos/                  — LOCAL ONLY, not in git, not on Vercel (see CDN below)
-    animated/01-38.mp4     — 38 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira; H.264 web-optimized)
+    animated/01-49.mp4     — 49 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai; H.264 web-optimized)
     animated/13-poster.webp — Custom posters (first frame was black)
     animated/31-poster.webp
     animated/32-poster.webp
     animated/33-poster.webp
     animated/34-poster.webp
     animated/35-poster.webp
-    ugc/01-13.mp4          — 13 AI UGC Ads
+    ugc/01-18.mp4          — 18 AI UGC Ads (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
 ```
@@ -113,8 +121,8 @@ public/
 ## Portfolio sections
 | # | ID | Title | Videos | Grid |
 |---|-----|-------|---------|------|
-| 01 | animated-ads | AI Animated Ads | 38 | 5-col |
-| 02 | ugc-ads | AI UGC Ads | 13 | 4-col |
+| 01 | animated-ads | AI Animated Ads | 49 | 5-col |
+| 02 | ugc-ads | AI UGC Ads | 18 | 4-col |
 | 03 | product-ads | AI Product Ads | 4 | 2-col |
 
 ## Video CDN — Bunny.net
@@ -184,6 +192,7 @@ const { lang, toggle, tr } = useLanguage()
 - `tr.staticAds` — portfolioLabel, heading[], filterLabel, countSingular, countPlural, empty, hoverHint, navHint, prev, next, close
 - `tr.cta` — eyebrow, line1, line2, bullet1, bullet2, button, contactUrl
 - `tr.midCta` — eyebrow, headline, button
+- `tr.contacts` — heading, subtext, names.{tomas,monika}, viber, facebook (rendered by Contacts.tsx inside CtaSection; phone numbers/FB URLs are hardcoded in Contacts.tsx, not i18n)
 - `tr.process` — eyebrow, line1, line2, steps[], statDeadlineLabel/Value, statCapacityLabel/Value, statRevisionsLabel/Value
 
 ## Key conventions
@@ -227,6 +236,31 @@ Add entries to `ADS` array in `staticAds.ts`. Put images in `public/ads/{brand}/
 - Magic MCP (`@21st-dev/magic`) — API_KEY configured in user scope
 - Vercel plugin — installed
 - Canva MCP — design ID `DAHG8aHFQDY` (thumbnails expire ~24h)
+- **Higgsfield** — used to whiten/recolor brand logos (see recipe below).
+  - CLI (`higgsfield`) network was flaky this session → use the **Higgsfield MCP tools** instead.
+  - Workspace id: `c3a0e802-1dc6-4b77-a4db-c8fcf3102ccd` (private). `select_workspace` before generating.
+  - Model that worked well for logos/text: `nano_banana_pro` (routes to `nano_banana_2`).
+
+## Whitening / recoloring a logo via Higgsfield (recipe)
+Used to normalise all colored brand logos to white for the dark marquee. Backups live in
+`~/Desktop/non-white-logos/` as `edit-white-*.webp` (folder is transient — `/tmp` + Desktop get cleared
+between sessions, so re-flatten from `public/logos` if needed).
+
+1. Flatten the colored source onto neutral gray (both light & dark parts visible) → `/tmp/x.png`:
+   `sharp(src).resize({width:1200,height:1200,fit:'contain',background:'#808080'}).flatten({background:'#808080'}).png()`
+2. Upload via MCP `media_upload` → PUT bytes to the presigned URL (curl, absolute paths, `</dev/null`) → `media_confirm`.
+   (Presigned URLs expire in 24h; regenerate if stale.)
+3. `generate_image` with `nano_banana_pro`, the uploaded image as `medias[{role:'image'}]`, prompt =
+   "recreate this exact logo as a flat PURE WHITE (#FFFFFF) silhouette, identical letterforms/layout, on a solid
+   pure black (#000000) background, no color/shadows/gradients." Name the brand + describe its marks so text stays faithful.
+4. Download `rawUrl`, then **key black→transparent** (luminance = alpha): build white RGB, joinChannel the grayscale
+   as alpha, `.trim().resize({height:160}).webp({quality:88,alpha:true})`.
+5. Verify on `#191B26`, copy into `public/logos/<name>.webp`, `tsc -b`, deploy.
+- **Colored/duotone outputs** (e.g. ludi-glavi red badge) can't use luminance-keying → use MCP `remove_background`
+  (generate on a distinct bg like solid green, then remove). ludi-glavi final = white comic badge + near-black
+  (#0D0E14) filled text, generated from the original as reference.
+- Generative editing garbles tiny/hand-lettered logos — always eyeball each result; fall back to a deterministic
+  sharp recolor when text must stay exact.
 
 ## Reusable Background dots pattern
 `src/components/Background.tsx` (`FloatingDots` + `NoiseOverlay`) is self-contained and reusable in other projects. Standalone React version:
@@ -264,11 +298,20 @@ export function FloatingDots({ color = '#B01020', count = 50 }) {
 Tunables: `color`, `count`, `translateY(-18px)` (float distance), `opacity 0.22→0.45` (visibility). Positions use a deterministic formula so they don't re-randomize on re-render.
 
 ## Adding new videos — quick recipe
+> IMPORTANT: source clips are often **HEVC/h265** (esp. iPhone/screen recordings) which
+> Chrome & Firefox CANNOT decode — ALWAYS transcode to H.264. Also re-encode to shrink
+> (raw renders are 60-90 MB; optimized are ~15-20 MB). Check codec first:
+> `ffprobe -v error -select_streams v:0 -show_entries stream=codec_name,width,height -of csv=p=0 src.mp4`
 ```bash
-# 1. Save video to public/videos/{category}/NN.mp4 (zero-padded)
-# 2. Generate poster
-qlmanage -t -s 600 -o /tmp/ "public/videos/{category}/NN.mp4"
-node -e "require('sharp')('/tmp/NN.mp4.png').webp({quality:85}).toFile('public/videos/{category}/NN-poster.webp')"
+# 0. Optimize/transcode -> public/videos/{category}/NN.mp4 (H.264, faststart, cap 1080p, no upscale)
+ffmpeg -y -i src.mp4 -vf "scale='min(1080,iw)':'-2'" \
+  -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 24 -preset medium -r 30 \
+  -movflags +faststart -c:a aac -b:a 128k "public/videos/{category}/NN.mp4"
+# (sandbox can't read ~/Desktop or ~/Downloads — cp source to /tmp first, or use dangerouslyDisableSandbox)
+
+# 2. Generate poster (extract a real frame ~1.5s in, not black; sharp -> webp ~540px)
+ffmpeg -y -ss 1.5 -i "public/videos/{category}/NN.mp4" -frames:v 1 /tmp/NN.png
+node -e "require('sharp')('/tmp/NN.png').resize({width:540}).webp({quality:72}).toFile('public/videos/{category}/NN-poster.webp')"
 
 # 3. Upload both to Bunny
 curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{category}/NN.mp4" \
@@ -282,8 +325,36 @@ curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{category}/NN-post
 # 5. tsc -b && vercel --prod
 ```
 
-## What's left / ideas
-- Poster images for any remaining videos that show black on load
-- FAQ section (concepts already drafted in conversation history — pricing, AI legitimacy on Meta/TikTok, process/timeline, fit)
-- Contact form or mailto link
-- Mobile nav (hamburger menu)
+## Optimization audit (ref)
+Full CRO / UX / code audit generated at `~/Downloads/fusion-portfolio-audit.html` (self-contained, brand-styled).
+Overall verdict: strong creative, weak conversion funnel. Biggest lever: the CTA still dead-ends in an external
+redirect (`fusioncreative.net/kontakti`) — on-page Viber/Facebook contacts were added but no inline form yet.
+
+### Done this session
+- Contacts block (Viber + Facebook per person) inside CtaSection (`#contact`) — `Contacts.tsx`.
+- Mobile hamburger dropdown nav + sticky "Get a quote" CTA — `Nav.tsx`, `MobileCta.tsx`.
+- Single hero `<h1>` + clean heading order; nav jumps converted to `<a href="#id">` anchors.
+- Compressed oversized Juun static-ad images (2048px → 1080px, ~3.5 MB → ~0.9 MB).
+- All marquee logos normalised to white/monochrome (see Higgsfield recipe).
+
+### Still open (from audit, highest impact first)
+- **On-page contact form / modal** (biggest CRO win) — replace/augment the external redirect; add WhatsApp + Cal.com.
+- **FAQ section** — lead with "Do Meta/TikTok allow AI ads?"; also timeline, revisions, "only have a logo", pricing.
+- **Testimonials with metrics** + case studies (no performance proof anywhere yet).
+- **Quantify hero stats** ("Real growth" → e.g. "avg 3.2× ROAS"); surface a pricing teaser.
+- **SEO meta gaps in `index.html`**: `lang="en"` hardcoded (site defaults BG), no canonical, no hreflang for `?lang=en`,
+  no robots.txt/sitemap, no Organization JSON-LD.
+- **`prefers-reduced-motion`** only covers CSS marquee/dots — not Framer Motion reveals, card tilt, or Lenis.
+- **3 ESLint errors** (non-blocking; builds are clean): setState-in-effect `StaticAdsSection.tsx:34`,
+  unused `_e` `VideoCard.tsx:35`, react-refresh `LanguageContext.tsx:47`.
+- Poster images for any remaining videos that show black on load.
+
+## Accessibility / SEO notes
+- Hero headline is the single page `<h1>` ("AI Creative Specialists"); split-letter visual is `aria-hidden` with an `sr-only` spaced title carrying the accessible name/SEO text. Heading order: h1 → h2 (sections) → h3 (process steps), no skipped levels.
+- Nav section jumps are `<a href="#id">` anchors (real link semantics + smooth scroll via preventDefault). Only the BG/EN toggle and hamburger remain `<button>`s.
+- Mobile nav (hamburger dropdown) + sticky "Get a quote" CTA are done.
+
+## Contacts (hardcoded in Contacts.tsx)
+- Tomas — Viber `+359896718015`, FB `facebook.com/tomas.dimitrov.12/`
+- Monika — Viber `+359888634506`, FB `facebook.com/profile.php?id=100000618333454`
+- Viber links use `viber://chat?number=%2B<digits>`; FB opens in a new tab.

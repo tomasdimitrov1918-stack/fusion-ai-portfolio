@@ -4,6 +4,9 @@ export const t = {
   bg: {
     nav: {
       staticAds: 'Статични реклами',
+      quote: 'Заяви оферта',
+      menu: 'Меню',
+      close: 'Затвори',
     },
     hero: {
       portfolioLabel: 'Портфолио',
@@ -66,10 +69,20 @@ export const t = {
       statRevisionsLabel: 'Корекции',
       statRevisionsValue: 'до 3 включени',
     },
+    contacts: {
+      heading: 'Пишете ни директно',
+      subtext: 'Един клик до нас — в Viber или Facebook.',
+      names: { tomas: 'Томас', monika: 'Моника' },
+      viber: 'Viber',
+      facebook: 'Facebook',
+    },
   },
   en: {
     nav: {
       staticAds: 'Static Ads',
+      quote: 'Get a quote',
+      menu: 'Menu',
+      close: 'Close',
     },
     hero: {
       portfolioLabel: 'Portfolio',
@@ -131,6 +144,13 @@ export const t = {
       statCapacityValue: 'up to 2-3 videos / day',
       statRevisionsLabel: 'Revisions',
       statRevisionsValue: 'up to 3 included',
+    },
+    contacts: {
+      heading: 'Message us directly',
+      subtext: 'One tap to reach us — on Viber or Facebook.',
+      names: { tomas: 'Tomas', monika: 'Monika' },
+      viber: 'Viber',
+      facebook: 'Facebook',
     },
   },
 } as const

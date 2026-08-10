@@ -1,12 +1,14 @@
 import { motion } from 'motion/react'
 import { GLOW_PULSE_DURATION_S, CTA_RING_DURATION_S } from '../lib/animations'
 import { useLanguage } from '../context/LanguageContext'
+import { Contacts } from './Contacts'
 
 export function CtaSection() {
   const { tr } = useLanguage()
 
   return (
     <section
+      id="contact"
       className="relative px-12 py-24 text-center overflow-hidden border-t"
       style={{ background: '#191B26', borderColor: 'rgba(176,16,32,0.2)' }}
     >
@@ -69,6 +71,8 @@ export function CtaSection() {
         >
           {tr.cta.button}
         </motion.a>
+
+        <Contacts />
       </div>
     </section>
   )
