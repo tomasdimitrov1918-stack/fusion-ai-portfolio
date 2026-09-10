@@ -95,6 +95,9 @@ public/
     so-simple/
     div-balkan/
   videos/                  — LOCAL ONLY, not in git, not on Vercel (see CDN below)
+                             animated/ + ugc/ are sorted into STYLE SUBFOLDERS (e.g. animated/Talking Products/04.mp4,
+                             ugc/Expert - Doctor/16.mp4) by `node scripts/organize-videos.mjs` — Bunny stays flat.
+                             product/ stays flat. The NN numbering below is unchanged.
     animated/01-71.mp4     — 71 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
     animated/13-poster.webp — Custom posters (first frame was black)
     animated/31-poster.webp
@@ -131,6 +134,8 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
   `assignSubs()` sets `VideoItem.sub`; `Section.subcategories` = the keys. A section without `subcategories` shows no chips.
 - **Animated:** Talking Products, Ingredients & Body, Story-Driven, Clay & Stop-Motion, 2D Videos, Cinematic Premium.
 - **UGC:** Testimonials, Expert / Doctor, Skits & TV Formats, Lifestyle & Product.
+- **Local folders:** `node scripts/organize-videos.mjs` moves `public/videos/{animated,ugc}/**/NN.mp4` (+ poster) into a folder
+  per style, read straight from the maps. Re-run after any re-assignment — it finds files wherever they are and removes emptied folders.
 - **Adding a video:** after bumping the count, add its number to one sub list — `src/data/portfolio.test.ts` fails if any
   animated/ugc video has no sub, and asserts per-sub counts (update those too).
 - **UI:** chips are deliberately loud (bouncing red ↓ prompt, 52px pills with poster thumb + count, solid red glowing active
@@ -336,6 +341,8 @@ curl -X PUT "https://storage.bunnycdn.com/fusion-video-assets/{category}/NN-post
   -H "Content-Type: image/webp" --data-binary @"public/videos/{category}/NN-poster.webp"
 
 # 4. Bump count in src/data/portfolio.ts (makeVideos call) — DON'T need poster override unless first frame is bad
+# 4b. Add the number to its style in ANIMATED_SUBS / UGC_SUBS, then file it into its local style folder:
+node scripts/organize-videos.mjs
 # 5. tsc -b && vercel --prod
 ```
 
