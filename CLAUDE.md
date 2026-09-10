@@ -48,7 +48,7 @@ src/
     MobileCta.tsx          — Sticky mobile-only "Get a quote" anchor → #contact; auto-hides via IntersectionObserver once the contact section is in view
     ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
     BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
-    PortfolioSection.tsx   — Section wrapper with parallax ghost text + video grid
+    PortfolioSection.tsx   — Section wrapper with parallax ghost text + style filter chips + video grid
     VideoCard.tsx          — 9:16 video card, lazy-loads src on hover, tilt+shine effect
     VideoLightbox.tsx      — Modal with video player (controls, no autoplay)
     StaticAdsSection.tsx   — Static image ads section with concept filters + lightbox
@@ -125,6 +125,19 @@ public/
 | 02 | ugc-ads | AI UGC Ads | 30 | 4-col |
 | 03 | product-ads | AI Product Ads | 4 | 2-col |
 
+## Video subcategories (style filter chips)
+Animated and UGC sections have filter chips ("All" + one per style); Product has none (too few videos).
+- **Mapping:** `ANIMATED_SUBS` / `UGC_SUBS` in `src/data/portfolio.ts` — `Record<subName, videoNumber[]>`; key order = chip order.
+  `assignSubs()` sets `VideoItem.sub`; `Section.subcategories` = the keys. A section without `subcategories` shows no chips.
+- **Animated:** Talking Products, Ingredients & Body, Story-Driven, Clay & Stop-Motion, 2D Videos, Cinematic Premium.
+- **UGC:** Testimonials, Expert / Doctor, Skits & TV Formats, Lifestyle & Product.
+- **Adding a video:** after bumping the count, add its number to one sub list — `src/data/portfolio.test.ts` fails if any
+  animated/ugc video has no sub, and asserts per-sub counts (update those too).
+- **UI:** chips are deliberately loud (bouncing red ↓ prompt, 52px pills with poster thumb + count, solid red glowing active
+  state, 2-col grid on mobile). Chip names stay English; prompt/"All"/"Showing" come from `tr.videoFilter`.
+- Playwright clicks on chips can miss because Lenis moves the page mid-click — click via `el.click()` in `evaluate` when testing,
+  and use `fullPage` + `clip` screenshots (normal viewport screenshots time out on this page).
+
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).
 
@@ -189,6 +202,7 @@ const { lang, toggle, tr } = useLanguage()
 - `tr.hero` — portfolioLabel, subtext, stats[], ctaPrimary, ctaSecondary
 - `tr.brands` — heading
 - `tr.sections` — keyed by section id
+- `tr.videoFilter` — prompt, all, showing, videos (style filter chips in PortfolioSection)
 - `tr.staticAds` — portfolioLabel, heading[], filterLabel, countSingular, countPlural, empty, hoverHint, navHint, prev, next, close
 - `tr.cta` — eyebrow, line1, line2, bullet1, bullet2, button, contactUrl
 - `tr.midCta` — eyebrow, headline, button

@@ -23,6 +23,12 @@ export const t = {
       'ugc-ads': 'Реклами с усещане за истинско съдържание от потребители — без заснемане.',
       'product-ads': 'Висококачествени продуктови реклами, създадени от една-единствена снимка.',
     },
+    videoFilter: {
+      prompt: 'Избери стил — кликни, за да филтрираш',
+      all: 'Всички',
+      showing: 'Показани',
+      videos: 'видеа',
+    },
     staticAds: {
       portfolioLabel: 'Портфолио',
       heading: ['Статични', 'Рекламни', 'Криейтиви'],
@@ -98,6 +104,12 @@ export const t = {
       'animated-ads': 'Cinematic, motion-rich ads — generated entirely with AI.',
       'ugc-ads': 'Authentic-feel UGC-style ads — zero filming, zero casting.',
       'product-ads': 'High-quality product ads — built from a single photo.',
+    },
+    videoFilter: {
+      prompt: 'Pick a style — tap to filter',
+      all: 'All',
+      showing: 'Showing',
+      videos: 'videos',
     },
     staticAds: {
       portfolioLabel: 'Portfolio',
