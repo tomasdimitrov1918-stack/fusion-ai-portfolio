@@ -58,7 +58,7 @@ src/
     Contacts.tsx           — Centered Viber + Facebook buttons for Tomas & Monika (viber:// deep link + FB profile)
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections, 49 animated + 18 ugc + 4 product videos, VideoItem/Section types
+    portfolio.ts           — 3 sections, 71 animated + 30 ugc + 4 product videos, VideoItem/Section types
     staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
@@ -95,14 +95,14 @@ public/
     so-simple/
     div-balkan/
   videos/                  — LOCAL ONLY, not in git, not on Vercel (see CDN below)
-    animated/01-49.mp4     — 49 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai; H.264 web-optimized)
+    animated/01-71.mp4     — 71 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
     animated/13-poster.webp — Custom posters (first frame was black)
     animated/31-poster.webp
     animated/32-poster.webp
     animated/33-poster.webp
     animated/34-poster.webp
     animated/35-poster.webp
-    ugc/01-18.mp4          — 18 AI UGC Ads (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare)
+    ugc/01-30.mp4          — 30 AI UGC Ads (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
 ```
@@ -121,8 +121,8 @@ public/
 ## Portfolio sections
 | # | ID | Title | Videos | Grid |
 |---|-----|-------|---------|------|
-| 01 | animated-ads | AI Animated Ads | 49 | 5-col |
-| 02 | ugc-ads | AI UGC Ads | 18 | 4-col |
+| 01 | animated-ads | AI Animated Ads | 71 | 5-col |
+| 02 | ugc-ads | AI UGC Ads | 30 | 4-col |
 | 03 | product-ads | AI Product Ads | 4 | 2-col |
 
 ## Video CDN — Bunny.net

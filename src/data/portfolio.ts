@@ -42,7 +42,7 @@ export const sections: Section[] = [
     title: 'AI Animated Ads',
     description: 'Кинематографични, динамични реклами — създадени изцяло с AI.',
     gridLayout: '5-col',
-    items: makeVideos('animated', 'animated', 49).map((v) => {
+    items: makeVideos('animated', 'animated', 71).map((v) => {
       if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
       if (v.id === 'animated-31') return { ...v, poster: `${CDN}/animated/31-poster.webp` }
       if (v.id === 'animated-32') return { ...v, poster: `${CDN}/animated/32-poster.webp` }
@@ -58,7 +58,7 @@ export const sections: Section[] = [
     title: 'AI UGC Ads',
     description: 'Реклами с усещане за истинско съдържание от потребители — без заснемане.',
     gridLayout: '4-col',
-    items: makeVideos('ugc', 'ugc', 18),
+    items: makeVideos('ugc', 'ugc', 30),
   },
   {
     id: 'product-ads',
