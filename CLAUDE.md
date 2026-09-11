@@ -182,7 +182,7 @@ To add new videos: rename to zero-padded format (e.g. `14.mp4`), generate poster
 - Shimmer CTA button — links to contact URL from `tr.cta.contactUrl`
 
 ## Tools marquee
-Tools: Kling 3.0, VEO 3.1, Sora Pro, Nano Banana Pro, ElevenLabs, CapCut, Seedance 2.0, ChatGPT Image 2.0, Higgsfield
+Tools: Kling 3.0, Kling Motion Control, Gemini Omni Flash 1.1, Nano Banana Pro, ElevenLabs, CapCut, Seedance 2.5, ChatGPT Image 2.0, GPT Image 2.5, Higgsfield, Higgsfield Genjutsu
 Animation: Border Draw (clipPath) + Typewriter (setInterval) — triggers on scroll into view via `useInView`
 
 ## Internationalisation (BG / EN)

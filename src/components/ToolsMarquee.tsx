@@ -3,8 +3,9 @@ import { useEffect, useState, useRef } from 'react'
 import type React from 'react'
 
 const TOOLS = [
-  'Kling 3.0', 'VEO 3.1', 'Sora Pro', 'Nano Banana Pro',
-  'ElevenLabs', 'CapCut', 'Seedance 2.0', 'ChatGPT Image 2.0', 'Higgsfield',
+  'Kling 3.0', 'Kling Motion Control', 'Gemini Omni Flash 1.1', 'Nano Banana Pro',
+  'ElevenLabs', 'CapCut', 'Seedance 2.5', 'ChatGPT Image 2.0', 'GPT Image 2.5',
+  'Higgsfield', 'Higgsfield Genjutsu',
 ]
 
 const BASE_STYLE: React.CSSProperties = {
