@@ -108,6 +108,8 @@ public/
     ugc/01-30.mp4          — 30 AI UGC Ads (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
+scripts/
+  organize-videos.mjs      — sorts local public/videos/{animated,ugc} into style subfolders (see Video subcategories)
 ```
 
 ## Page layout order (App.tsx)
@@ -351,7 +353,7 @@ Full CRO / UX / code audit generated at `~/Downloads/fusion-portfolio-audit.html
 Overall verdict: strong creative, weak conversion funnel. Biggest lever: the CTA still dead-ends in an external
 redirect (`fusioncreative.net/kontakti`) — on-page Viber/Facebook contacts were added but no inline form yet.
 
-### Done this session
+### Done (Aug 2026 session)
 - Contacts block (Viber + Facebook per person) inside CtaSection (`#contact`) — `Contacts.tsx`.
 - Mobile hamburger dropdown nav + sticky "Get a quote" CTA — `Nav.tsx`, `MobileCta.tsx`.
 - Single hero `<h1>` + clean heading order; nav jumps converted to `<a href="#id">` anchors.
