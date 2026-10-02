@@ -188,22 +188,22 @@ export function Hero() {
             />
           </button>
 
-          {/* Secondary */}
-          <button
-            className="text-[10px] tracking-[3px] uppercase px-8 py-3.5 border transition-colors duration-200"
-            style={{ borderColor: 'rgba(255,255,255,0.12)', color: 'rgba(255,255,255,0.45)' }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(176,16,32,0.5)'
-              e.currentTarget.style.color = 'rgba(255,255,255,0.8)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)'
-              e.currentTarget.style.color = 'rgba(255,255,255,0.45)'
-            }}
-            onClick={() => document.getElementById('animated-ads')?.scrollIntoView({ behavior: 'smooth' })}
-          >
-            {tr.hero.ctaSecondary}
-          </button>
+          {/* Section shortcuts */}
+          {[
+            { id: 'animated-ads', label: tr.hero.ctaAnimated },
+            { id: 'ugc-ads', label: tr.hero.ctaUgc },
+          ].map(({ id, label }) => (
+            <button
+              key={id}
+              className="text-[12px] font-bold tracking-[3px] uppercase px-9 py-4 border-2 text-white transition-colors duration-200"
+              style={{ borderColor: '#E01020', background: 'rgba(13,14,20,0.75)', boxShadow: '0 0 22px rgba(224,16,32,0.35)' }}
+              onMouseEnter={(e) => { e.currentTarget.style.background = '#E01020' }}
+              onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(13,14,20,0.75)' }}
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              {label}
+            </button>
+          ))}
         </motion.div>
       </div>
 

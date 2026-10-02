@@ -14,6 +14,8 @@ export const t = {
       stats: ['50+ клиента', '200+ видеа', '6 AI инструмента', 'Реален растеж'],
       ctaPrimary: 'Разкажи ни за бизнеса ти',
       ctaSecondary: 'Виж работата ни ↓',
+      ctaAnimated: 'AI Анимации ↓',
+      ctaUgc: 'AI UGC ↓',
     },
     brands: {
       heading: 'Брандове, които ни се довериха',
@@ -96,6 +98,8 @@ export const t = {
       stats: ['50+ clients', '200+ videos', '6 AI tools', 'Real growth'],
       ctaPrimary: 'Tell us about your business',
       ctaSecondary: 'See our work ↓',
+      ctaAnimated: 'AI Animation ↓',
+      ctaUgc: 'AI UGC ↓',
     },
     brands: {
       heading: 'Brands that trusted us',
