@@ -123,6 +123,11 @@ scripts/
 8. `<CtaSection />` — full CTA section
 9. `<Footer />`
 
+## Hero A/B versions (?v=2)
+- `portfolio.fusioncreative.net` → original `Hero.tsx`; `?v=2` → `HeroV2.tsx` (port of the aiads landing hero, styles in `HeroV2.css` scoped under `.hv2`, Montserrat loaded in index.html).
+- `src/lib/variant.ts` reads `?v`; `App.tsx` picks the hero; the lang toggle keeps `v=2`. Copy lives in `tr.heroV2`.
+- `src/lib/track.ts` adds `hero_variant` (1|2) to every Meta Pixel event, so leads can be compared per version.
+
 ## Portfolio sections
 | # | ID | Title | Videos | Grid |
 |---|-----|-------|---------|------|
