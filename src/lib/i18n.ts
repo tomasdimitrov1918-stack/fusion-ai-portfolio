@@ -17,6 +17,21 @@ export const t = {
       ctaAnimated: 'AI Анимации ↓',
       ctaUgc: 'AI UGC ↓',
     },
+    // Hero version 2 (?v=2), ported from the aiads landing page
+    heroV2: {
+      eyebrow: 'AI видео реклами за DTC брандове',
+      title: 'Видео реклами, които клиентите ти',
+      titleAccent: 'не подминават',
+      sub: 'Създаваме AI видео реклами, които спират скрола и продават. Получаваш ги за дни, не за седмици, на част от цената на продуцентска агенция.',
+      ctaPrimary: 'Вземи оферта за твоя бизнес',
+      ctaSecondary: 'Виж работата ни',
+      hook: 'Първо ти правим безплатна примерна реклама от 10 до 15 секунди за твой продукт. Плащаш само ако ти хареса.',
+      stats: [
+        { value: 400, suffix: '+', label: 'Доставени видео реклами' },
+        { value: 48, suffix: 'ч', label: 'Средно време за доставка' },
+        { value: 50, suffix: '+', label: 'DTC бранда ни се довериха' },
+      ],
+    },
     brands: {
       heading: 'Брандове, които ни се довериха',
     },
@@ -100,6 +115,21 @@ export const t = {
       ctaSecondary: 'See our work ↓',
       ctaAnimated: 'AI Animation ↓',
       ctaUgc: 'AI UGC ↓',
+    },
+    // Hero version 2 (?v=2), ported from the aiads landing page
+    heroV2: {
+      eyebrow: 'AI video ads for DTC brands',
+      title: 'Video ads your customers',
+      titleAccent: "don't scroll past",
+      sub: "We create AI video ads that stop the scroll and sell. You get them in days, not weeks, at a fraction of a production agency's price.",
+      ctaPrimary: 'Get a quote for your business',
+      ctaSecondary: 'See our work',
+      hook: 'First we make a free 10 to 15 second sample ad for your product. You only pay if you like it.',
+      stats: [
+        { value: 400, suffix: '+', label: 'Video ads delivered' },
+        { value: 48, suffix: 'h', label: 'Average delivery time' },
+        { value: 50, suffix: '+', label: 'DTC brands trusted us' },
+      ],
     },
     brands: {
       heading: 'Brands that trusted us',

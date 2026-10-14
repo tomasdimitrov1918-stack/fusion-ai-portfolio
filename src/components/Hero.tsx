@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import type React from 'react'
 import { useLanguage } from '../context/LanguageContext'
+import { track } from '../lib/track'
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const HERO_LINES: { text: string; red?: boolean }[] = [
@@ -174,7 +175,10 @@ export function Hero() {
           <button
             className="relative overflow-hidden text-[10px] font-bold tracking-[3px] uppercase px-8 py-3.5 text-white"
             style={{ background: '#B01020' }}
-            onClick={() => window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              track('Lead', { content_name: 'contact_page', placement: 'hero' })
+              window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
+            }}
           >
             <span className="relative z-10">{tr.hero.ctaPrimary}</span>
             <motion.div

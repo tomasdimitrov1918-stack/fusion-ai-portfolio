@@ -1,6 +1,7 @@
 import { motion, useInView } from 'motion/react'
 import { useRef } from 'react'
 import { useLanguage } from '../context/LanguageContext'
+import { track } from '../lib/track'
 
 export function MidCtaSection() {
   const { tr } = useLanguage()
@@ -67,7 +68,10 @@ export function MidCtaSection() {
           <button
             className="relative overflow-hidden text-[10px] font-bold tracking-[3px] uppercase px-10 py-4 text-white whitespace-nowrap"
             style={{ background: '#B01020' }}
-            onClick={() => window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')}
+            onClick={() => {
+              track('Lead', { content_name: 'contact_page', placement: 'mid_cta' })
+              window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
+            }}
           >
             <span className="relative z-10">{tr.midCta.button}</span>
             <motion.div

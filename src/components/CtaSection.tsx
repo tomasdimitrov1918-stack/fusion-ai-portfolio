@@ -1,13 +1,33 @@
+import { useEffect, useRef } from 'react'
 import { motion } from 'motion/react'
 import { GLOW_PULSE_DURATION_S, CTA_RING_DURATION_S } from '../lib/animations'
 import { useLanguage } from '../context/LanguageContext'
 import { Contacts } from './Contacts'
+import { track, trackCustom } from '../lib/track'
 
 export function CtaSection() {
   const { tr } = useLanguage()
+  const sectionRef = useRef<HTMLElement>(null)
+
+  // Fires once per page view when the contact section is actually on screen.
+  useEffect(() => {
+    const el = sectionRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return
+        trackCustom('ReachedContact')
+        observer.disconnect()
+      },
+      { threshold: 0.4 },
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <section
+      ref={sectionRef}
       id="contact"
       className="relative px-12 py-24 text-center overflow-hidden border-t"
       style={{ background: '#191B26', borderColor: 'rgba(176,16,32,0.2)' }}
@@ -54,6 +74,7 @@ export function CtaSection() {
           href={tr.cta.contactUrl}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={() => track('Lead', { content_name: 'contact_page', placement: 'cta_section' })}
           className="inline-block text-[11px] font-bold tracking-[3px] uppercase px-12 py-4 text-white"
           style={{ background: '#B01020' }}
           animate={{

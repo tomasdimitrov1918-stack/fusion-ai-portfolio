@@ -4,6 +4,7 @@ import Lenis from 'lenis'
 import { LanguageProvider } from './context/LanguageContext'
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
+import { HeroV2 } from './components/HeroV2'
 import { ToolsMarquee } from './components/ToolsMarquee'
 import { PortfolioSection } from './components/PortfolioSection'
 import { BrandsMarquee } from './components/BrandsMarquee'
@@ -17,6 +18,8 @@ import { VideoLightbox } from './components/VideoLightbox'
 import { NoiseOverlay, FloatingDots } from './components/Background'
 import { sections } from './data/portfolio'
 import type { VideoItem } from './data/portfolio'
+import { track } from './lib/track'
+import { heroVariant } from './lib/variant'
 
 export default function App() {
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null)
@@ -43,14 +46,21 @@ export default function App() {
         <NoiseOverlay />
         <FloatingDots />
         <Nav />
-        <Hero />
+        {heroVariant === 2 ? <HeroV2 /> : <Hero />}
         <ToolsMarquee />
         <BrandsMarquee />
         {sections.map((section) => (
           <PortfolioSection
             key={section.id}
             section={section}
-            onVideoClick={setActiveVideo}
+            onVideoClick={(item) => {
+              track('ViewContent', {
+                content_type: 'video',
+                content_name: `${item.category} ${item.label}`,
+                content_category: item.sub ?? item.category,
+              })
+              setActiveVideo(item)
+            }}
           />
         ))}
         <ProcessSection />

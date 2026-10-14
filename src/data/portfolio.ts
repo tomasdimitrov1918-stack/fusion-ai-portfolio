@@ -25,31 +25,40 @@ const CDN = 'https://fusion-creative-assets.b-cdn.net'
 // ── subcategories (video number → style) ─────────────────────────────────────
 // Order of keys = order of the filter chips.
 const ANIMATED_SUBS: Record<string, number[]> = {
-  'Talking Products': [4, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 22, 27, 28, 29, 35, 46, 48, 49, 64],
+  'Talking Products': [4, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 22, 27, 28, 29, 35, 46, 48, 49, 64, 80, 86],
   'Ingredients & Body': [2, 3, 5, 19, 20, 24, 25, 26, 31, 32, 36, 37, 38, 47, 56, 57, 59, 63, 65],
   'Story-Driven': [1, 7, 15, 21, 23, 33, 34, 39, 40, 41, 42, 43, 44, 45, 55, 58, 69, 70],
   'Clay & Stop-Motion': [60, 61, 62, 66, 67, 68],
-  '2D Videos': [11, 30, 71],
-  'Cinematic Premium': [50, 51, 52, 53, 54],
+  '2D Videos': [11, 30, 71, 89, 90],
+  'Cinematic Premium': [50, 51, 52, 53, 54, 75, 76, 79],
+  'GTA Ads': [87],
+  'Papercut Ads': [85],
+  'Miniature Ads': [83, 84],
+  'Zack D Ads': [91],
 }
 
 const UGC_SUBS: Record<string, number[]> = {
   Testimonials: [3, 8, 10, 12, 15, 28, 29, 30],
-  'Expert / Doctor': [16, 17, 18, 21, 23],
-  'Skits & TV Formats': [2, 7, 19, 20, 22, 24, 25, 26, 27],
-  'Lifestyle & Product': [1, 4, 5, 6, 9, 11, 13, 14],
+  'Expert / Doctor': [16, 17, 18, 21, 23, 33],
+  'Skits & TV Formats': [2, 7, 19, 20, 22, 24, 25, 26, 27, 31, 32, 34, 35, 36, 37],
+  'Lifestyle & Product': [1, 4, 5, 6, 9, 11, 13, 14, 38, 39, 40],
 }
+
+// Animated numbers re-filed into other sections (72, 73, 74, 88 -> ugc/34-37; 77, 78 -> ugc/38-39; 81, 82 -> product/05-06 on the CDN);
+// the animated/ copies are not shown.
+const MOVED_ELSEWHERE = [72, 73, 74, 77, 78, 81, 82, 88]
 
 // ── helpers ───────────────────────────────────────────────────────────────────
 function assignSubs(items: VideoItem[], groups: Record<string, number[]>): VideoItem[] {
   const subByNumber = new Map<number, string>()
   for (const [sub, numbers] of Object.entries(groups)) numbers.forEach((n) => subByNumber.set(n, sub))
-  return items.map((v, i) => ({ ...v, sub: subByNumber.get(i + 1) }))
+  return items.map((v) => ({ ...v, sub: subByNumber.get(Number(v.label)) }))
 }
 
-function makeVideos(category: Category, folder: string, count: number): VideoItem[] {
-  return Array.from({ length: count }, (_, i) => {
-    const n = String(i + 1).padStart(2, '0')
+// `skip` lists numbers that exist on the CDN under this folder but are shown in another section.
+function makeVideos(category: Category, folder: string, count: number, skip: number[] = []): VideoItem[] {
+  return Array.from({ length: count }, (_, i) => i + 1).filter((num) => !skip.includes(num)).map((num) => {
+    const n = String(num).padStart(2, '0')
     return {
       id: `${category}-${n}`,
       category,
@@ -68,7 +77,7 @@ export const sections: Section[] = [
     title: 'AI Animated Ads',
     description: 'Кинематографични, динамични реклами — създадени изцяло с AI.',
     gridLayout: '5-col',
-    items: assignSubs(makeVideos('animated', 'animated', 71).map((v) => {
+    items: assignSubs(makeVideos('animated', 'animated', 91, MOVED_ELSEWHERE).map((v) => {
       if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
       if (v.id === 'animated-31') return { ...v, poster: `${CDN}/animated/31-poster.webp` }
       if (v.id === 'animated-32') return { ...v, poster: `${CDN}/animated/32-poster.webp` }
@@ -85,7 +94,7 @@ export const sections: Section[] = [
     title: 'AI UGC Ads',
     description: 'Реклами с усещане за истинско съдържание от потребители — без заснемане.',
     gridLayout: '4-col',
-    items: assignSubs(makeVideos('ugc', 'ugc', 30), UGC_SUBS),
+    items: assignSubs(makeVideos('ugc', 'ugc', 40), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
   },
   {
@@ -94,6 +103,6 @@ export const sections: Section[] = [
     title: 'AI Product Ads',
     description: 'Висококачествени продуктови реклами, създадени от една-единствена снимка.',
     gridLayout: '2-col',
-    items: makeVideos('product', 'product', 4),
+    items: makeVideos('product', 'product', 6),
   },
 ]

@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { ADS, CONCEPTS, type AdConcept } from '../data/staticAds'
 import { useLanguage } from '../context/LanguageContext'
+import { track } from '../lib/track'
 
 export function StaticAdsSection() {
   const [activeConcept, setActiveConcept] = useState<AdConcept>(CONCEPTS[0])
@@ -190,7 +191,10 @@ export function StaticAdsSection() {
                 {images.map(({ src, idx }) => (
                   <div
                     key={src}
-                    onClick={() => setLightboxIndex(idx)}
+                    onClick={() => {
+                      track('ViewContent', { content_type: 'image', content_name: allImages[idx].brand, content_category: activeConcept })
+                      setLightboxIndex(idx)
+                    }}
                     title={s.hoverHint}
                     style={{
                       borderRadius: 4,

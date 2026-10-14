@@ -6,6 +6,7 @@ import { VideoCard } from './VideoCard'
 import { cardContainerVariants, cardItemVariants } from '../lib/animations'
 import { useParallax } from '../hooks/useParallax'
 import { useLanguage } from '../context/LanguageContext'
+import { trackCustom } from '../lib/track'
 
 interface PortfolioSectionProps {
   section: Section
@@ -141,7 +142,10 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
                     key={chip.label}
                     type="button"
                     aria-pressed={active}
-                    onClick={() => setActiveSub(chip.key)}
+                    onClick={() => {
+                      trackCustom('FilterStyle', { section: section.id, style: chip.label })
+                      setActiveSub(chip.key)
+                    }}
                     className={`video-filter-chip${active ? ' is-active' : ''}`}
                   >
                     {chip.poster && <img src={chip.poster} alt="" loading="lazy" className="video-filter-thumb" />}

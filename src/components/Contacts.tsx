@@ -1,5 +1,6 @@
 import type React from 'react'
 import { useLanguage } from '../context/LanguageContext'
+import { track } from '../lib/track'
 
 // ── contact data (not language-specific) ───────────────────────────────────────
 const CONTACTS = {
@@ -38,14 +39,16 @@ interface ContactButtonProps {
   ariaLabel: string
   color: string
   external?: boolean
+  onTrack: () => void
   children: React.ReactNode
 }
 
-function ContactButton({ href, label, ariaLabel, color, external, children }: ContactButtonProps) {
+function ContactButton({ href, label, ariaLabel, color, external, onTrack, children }: ContactButtonProps) {
   return (
     <a
       href={href}
       aria-label={ariaLabel}
+      onClick={onTrack}
       {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
       className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[12px] font-bold uppercase tracking-wide text-white"
       style={{
@@ -79,6 +82,8 @@ interface PersonProps {
 }
 
 function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProps) {
+  const lead = (channel: 'viber' | 'facebook') => () =>
+    track('Lead', { content_name: `${channel}_${name.toLowerCase()}`, placement: 'contacts', channel })
   return (
     <div className="flex flex-col items-center gap-4">
       <span
@@ -93,6 +98,7 @@ function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProp
           label={viberLabel}
           ariaLabel={`${viberLabel} — ${name}`}
           color={VIBER_PURPLE}
+          onTrack={lead('viber')}
         >
           <ViberIcon />
         </ContactButton>
@@ -102,6 +108,7 @@ function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProp
           ariaLabel={`${facebookLabel} — ${name}`}
           color={FB_BLUE}
           external
+          onTrack={lead('facebook')}
         >
           <FacebookIcon />
         </ContactButton>

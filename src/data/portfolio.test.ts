@@ -14,16 +14,16 @@ describe('portfolio data', () => {
     expect(sections).toHaveLength(3)
   })
 
-  it('animated-ads section has 71 items', () => {
-    expect(byId('animated-ads').items).toHaveLength(71)
+  it('animated-ads section has 83 items', () => {
+    expect(byId('animated-ads').items).toHaveLength(83)
   })
 
-  it('ugc-ads section has 30 items', () => {
-    expect(byId('ugc-ads').items).toHaveLength(30)
+  it('ugc-ads section has 40 items', () => {
+    expect(byId('ugc-ads').items).toHaveLength(40)
   })
 
-  it('product-ads section has 4 items', () => {
-    expect(byId('product-ads').items).toHaveLength(4)
+  it('product-ads section has 6 items', () => {
+    expect(byId('product-ads').items).toHaveLength(6)
   })
 
   it('every item has a non-empty videoUrl', () => {
@@ -46,21 +46,25 @@ describe('video subcategories', () => {
 
   it('animated subcategory counts match the review', () => {
     expect(countBySub('animated-ads')).toEqual({
-      'Talking Products': 20,
+      'Talking Products': 22,
       'Ingredients & Body': 19,
       'Story-Driven': 18,
       'Clay & Stop-Motion': 6,
-      '2D Videos': 3,
-      'Cinematic Premium': 5,
+      '2D Videos': 5,
+      'Cinematic Premium': 8,
+      'GTA Ads': 1,
+      'Papercut Ads': 1,
+      'Miniature Ads': 2,
+      'Zack D Ads': 1,
     })
   })
 
   it('ugc subcategory counts match the review', () => {
     expect(countBySub('ugc-ads')).toEqual({
       Testimonials: 8,
-      'Expert / Doctor': 5,
-      'Skits & TV Formats': 9,
-      'Lifestyle & Product': 8,
+      'Expert / Doctor': 6,
+      'Skits & TV Formats': 15,
+      'Lifestyle & Product': 11,
     })
   })
 
@@ -69,6 +73,8 @@ describe('video subcategories', () => {
     expect(sub('animated-ads', '50')).toBe('Cinematic Premium')
     expect(sub('animated-ads', '30')).toBe('2D Videos')
     expect(sub('animated-ads', '63')).toBe('Ingredients & Body')
+    expect(sub('animated-ads', '87')).toBe('GTA Ads')
+    expect(sub('animated-ads', '91')).toBe('Zack D Ads')
     expect(sub('ugc-ads', '25')).toBe('Skits & TV Formats')
   })
 

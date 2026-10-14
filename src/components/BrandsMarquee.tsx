@@ -25,6 +25,9 @@ const BRANDS = [
   { src: '/logos/pampersi.webp',   alt: 'Памперси.бг',   h: 42 },
   { src: '/logos/gifto.webp',      alt: 'gifto',         h: 34 },
   { src: '/logos/brainchai.webp',  alt: 'BrainChai',     h: 22 },
+  { src: '/logos/maitreya-fields.webp', alt: 'Maitreya Fields', h: 32 },
+  { src: '/logos/body-fuel.webp',  alt: 'Body Fuel',     h: 34 },
+  { src: '/logos/yummy.webp',      alt: 'Yummy',         h: 48 },
 ]
 
 export function BrandsMarquee() {
