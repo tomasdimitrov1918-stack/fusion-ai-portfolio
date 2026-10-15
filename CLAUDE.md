@@ -188,6 +188,10 @@ On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSe
 - This project has no email env vars of its own (3 empty RESEND_API_KEY/SENDER_EMAIL/LEAD_INBOX entries may exist — unused).
 - `npx vite` does not apply the rewrite — locally the form lands in its error state; test on a deploy.
 - Pixel `Lead` (placement `form`) fires only after a successful submit.
+- After submit the form is replaced by a thank-you screen: name, "we'll call you shortly on {phone}", the 48 h promise and a
+  big purple "Пиши ни директно във Viber" button (pixel `Contact` placement `form_success`).
+- Instant lead alerts go to Telegram from the landing's function (env `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` on the
+  **fusion-creative-landing** Vercel project).
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).

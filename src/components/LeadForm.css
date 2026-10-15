@@ -180,11 +180,6 @@
   cursor: default;
 }
 
-.lf__submit.is-success {
-  background: var(--lf-success);
-  box-shadow: none;
-}
-
 .lf__footnote {
   color: var(--lf-dim);
   font-size: 0.8125rem;
@@ -218,6 +213,64 @@
 
 .lf__status.is-error {
   color: #FF6B76;
+}
+
+/* After-submit screen */
+.lf__done {
+  justify-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+.lf__done-icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(29, 158, 117, 0.15);
+  color: var(--lf-success);
+}
+
+.lf__done-icon svg {
+  width: 28px;
+  height: 28px;
+}
+
+.lf__done-title {
+  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.lf__done-text {
+  max-width: 44ch;
+  color: var(--lf-muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.lf__done-viber {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  min-height: 56px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  background: #7360F2; /* Viber purple */
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 8px 28px rgba(115, 96, 242, 0.35);
+}
+
+@media (max-width: 480px) {
+  .lf__done-viber {
+    width: 100%;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

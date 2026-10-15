@@ -89,7 +89,6 @@ export function LeadForm() {
     id: `lf-${field}`,
     name: field,
     value: values[field],
-    disabled: status === 'success',
     className: `lf__input${invalid[field] ? ' is-invalid' : ''}`,
     'aria-invalid': invalid[field] ? true : false,
     'aria-describedby': invalid[field] ? `lf-${field}-error` : undefined,
@@ -141,7 +140,7 @@ export function LeadForm() {
     }
   }
 
-  const submitLabel = status === 'sending' ? f.sending : status === 'success' ? f.success : f.submit
+  const submitLabel = status === 'sending' ? f.sending : f.submit
 
   return (
     <section ref={sectionRef} className="lf" id="lead-form" aria-labelledby="lead-form-heading">
@@ -168,76 +167,104 @@ export function LeadForm() {
           <p className="lf__sub">{f.sub}</p>
         </motion.div>
 
-        <motion.form
-          className="lf__form"
-          noValidate
-          onSubmit={onSubmit}
-          onFocus={onFormFocus}
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.15 }}
-          transition={{ duration: REVEAL_DURATION_S, ease: EASE_OUT }}
-        >
-          <div className="lf__field">
-            <label className="lf__label" htmlFor="lf-store_url">
-              {f.storeLabel} <span className="lf__required" aria-hidden="true">*</span>
-            </label>
-            <input {...inputProps('store_url')} type="url" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} required />
-            <p className="lf__hint">{f.storeHint}</p>
-            {errorText('store_url')}
-          </div>
-
-          <div className="lf__row">
-            <div className="lf__field">
-              <label className="lf__label" htmlFor="lf-name">
-                {f.nameLabel} <span className="lf__required" aria-hidden="true">*</span>
-              </label>
-              <input {...inputProps('name')} type="text" autoComplete="name" placeholder={f.namePlaceholder} required />
-              {errorText('name')}
-            </div>
-            <div className="lf__field">
-              <label className="lf__label" htmlFor="lf-email">
-                {f.emailLabel} <span className="lf__required" aria-hidden="true">*</span>
-              </label>
-              <input {...inputProps('email')} type="email" inputMode="email" autoComplete="email" placeholder={f.emailPlaceholder} required />
-              {errorText('email')}
-            </div>
-          </div>
-
-          <div className="lf__field">
-            <label className="lf__label" htmlFor="lf-phone">
-              {f.phoneLabel} <span className="lf__required" aria-hidden="true">*</span>
-            </label>
-            <input {...inputProps('phone')} type="tel" inputMode="tel" autoComplete="tel" placeholder={f.phonePlaceholder} required />
-            <p className="lf__hint">{f.phoneHint}</p>
-            {errorText('phone')}
-          </div>
-
-          <button
-            className={`lf__submit${status === 'success' ? ' is-success' : ''}`}
-            type="submit"
-            disabled={status === 'sending' || status === 'success'}
+        {status === 'success' ? (
+          // After-submit screen: confirm the promise and offer the fastest next step
+          <motion.div
+            className="lf__form lf__done"
+            role="status"
+            aria-live="polite"
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: REVEAL_DURATION_S, ease: EASE_OUT }}
           >
-            {submitLabel}
-          </button>
-
-          <p className="lf__footnote">{f.footnote}</p>
-
-          {/* For people who'd rather message than fill in a form */}
-          <p className="lf__viber">
-            {f.viberPrompt}{' '}
+            <span className="lf__done-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 12.5 9.5 18 20 6.5" />
+              </svg>
+            </span>
+            <h3 className="lf__done-title">{f.doneTitle.replace('{name}', values.name.trim())}</h3>
+            <p className="lf__done-text">{f.doneCall.replace('{phone}', values.phone.trim().replace(/ /g, '\u00a0'))}</p>
+            <p className="lf__done-text">{f.successStatus}</p>
             <a
+              className="lf__done-viber"
               href={VIBER_TOMAS}
-              onClick={() => track('Contact', { content_name: 'viber_tomas', placement: 'form', channel: 'viber' })}
+              onClick={() => track('Contact', { content_name: 'viber_tomas', placement: 'form_success', channel: 'viber' })}
             >
-              {f.viberLink}
+              {f.doneViber}
             </a>
-          </p>
+          </motion.div>
+        ) : (
+          <motion.form
+            className="lf__form"
+            noValidate
+            onSubmit={onSubmit}
+            onFocus={onFormFocus}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.15 }}
+            transition={{ duration: REVEAL_DURATION_S, ease: EASE_OUT }}
+          >
+            <div className="lf__field">
+              <label className="lf__label" htmlFor="lf-store_url">
+                {f.storeLabel} <span className="lf__required" aria-hidden="true">*</span>
+              </label>
+              <input {...inputProps('store_url')} type="url" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} required />
+              <p className="lf__hint">{f.storeHint}</p>
+              {errorText('store_url')}
+            </div>
 
-          <p className={`lf__status${status === 'error' ? ' is-error' : ''}`} role="status" aria-live="polite">
-            {status === 'success' ? f.successStatus : status === 'error' ? f.errorStatus : ''}
-          </p>
-        </motion.form>
+            <div className="lf__row">
+              <div className="lf__field">
+                <label className="lf__label" htmlFor="lf-name">
+                  {f.nameLabel} <span className="lf__required" aria-hidden="true">*</span>
+                </label>
+                <input {...inputProps('name')} type="text" autoComplete="name" placeholder={f.namePlaceholder} required />
+                {errorText('name')}
+              </div>
+              <div className="lf__field">
+                <label className="lf__label" htmlFor="lf-email">
+                  {f.emailLabel} <span className="lf__required" aria-hidden="true">*</span>
+                </label>
+                <input {...inputProps('email')} type="email" inputMode="email" autoComplete="email" placeholder={f.emailPlaceholder} required />
+                {errorText('email')}
+              </div>
+            </div>
+
+            <div className="lf__field">
+              <label className="lf__label" htmlFor="lf-phone">
+                {f.phoneLabel} <span className="lf__required" aria-hidden="true">*</span>
+              </label>
+              <input {...inputProps('phone')} type="tel" inputMode="tel" autoComplete="tel" placeholder={f.phonePlaceholder} required />
+              <p className="lf__hint">{f.phoneHint}</p>
+              {errorText('phone')}
+            </div>
+
+            <button
+              className="lf__submit"
+              type="submit"
+              disabled={status === 'sending'}
+            >
+              {submitLabel}
+            </button>
+
+            <p className="lf__footnote">{f.footnote}</p>
+
+            {/* For people who'd rather message than fill in a form */}
+            <p className="lf__viber">
+              {f.viberPrompt}{' '}
+              <a
+                href={VIBER_TOMAS}
+                onClick={() => track('Contact', { content_name: 'viber_tomas', placement: 'form', channel: 'viber' })}
+              >
+                {f.viberLink}
+              </a>
+            </p>
+
+            <p className="lf__status is-error" role="status" aria-live="polite">
+              {status === 'error' ? f.errorStatus : ''}
+            </p>
+          </motion.form>
+        )}
       </div>
     </section>
   )
