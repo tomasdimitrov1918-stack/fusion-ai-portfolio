@@ -14,9 +14,21 @@ declare global {
 //   Lead        — ONLY a successful lead-form submit (real conversion; keep it truthful)
 //   Contact     — clicks that start a conversation: contact-page buttons, Viber, Facebook
 //   ViewContent — opening a video or static ad in the lightbox
-export function track(event: 'Lead' | 'Contact' | 'ViewContent', params?: FbqParams) {
+// `eventId` pairs a browser event with the same event sent server-side (Conversions API,
+// see the landing's api/lead.js) so Meta counts it once.
+export function track(event: 'Lead' | 'Contact' | 'ViewContent', params?: FbqParams, eventId?: string) {
   if (typeof window === 'undefined' || typeof window.fbq !== 'function') return
-  window.fbq('track', event, { ...params, hero_variant: heroVariant })
+  window.fbq('track', event, { ...params, hero_variant: heroVariant }, ...(eventId ? [{ eventID: eventId }] : []))
+}
+
+// Meta browser IDs for the Conversions API: _fbp cookie, and _fbc cookie or one built from ?fbclid
+export function metaBrowserIds(): { fbp?: string; fbc?: string } {
+  const cookie = (name: string) => document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`))?.[1]
+  const fbclid = new URLSearchParams(window.location.search).get('fbclid')
+  return {
+    fbp: cookie('_fbp'),
+    fbc: cookie('_fbc') ?? (fbclid ? `fb.1.${Date.now()}.${fbclid}` : undefined),
+  }
 }
 
 // Custom events show up under "Custom conversions" / custom events in Events Manager.

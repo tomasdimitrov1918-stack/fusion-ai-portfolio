@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
-import { track, trackCustom } from '../lib/track'
+import { metaBrowserIds, track, trackCustom } from '../lib/track'
 import { heroVariant } from '../lib/variant'
 import './LeadForm.css'
 
@@ -120,6 +120,8 @@ export function LeadForm() {
     }
 
     setStatus('sending')
+    // Shared by the browser pixel Lead and the server-side Conversions API Lead → deduped by Meta
+    const eventId = `lead-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`
     try {
       const response = await fetch('/api/lead', {
         method: 'POST',
@@ -128,11 +130,16 @@ export function LeadForm() {
           ...Object.fromEntries(REQUIRED.map((field) => [field, values[field].trim()])),
           hero_variant: String(heroVariant),
           source: 'portfolio',
+          event_id: eventId,
+          ...metaBrowserIds(),
+          page_url: window.location.href,
+          // ?meta_test=TEST12345 routes the server event to Events Manager → Test Events (not counted)
+          test_event_code: new URLSearchParams(window.location.search).get('meta_test') ?? undefined,
         }),
       })
       if (!response.ok) throw new Error(`Request failed: ${response.status}`)
       // Meta Pixel: only on a real successful submit, so ad optimisation data stays truthful
-      track('Lead', { content_name: 'lead_form', placement: 'form' })
+      track('Lead', { content_name: 'lead_form', placement: 'form' }, eventId)
       setStatus('success')
     } catch (err) {
       console.error('Lead submit failed:', err)

@@ -190,6 +190,9 @@ On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSe
 - Pixel `Lead` (placement `form`) fires only after a successful submit.
 - After submit the form is replaced by a thank-you screen: name, "we'll call you shortly on {phone}", the 48 h promise and a
   big purple "Пиши ни директно във Viber" button (pixel `Contact` placement `form_success`).
+- **Conversions API:** the form sends `event_id` (+ `_fbp`/`_fbc`, page URL) and fires the browser `Lead` with the same
+  `eventID`; the landing's function sends the server-side `Lead` (token `META_CAPI_TOKEN` on fusion-creative-landing).
+  Test with `?meta_test=TEST12345` (code from Events Manager → Test Events).
 - Instant lead alerts go to Telegram from the landing's function (env `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` on the
   **fusion-creative-landing** Vercel project).
 
