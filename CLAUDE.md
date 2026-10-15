@@ -58,7 +58,12 @@ src/
     Background.tsx         — NoiseOverlay (SVG feTurbulence) + FloatingDots (fixed, zIndex:1, site-wide)
     Hero.tsx               — Full-screen cinematic hero, letter-by-letter blur reveal
     Nav.tsx                — Fixed nav: logo + section links (anchors, href="#id") + BG/EN toggle; below md a hamburger opens a compact dropdown menu (rendered as a sibling of the nav so `fixed` maps to the viewport, not the transformed nav)
-    MobileCta.tsx          — Sticky mobile-only "Get a quote" anchor → #contact; auto-hides via IntersectionObserver once the contact section is in view
+    MobileCta.tsx          — Sticky mobile-only CTA. V1: "Заяви оферта" pill → #contact. V2: hero-style button → #lead-form (see V2 section)
+    HeroV2.tsx/.css        — ?v=2 hero, port of the aiads landing hero (scoped .hv2)
+    WhyUsV2.tsx/.css       — ?v=2 "Защо брандовете…" 3 value cards + CTA to the form (scoped .wv2)
+    AboutUs.tsx/.css       — "Кои сме ние" founders section, both versions (scoped .ab)
+    OfferV2.tsx/.css       — ?v=2 "Месечен план" card with price hint (scoped .of)
+    LeadForm.tsx/.css      — Lead form + thank-you screen, both versions (scoped .lf), posts to /api/lead
     ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
     BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
     PortfolioSection.tsx   — Section wrapper with parallax ghost text + style filter chips + video grid
@@ -71,7 +76,7 @@ src/
     Contacts.tsx           — Centered Viber + Facebook buttons for Tomas & Monika (viber:// deep link + FB profile)
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections, 71 animated + 30 ugc + 4 product videos, VideoItem/Section types
+    portfolio.ts           — 3 sections (83 animated shown of CDN 1-91, 40 ugc, 6 product), featured picks, VideoItem/Section types
     staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
@@ -79,6 +84,8 @@ src/
   lib/
     animations.ts          — All named constants + Framer Motion variants
     i18n.ts                — All UI strings in BG and EN (see Internationalisation below)
+    variant.ts             — ?v=2 detection (heroVariant) + scrollToSection / scrollToLeadForm
+    track.ts               — Meta Pixel helpers (track / trackCustom / metaBrowserIds), see Meta Pixel events
 public/
   favicon.jpg              — Fusion F logo (red on black)
   logo.webp                — Fusion Creative logo (transparent bg, 500x200)
@@ -111,47 +118,50 @@ public/
                              animated/ + ugc/ are sorted into STYLE SUBFOLDERS (e.g. animated/Talking Products/04.mp4,
                              ugc/Expert - Doctor/16.mp4) by `node scripts/organize-videos.mjs` — Bunny stays flat.
                              product/ stays flat. The NN numbering below is unchanged.
-    animated/01-71.mp4     — 71 AI Animated Ads (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
+    animated/01-91.mp4     — (list below is the original 71; the CDN now has 1-91, 8 re-filed elsewhere, see MOVED_ELSEWHERE) (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
     animated/13-poster.webp — Custom posters (first frame was black)
     animated/31-poster.webp
     animated/32-poster.webp
     animated/33-poster.webp
     animated/34-poster.webp
     animated/35-poster.webp
-    ugc/01-30.mp4          — 30 AI UGC Ads (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
+    ugc/01-40.mp4          — (original 30 listed; now 1-40 on the CDN) (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
+vercel.json                — rewrites /api/lead → https://aiads.fusioncreative.net/api/lead (landing project's function)
 scripts/
   organize-videos.mjs      — sorts local public/videos/{animated,ugc} into style subfolders (see Video subcategories)
 ```
 
 ## Page layout order (App.tsx)
-1. `<Hero />` — full-screen hero
-2. `<BrandsMarquee />` — client logos (V2: `<WhyUsV2 />` follows)
-3. `<ToolsMarquee />` — AI tools chips, right above AI Animated Ads
-4. `{sections.map(...)}` — 3× `<PortfolioSection />` (animated, ugc, product)
-5. `<ProcessSection />` — how we work, 6 steps
-6. `<MidCtaSection />` — compact CTA bar
-7. `<StaticAdsSection />` — static ad creatives
-7b. `<AboutUs />` — founders section (both versions); `<OfferV2 />` follows on ?v=2 only
-8. `<CtaSection />` — full CTA section
-8b. `<LeadForm />` — lead form (both versions), right above the footer
-9. `<Footer />`
+| # | V1 (`/`) | V2 (`?v=2`) |
+|---|----------|-------------|
+| 1 | `<Hero />` | `<HeroV2 />` |
+| 2 | `<BrandsMarquee />` | `<BrandsMarquee />` |
+| 3 | | `<WhyUsV2 />` (cards + CTA → form) |
+| 4 | `<ToolsMarquee />` | `<ToolsMarquee />` |
+| 5 | 3× `<PortfolioSection />` (animated, ugc, product) | same |
+| 6 | `<ProcessSection />`, `<MidCtaSection />` | same (MidCta button → form) |
+| 7 | `<StaticAdsSection />` | same |
+| 8 | `<AboutUs />` | `<AboutUs />`, then `<OfferV2 />` |
+| 9 | `<CtaSection />` ("Реален растеж" + contacts) | `<LeadForm />` |
+| 10 | `<LeadForm />` | `<CtaSection contactsOnly />` (Viber/FB only) |
+| 11 | `<Footer />` | `<Footer blend />` (page background) |
 
 ## Hero A/B versions (?v=2)
 - `portfolio.fusioncreative.net` → original `Hero.tsx`; `?v=2` → `HeroV2.tsx` (port of the aiads landing hero, styles in `HeroV2.css` scoped under `.hv2`, Montserrat loaded in index.html).
 - `src/lib/variant.ts` reads `?v`; `App.tsx` picks the hero; the lang toggle keeps `v=2`. Copy lives in `tr.heroV2`.
 - Also v2-only: `WhyUsV2.tsx` (+ `.css`, scoped `.wv2`, copy in `tr.whyV2`), the landing's "why brands switch" 3 value cards, rendered right under `<BrandsMarquee />`.
-- Also v2-only: `OfferV2.tsx` (+ `.css`, scoped `.of`, copy in `tr.offerV2`), the landing's monthly-plan offer card (no scroll-pin), right under `<AboutUs />`. CTA opens the contact URL + `Lead` (placement `offer`).
+- Also v2-only: `OfferV2.tsx` (+ `.css`, scoped `.of`, copy in `tr.offerV2`), the landing's monthly-plan offer card (no scroll-pin), right under `<AboutUs />`. Its CTA scrolls to the form (`GoToForm`).
 - Both versions: `AboutUs.tsx` (+ `.css`, scoped `.ab`, copy in `tr.about`), the landing's "Кои сме ние" founders section, after `<StaticAdsSection />`. Its middle stat is 50+ brands (the landing has a `[ X ]+` placeholder there).
 - `src/lib/track.ts` adds `hero_variant` (1|2) to every Meta Pixel event, so leads can be compared per version.
 
 ## Portfolio sections
 | # | ID | Title | Videos | Grid |
 |---|-----|-------|---------|------|
-| 01 | animated-ads | AI Animated Ads | 71 | 5-col |
-| 02 | ugc-ads | AI UGC Ads | 30 | 4-col |
-| 03 | product-ads | AI Product Ads | 4 | 2-col |
+| 01 | animated-ads | AI Animated Ads | 83 (12 best picks shown first) | 5-col |
+| 02 | ugc-ads | AI UGC Ads | 40 (12 best picks shown first) | 4-col |
+| 03 | product-ads | AI Product Ads | 6 | 2-col |
 
 ## Video subcategories (style filter chips)
 Animated and UGC sections have filter chips ("All" + one per style); Product has none (too few videos).
@@ -429,17 +439,25 @@ redirect (`fusioncreative.net/kontakti`) — on-page Viber/Facebook contacts wer
 - Compressed oversized Juun static-ad images (2048px → 1080px, ~3.5 MB → ~0.9 MB).
 - All marquee logos normalised to white/monochrome (see Higgsfield recipe).
 
-### Still open (from audit, highest impact first)
-- **On-page contact form / modal** (biggest CRO win) — replace/augment the external redirect; add WhatsApp + Cal.com.
-- **FAQ section** — lead with "Do Meta/TikTok allow AI ads?"; also timeline, revisions, "only have a logo", pricing.
-- **Testimonials with metrics** + case studies (no performance proof anywhere yet).
-- **Quantify hero stats** ("Real growth" → e.g. "avg 3.2× ROAS"); surface a pricing teaser.
+### Done (Oct 2026 session)
+On-page lead form (+ phone, Viber link, thank-you screen), Conversions API with dedup (verified in Test Events), V2 funnel
+(landing hero/sections, CTAs → form), best-picks video view, static-ads preview, price hint, one sample-ad promise
+everywhere, no dashes, "за бизнеса ти" instead of DTC.
+
+### Still open (highest impact first)
+- **`?niche=` per-ad-set page matching** — see the PENDING block at the top of this file (owner wants a reminder each session).
+- **Real proof**: 2-3 client quotes / results near the form (owner to supply; never invent).
+- **Sample video next to the form** ("Ето как изглежда безплатната примерна реклама").
+- **Two-step form** (name + phone first, then site/email) and a lighter offer for not-ready visitors ("5 идеи за реклами").
+- **FAQ** near the form ("Позволява ли Meta AI реклами?", timing, revisions, "имам само лого", price).
+- **UTM links** in Meta ads (`?v=2&utm_source=meta&utm_campaign=…`); retarget ReachedForm/FormStart non-submitters.
+- **Instant lead alerts**: Telegram code exists in the landing function (env-gated, unused). Owner declined Telegram and
+  Pushover; Viber bots cost €100/month. Current plan: Gmail notifications on office@.
 - **SEO meta gaps in `index.html`**: `lang="en"` hardcoded (site defaults BG), no canonical, no hreflang for `?lang=en`,
   no robots.txt/sitemap, no Organization JSON-LD.
 - **`prefers-reduced-motion`** only covers CSS marquee/dots — not Framer Motion reveals, card tilt, or Lenis.
-- **3 ESLint errors** (non-blocking; builds are clean): setState-in-effect `StaticAdsSection.tsx:34`,
-  unused `_e` `VideoCard.tsx:35`, react-refresh `LanguageContext.tsx:47`.
-- Poster images for any remaining videos that show black on load.
+- **ESLint errors** (non-blocking; builds are clean): setState-in-effect in StaticAdsSection, unused `_e` in VideoCard,
+  react-refresh in LanguageContext.
 
 ## Accessibility / SEO notes
 - Hero headline is the single page `<h1>` ("AI Creative Specialists"); split-letter visual is `aria-hidden` with an `sr-only` spaced title carrying the accessible name/SEO text. Heading order: h1 → h2 (sections) → h3 (process steps), no skipped levels.
