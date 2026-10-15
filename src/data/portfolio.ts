@@ -99,7 +99,7 @@ export const sections: Section[] = [
     gridLayout: '4-col',
     items: assignSubs(makeVideos('ugc', 'ugc', 40), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
-    featured: [2, 18, 22, 21, 30, 32, 31, 33, 37, 25],
+    featured: [2, 18, 22, 21, 30, 32, 31, 33, 37, 25, 27, 28],
   },
   {
     id: 'product-ads',

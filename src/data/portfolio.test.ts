@@ -36,8 +36,8 @@ describe('portfolio data', () => {
 })
 
 describe('featured (best picks) videos', () => {
-  it('animated has 12 and ugc has 10 featured picks, all existing videos, no duplicates', () => {
-    const expected: Record<string, number> = { 'animated-ads': 12, 'ugc-ads': 10 }
+  it('animated and ugc each have 12 featured picks, all existing videos, no duplicates', () => {
+    const expected: Record<string, number> = { 'animated-ads': 12, 'ugc-ads': 12 }
     for (const [id, count] of Object.entries(expected)) {
       const s = byId(id)
       expect(s.featured).toHaveLength(count)

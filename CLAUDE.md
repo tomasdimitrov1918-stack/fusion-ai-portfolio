@@ -163,7 +163,7 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
   per style, read straight from the maps. Re-run after any re-assignment — it finds files wherever they are and removes emptied folders.
 - **Adding a video:** after bumping the count, add its number to one sub list — `src/data/portfolio.test.ts` fails if any
   animated/ugc video has no sub, and asserts per-sub counts (update those too).
-- **Best picks (default view):** `Section.featured` (video numbers, in display order) — animated 12, ugc 10, picked by the owner
+- **Best picks (default view):** `Section.featured` (video numbers, in display order) — animated 12, ugc 12, picked by the owner
   (2026-10-15). The first chip "Най-добрите" is active by default; "Всички" and a "Виж всички N видеа" button under the grid show
   the full library. `portfolio.test.ts` checks the picks exist. Static ads show 8 per concept + "Покажи всички" (`PREVIEW_COUNT`).
 - **Skip to UGC:** the animated-ads chip grid ends with a red "Прескочи към UGC" chip (`tr.videoFilter.skipToUgc`, both versions)

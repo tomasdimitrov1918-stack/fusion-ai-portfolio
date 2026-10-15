@@ -19,7 +19,7 @@ export const t = {
     },
     // Hero version 2 (?v=2), ported from the aiads landing page
     heroV2: {
-      eyebrow: 'AI видео реклами за DTC брандове',
+      eyebrow: 'AI видео реклами за бизнеса ти',
       title: 'Видео реклами, които клиентите ти',
       titleAccent: 'не подминават',
       sub: 'Създаваме AI видео реклами, които спират скрола и продават. Получаваш ги за дни, не за седмици, на част от цената на продуцентска агенция.',
@@ -71,7 +71,7 @@ export const t = {
       checklist: [
         'Фиксиран брой конвертиращи видео реклами всеки месец. Постоянен поток от свежи креативи за тестване.',
         'Изцяло done-for-you продукция: сценарий, AI продукция, монтаж и брандирани субтитри.',
-        'Създадени специално за DTC e-commerce: продукт, оферта и призив за покупка във всяко видео.',
+        'Създадени специално за бизнеса ти: продукт, оферта и призив за покупка във всяко видео.',
         'Ревизии, включени в плана. Доуточняваме всяко видео, докато не заработи за твоя бранд.',
       ],
       sideTitle: 'Виж го първо върху твоя\u00a0продукт',
@@ -205,7 +205,7 @@ export const t = {
     },
     // Hero version 2 (?v=2), ported from the aiads landing page
     heroV2: {
-      eyebrow: 'AI video ads for DTC brands',
+      eyebrow: 'AI video ads for your business',
       title: 'Video ads your customers',
       titleAccent: "don't scroll past",
       sub: "We create AI video ads that stop the scroll and sell. You get them in days, not weeks, at a fraction of a production agency's price.",
@@ -257,7 +257,7 @@ export const t = {
       checklist: [
         'A fixed number of converting video ads every month. A steady stream of fresh creatives to test.',
         'Fully done-for-you production: script, AI production, editing and branded subtitles.',
-        'Built specifically for DTC e-commerce: product, offer and a call to buy in every video.',
+        'Built specifically for your business: product, offer and a call to buy in every video.',
         'Revisions included in the plan. We refine every video until it works for your brand.',
       ],
       sideTitle: 'See it on your product\u00a0first',
