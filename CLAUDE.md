@@ -239,8 +239,9 @@ placement `problems`) + "Виж как работим" → `#process`. Copy in `
 Step list (`buildSteps`): reset → 1..8 tested (280 ms each, zoom 2.4) → 9..18 (125 ms, zoom 1.6) → 19..40 (55 ms, zoom 1)
 → losers flip back to blank, 9 winners stay lit (2.4 s) → loop. ~9 s per loop (sped up ~25% on owner request). Reveal order = square rings from the top-left corner so the
 zoomed corner fills first; `WINNER_RANKS` gives 1/4/9 winners at 8/18/40. Tier label + pill + bar colour follow the count
-(<10 / 10-19 / 20+). Runs only while the card is in view; reduced motion shows one still frame. No ROAS scores or
-third-party stats on purpose (footnote says the counts are illustrative). New static ads → re-run
+(<10 / 10-19 / 20+). Runs only while the card is in view; reduced motion shows one still frame. Tiles show an
+**illustrative** ROAS badge (owner asked, like larven): winners 2.1x to 4.4x in red, the rest 0.4x to 1.8x (`ROAS_BY_RANK`);
+the footnote must keep saying these are examples, not measured results. No third-party stats (larven's "65%"). New static ads → re-run
 `node scripts/make-test-grid-thumbs.mjs`.
 
 ## Video CDN — Bunny.net

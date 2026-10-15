@@ -10,13 +10,22 @@ import './TestWinners.css'
 // looping motion graphic on larven.ai (theirs is a 10 s mp4), using our real static ads as tiles:
 //   reset → zoomed in, ~8 ads flip in, 1 winner → zoom out, 18 ads, 4 winners →
 //   full 8×5 grid, 40 ads, 9 winners → losers flip back to blank, winners stay lit → loop.
-// No made-up ROAS scores: winners get a red frame and a check instead.
+// ROAS badges are illustrative (owner asked, like the original); the footnote says so.
 
 const COLS = 8
 const ROWS = 5
 const TOTAL = COLS * ROWS
 // Ranks (in reveal order) that turn out to be winners: 1 within the first 8, 4 within 18, 9 within 40
 const WINNER_RANKS = new Set([3, 8, 12, 15, 20, 24, 28, 32, 37])
+// Illustrative ROAS factor per reveal rank, like the original (winners 2x+, the rest below).
+// Not measured results for these creatives: the footnote under the card says so.
+const WINNER_ROAS = [2.6, 4.4, 3.5, 2.2, 2.9, 2.1, 3.1, 2.6, 2.4]
+const ROAS_BY_RANK: number[] = (() => {
+  let w = 0
+  return Array.from({ length: TOTAL }, (_, rank) =>
+    WINNER_RANKS.has(rank) ? WINNER_ROAS[w++] : Math.round((0.4 + ((rank * 37) % 15) / 10) * 10) / 10,
+  )
+})()
 // Camera zoom per tier (origin top-left); reveal order fills the visible corner first
 const TIER_SCALE = [2.4, 1.6, 1]
 
@@ -64,8 +73,10 @@ function Rolling({ value, className }: { value: number; className: string }) {
 }
 
 export function TestWinners() {
-  const { tr } = useLanguage()
+  const { lang, tr } = useLanguage()
   const t = tr.tests
+  // Bulgarian decimal comma (2,6x), English point (2.6x)
+  const roas = (v: number) => `${lang === 'bg' ? v.toFixed(1).replace('.', ',') : v.toFixed(1)}x`
   const reduceMotion = useReducedMotion()
   const cardRef = useRef<HTMLDivElement>(null)
   const inView = useInView(cardRef, { amount: 0.35 })
@@ -135,13 +146,7 @@ export function TestWinners() {
                         ) : (
                           <>
                             <img src={ad.src} alt="" loading="lazy" decoding="async" className="tw__img" />
-                            {state === 'winner' && (
-                              <span className="tw__badge">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                  <path d="M4 12.5 9.5 18 20 6.5" />
-                                </svg>
-                              </span>
-                            )}
+                            <span className={`tw__badge${state === 'winner' ? ' is-win' : ''}`}>{roas(ROAS_BY_RANK[rank])}</span>
                           </>
                         )}
                       </motion.div>
