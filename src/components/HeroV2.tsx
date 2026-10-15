@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
-import { track } from '../lib/track'
+import { track, trackCustom } from '../lib/track'
 import './HeroV2.css'
 
 // Hero version 2, shown on ?v=2 (see lib/variant.ts). A port of the hero on
@@ -93,7 +93,7 @@ export function HeroV2() {
             <button
               className="hv2__btn hv2__btn--primary"
               onClick={() => {
-                track('Lead', { content_name: 'contact_page', placement: 'hero' })
+                track('Contact', { content_name: 'contact_page', placement: 'hero' })
                 window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
               }}
             >
@@ -107,6 +107,7 @@ export function HeroV2() {
               href="#animated-ads"
               onClick={(e) => {
                 e.preventDefault()
+                trackCustom('HeroClick', { button: 'see_work' })
                 document.getElementById('animated-ads')?.scrollIntoView({ behavior: 'smooth' })
               }}
             >

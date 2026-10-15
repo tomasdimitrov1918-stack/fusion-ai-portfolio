@@ -5,6 +5,10 @@ import { LanguageProvider } from './context/LanguageContext'
 import { Nav } from './components/Nav'
 import { Hero } from './components/Hero'
 import { HeroV2 } from './components/HeroV2'
+import { WhyUsV2 } from './components/WhyUsV2'
+import { AboutUs } from './components/AboutUs'
+import { OfferV2 } from './components/OfferV2'
+import { LeadForm } from './components/LeadForm'
 import { ToolsMarquee } from './components/ToolsMarquee'
 import { PortfolioSection } from './components/PortfolioSection'
 import { BrandsMarquee } from './components/BrandsMarquee'
@@ -49,6 +53,7 @@ export default function App() {
         {heroVariant === 2 ? <HeroV2 /> : <Hero />}
         <ToolsMarquee />
         <BrandsMarquee />
+        {heroVariant === 2 && <WhyUsV2 />}
         {sections.map((section) => (
           <PortfolioSection
             key={section.id}
@@ -66,8 +71,21 @@ export default function App() {
         <ProcessSection />
         <MidCtaSection />
         <StaticAdsSection />
-        <CtaSection />
-        <Footer />
+        <AboutUs />
+        {heroVariant === 2 && <OfferV2 />}
+        {heroVariant === 2 ? (
+          <>
+            <LeadForm />
+            <CtaSection contactsOnly />
+            <Footer blend />
+          </>
+        ) : (
+          <>
+            <CtaSection />
+            <LeadForm />
+            <Footer />
+          </>
+        )}
         <MobileCta />
         <VideoLightbox item={activeVideo} onClose={() => setActiveVideo(null)} />
       </div>

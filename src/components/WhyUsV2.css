@@ -1,0 +1,134 @@
+/* "Why brands switch" value props, ?v=2 only — a port of section 4 on
+   aiads.fusioncreative.net (~/Fusion/fusion-creative-landing, css/styles.css
+   "Value props" + section head). Scoped under .wv2. */
+
+.wv2 {
+  --wv2-red: #E01020;
+  --wv2-red-soft: rgba(224, 16, 32, 0.12);
+  --wv2-muted: #9A9CA8;
+  --wv2-card: #171821;
+  --wv2-border: rgba(255, 255, 255, 0.08);
+  --wv2-border-strong: rgba(255, 255, 255, 0.16);
+  --wv2-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  z-index: 2; /* above the fixed FloatingDots */
+  padding-block: clamp(72px, 11vw, 128px);
+  font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+.wv2__container {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.wv2__head {
+  max-width: 640px;
+  margin-bottom: clamp(40px, 6vw, 64px);
+}
+
+.wv2__eyebrow {
+  display: inline-block;
+  color: var(--wv2-red);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.wv2__title {
+  overflow: hidden;
+  font-size: clamp(1.625rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.wv2__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 860px) {
+  .wv2__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Hover lift lives on the inner card: the outer motion wrapper owns the reveal transform */
+.wv2__card {
+  position: relative;
+  height: 100%;
+  overflow: hidden;
+  background: var(--wv2-card);
+  border: 1px solid var(--wv2-border);
+  border-radius: 14px;
+  padding: clamp(24px, 4vw, 36px);
+  transition: border-color 0.25s var(--wv2-ease-out), transform 0.25s var(--wv2-ease-out);
+}
+
+/* Oversized ghost numeral in the card corner */
+.wv2__card::after {
+  content: attr(data-num);
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 4.5rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: rgba(255, 255, 255, 0.07);
+  pointer-events: none;
+  transition: color 0.25s var(--wv2-ease-out);
+}
+
+.wv2__card:hover {
+  border-color: var(--wv2-border-strong);
+  transform: translateY(-4px);
+}
+
+.wv2__card:hover::after {
+  color: rgba(224, 16, 32, 0.18);
+}
+
+.wv2__icon {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 13px;
+  background: var(--wv2-red-soft);
+  color: var(--wv2-red);
+  margin-bottom: 20px;
+}
+
+.wv2__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.wv2__card-title {
+  font-size: 1.1875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.wv2__card-text {
+  margin-top: 12px;
+  color: var(--wv2-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wv2__card,
+  .wv2__card::after {
+    transition: none;
+  }
+}

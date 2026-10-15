@@ -1,0 +1,236 @@
+/* Lead form at the bottom of the page (both versions) — a port of section 7 on
+   aiads.fusioncreative.net (~/Fusion/fusion-creative-landing, css/styles.css
+   "Lead form"), with a phone field and without the budget select. Scoped under .lf. */
+
+.lf {
+  --lf-red: #E01020;
+  --lf-red-soft: rgba(224, 16, 32, 0.12);
+  --lf-muted: #9A9CA8;
+  --lf-dim: #6A6C78;
+  --lf-surface: #13141C;
+  --lf-card: #171821;
+  --lf-border: rgba(255, 255, 255, 0.08);
+  --lf-border-strong: rgba(255, 255, 255, 0.16);
+  --lf-success: #1D9E75;
+  --lf-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  z-index: 2; /* above the fixed FloatingDots */
+  padding-block: clamp(72px, 11vw, 128px);
+  font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+.lf__container {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.lf__head {
+  max-width: 640px;
+  margin: 0 auto clamp(40px, 6vw, 64px);
+  text-align: center;
+}
+
+.lf__eyebrow {
+  display: inline-block;
+  color: var(--lf-red);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.lf__title {
+  overflow: hidden;
+  font-size: clamp(1.625rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.lf__sub {
+  margin-top: 16px;
+  color: var(--lf-muted);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.lf__form {
+  background: var(--lf-card);
+  border: 1px solid var(--lf-border);
+  border-radius: 20px;
+  padding: clamp(24px, 5vw, 44px);
+  display: grid;
+  gap: 22px;
+}
+
+.lf__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+@media (max-width: 600px) {
+  .lf__row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lf__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lf__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.lf__required {
+  color: var(--lf-red);
+}
+
+.lf__input {
+  width: 100%;
+  min-height: 50px;
+  padding: 13px 16px;
+  background: var(--lf-surface);
+  border: 1px solid var(--lf-border-strong);
+  border-radius: 10px;
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem; /* ≥16px prevents iOS auto-zoom */
+  transition: border-color 0.2s var(--lf-ease-out), box-shadow 0.2s var(--lf-ease-out);
+}
+
+.lf__input::placeholder {
+  color: var(--lf-dim);
+}
+
+.lf__input:focus {
+  outline: none;
+  border-color: var(--lf-red);
+  box-shadow: 0 0 0 3px var(--lf-red-soft);
+}
+
+.lf__input.is-invalid {
+  border-color: var(--lf-red);
+}
+
+.lf__input:disabled {
+  opacity: 0.6;
+}
+
+.lf__select-wrap {
+  position: relative;
+}
+
+.lf__select {
+  appearance: none;
+  -webkit-appearance: none;
+  padding-right: 44px;
+  cursor: pointer;
+}
+
+.lf__chevron {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 18px;
+  height: 18px;
+  color: var(--lf-dim);
+  pointer-events: none;
+}
+
+.lf__hint {
+  color: var(--lf-dim);
+  font-size: 0.8125rem;
+  line-height: 1.5;
+}
+
+.lf__error {
+  color: #FF6B76;
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.lf__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 56px;
+  padding: 16px 32px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--lf-red);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1.2;
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 8px 28px rgba(224, 16, 32, 0.35);
+  transition: transform 0.2s var(--lf-ease-out), box-shadow 0.2s var(--lf-ease-out),
+              background-color 0.2s var(--lf-ease-out);
+}
+
+.lf__submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(224, 16, 32, 0.45);
+}
+
+.lf__submit:active:not(:disabled) {
+  transform: translateY(0) scale(0.98);
+}
+
+.lf__submit:focus-visible {
+  outline: 3px solid var(--lf-red);
+  outline-offset: 3px;
+}
+
+.lf__submit:disabled {
+  cursor: default;
+}
+
+.lf__submit.is-success {
+  background: var(--lf-success);
+  box-shadow: none;
+}
+
+.lf__footnote {
+  color: var(--lf-dim);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+.lf__status {
+  color: var(--lf-success);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lf__status:empty {
+  display: none; /* no empty grid gap until there's a message */
+}
+
+.lf__status.is-error {
+  color: #FF6B76;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lf__input,
+  .lf__submit {
+    transition: none;
+  }
+}

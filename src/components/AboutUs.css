@@ -1,0 +1,225 @@
+/* "Who we are" section, both versions, after the static ads — a port of section 5b
+   on aiads.fusioncreative.net (~/Fusion/fusion-creative-landing, css/styles.css
+   "About / who we are"). Scoped under .ab. */
+
+.ab {
+  --ab-red: #E01020;
+  --ab-red-soft: rgba(224, 16, 32, 0.12);
+  --ab-muted: #9A9CA8;
+  --ab-dim: #6A6C78;
+  --ab-card: #171821;
+  --ab-border: rgba(255, 255, 255, 0.08);
+
+  position: relative;
+  z-index: 2; /* above the fixed FloatingDots */
+  overflow: hidden; /* the portrait glow extends past the column */
+  padding-block: clamp(72px, 11vw, 128px);
+  font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+.ab__container {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.ab__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(36px, 6vw, 72px);
+  align-items: center;
+}
+
+.ab__head {
+  max-width: 640px;
+  margin-bottom: 28px;
+}
+
+.ab__eyebrow {
+  display: inline-block;
+  color: var(--ab-red);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.ab__title {
+  overflow: hidden;
+  font-size: clamp(1.625rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.ab__copy {
+  display: grid;
+  gap: 16px;
+  max-width: 52ch;
+}
+
+.ab__copy p {
+  color: var(--ab-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+/* Founder chips */
+.ab__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+  list-style: none;
+}
+
+.ab__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--ab-card);
+  border: 1px solid var(--ab-border);
+  border-radius: 999px;
+  padding: 8px 18px 8px 8px;
+}
+
+.ab__avatar {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--ab-red-soft);
+  border: 1px solid rgba(224, 16, 32, 0.3);
+  color: #FF8A92;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.ab__chip-meta {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.25;
+}
+
+.ab__chip-name {
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.ab__chip-role {
+  color: var(--ab-dim);
+  font-size: 0.75rem;
+}
+
+/* Compact stat panel */
+.ab__stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--ab-border);
+}
+
+.ab__stat {
+  display: flex;
+  flex-direction: column-reverse; /* value above label; dt stays first in DOM */
+  gap: 6px;
+}
+
+.ab__stat-value {
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+
+.ab__stat-label {
+  color: var(--ab-dim);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  line-height: 1.45;
+}
+
+/* Free-floating portrait: no frame, edges dissolve into the page */
+.ab__portrait {
+  position: relative;
+}
+
+/* Ambient red glow behind the founders */
+.ab__portrait::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle at center,
+              rgba(224, 16, 32, 0.16) 0%,
+              rgba(224, 16, 32, 0.05) 45%,
+              transparent 70%);
+  pointer-events: none;
+}
+
+.ab__portrait img {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 24px 48px rgba(0, 0, 0, 0.6));
+  /* Dissolve the mid-torso crop straight into the page background */
+  -webkit-mask-image: linear-gradient(to bottom, #000 68%, transparent 97%);
+  mask-image: linear-gradient(to bottom, #000 68%, transparent 97%);
+  animation: ab-portrait-float 7s ease-in-out infinite;
+}
+
+@keyframes ab-portrait-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ab__portrait img {
+    animation: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .ab__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Image first on mobile, copy after */
+  .ab__media {
+    order: -1;
+    max-width: 420px;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .ab__stats {
+    gap: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ab__stats {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .ab__stat {
+    flex-direction: row-reverse;
+    align-items: baseline;
+    justify-content: flex-end;
+    gap: 12px;
+  }
+}

@@ -120,12 +120,17 @@ scripts/
 5. `<ProcessSection />` — how we work, 6 steps
 6. `<MidCtaSection />` — compact CTA bar
 7. `<StaticAdsSection />` — static ad creatives
+7b. `<AboutUs />` — founders section (both versions); `<OfferV2 />` follows on ?v=2 only
 8. `<CtaSection />` — full CTA section
+8b. `<LeadForm />` — lead form (both versions), right above the footer
 9. `<Footer />`
 
 ## Hero A/B versions (?v=2)
 - `portfolio.fusioncreative.net` → original `Hero.tsx`; `?v=2` → `HeroV2.tsx` (port of the aiads landing hero, styles in `HeroV2.css` scoped under `.hv2`, Montserrat loaded in index.html).
 - `src/lib/variant.ts` reads `?v`; `App.tsx` picks the hero; the lang toggle keeps `v=2`. Copy lives in `tr.heroV2`.
+- Also v2-only: `WhyUsV2.tsx` (+ `.css`, scoped `.wv2`, copy in `tr.whyV2`), the landing's "why brands switch" 3 value cards, rendered right under `<BrandsMarquee />`.
+- Also v2-only: `OfferV2.tsx` (+ `.css`, scoped `.of`, copy in `tr.offerV2`), the landing's monthly-plan offer card (no scroll-pin), right under `<AboutUs />`. CTA opens the contact URL + `Lead` (placement `offer`).
+- Both versions: `AboutUs.tsx` (+ `.css`, scoped `.ab`, copy in `tr.about`), the landing's "Кои сме ние" founders section, after `<StaticAdsSection />`. Its middle stat is 50+ brands (the landing has a `[ X ]+` placeholder there).
 - `src/lib/track.ts` adds `hero_variant` (1|2) to every Meta Pixel event, so leads can be compared per version.
 
 ## Portfolio sections
@@ -149,6 +154,24 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
   state, 2-col grid on mobile). Chip names stay English; prompt/"All"/"Showing" come from `tr.videoFilter`.
 - Playwright clicks on chips can miss because Lenis moves the page mid-click — click via `el.click()` in `evaluate` when testing,
   and use `fullPage` + `clip` screenshots (normal viewport screenshots time out on this page).
+
+## Meta Pixel events (`src/lib/track.ts`, pixel 3894913167483268)
+Every event carries `hero_variant` (1|2). Standard: `Lead` = successful form submit ONLY; `Contact` = contact-page buttons
+(hero/mid_cta/cta_section/offer) + Viber/Facebook clicks; `ViewContent` = video/static-ad lightbox opens.
+Custom: `ReachedForm`, `FormStart`, `ReachedContact`, `HeroClick` (button), `FilterStyle`. Never fire `Lead` on clicks.
+
+## V2 bottom of page
+On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
+
+## Lead form + `/api/lead`
+- `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field and **no budget** select.
+- It POSTs JSON (with `source: 'portfolio'`, `hero_variant`) to `/api/lead`, which `vercel.json` **rewrites to
+  `https://aiads.fusioncreative.net/api/lead`** — the landing project's function, which owns the Resend key (marked sensitive
+  in Vercel, so it can't be copied here). That function emails the lead (incl. phone + V1/V2) to office@ and sends the visitor
+  confirmation. Changes to lead emails happen in `~/Fusion/fusion-creative-landing/api/lead.js`.
+- This project has no email env vars of its own (3 empty RESEND_API_KEY/SENDER_EMAIL/LEAD_INBOX entries may exist — unused).
+- `npx vite` does not apply the rewrite — locally the form lands in its error state; test on a deploy.
+- Pixel `Lead` (placement `form`) fires only after a successful submit.
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).

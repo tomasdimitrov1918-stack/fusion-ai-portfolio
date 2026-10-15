@@ -83,7 +83,7 @@ interface PersonProps {
 
 function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProps) {
   const lead = (channel: 'viber' | 'facebook') => () =>
-    track('Lead', { content_name: `${channel}_${name.toLowerCase()}`, placement: 'contacts', channel })
+    track('Contact', { content_name: `${channel}_${name.toLowerCase()}`, placement: 'contacts', channel })
   return (
     <div className="flex flex-col items-center gap-4">
       <span
@@ -117,12 +117,13 @@ function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProp
   )
 }
 
-export function Contacts() {
+// `className` sets the outer spacing (default sits under the CTA button in CtaSection).
+export function Contacts({ className = 'mt-16' }: { className?: string }) {
   const { tr } = useLanguage()
   const c = tr.contacts
 
   return (
-    <div className="mt-16 flex flex-col items-center">
+    <div className={`${className} flex flex-col items-center`}>
       <p className="text-[clamp(18px,2.6vw,26px)] font-black uppercase tracking-[0.18em] mb-8" style={{ color: '#fff' }}>
         {c.heading}
       </p>

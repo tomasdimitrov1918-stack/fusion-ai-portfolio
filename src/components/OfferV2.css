@@ -1,0 +1,179 @@
+/* Monthly plan offer card, ?v=2 only (under About) — a port of section 6 on
+   aiads.fusioncreative.net (~/Fusion/fusion-creative-landing, css/styles.css
+   "Offer"). The landing's desktop scroll-pin is left out; items are always lit
+   (same as its mobile fallback). Scoped under .of. */
+
+.of {
+  --of-red: #E01020;
+  --of-red-soft: rgba(224, 16, 32, 0.12);
+  --of-muted: #9A9CA8;
+  --of-dim: #6A6C78;
+  --of-surface: #13141C;
+  --of-border-strong: rgba(255, 255, 255, 0.16);
+  --of-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  z-index: 2; /* above the fixed FloatingDots */
+  padding-block: clamp(72px, 11vw, 128px);
+  font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+.of__container {
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+.of__card {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  gap: clamp(32px, 5vw, 56px);
+  background: linear-gradient(150deg, #1A1B26 0%, var(--of-surface) 55%, #12131B 100%);
+  border: 1px solid var(--of-border-strong);
+  border-radius: 20px;
+  padding: clamp(28px, 5vw, 56px);
+}
+
+@media (max-width: 860px) {
+  .of__card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.of__eyebrow {
+  display: inline-block;
+  color: var(--of-red);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.of__title {
+  overflow: hidden;
+  max-width: 18ch;
+  font-size: clamp(1.625rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.of__sub {
+  margin-top: 16px;
+  color: var(--of-muted);
+  font-size: 1rem;
+  line-height: 1.65;
+  max-width: 52ch;
+}
+
+.of__checklist {
+  display: grid;
+  gap: 16px;
+  margin-top: 32px;
+  list-style: none;
+}
+
+.of__item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.of__check {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  margin-top: 1px;
+  padding: 3px;
+  border-radius: 7px;
+  background: var(--of-red-soft);
+  color: var(--of-red);
+}
+
+.of__side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: rgba(13, 14, 20, 0.6);
+  border: 1px solid rgba(224, 16, 32, 0.35);
+  border-radius: 14px;
+  padding: clamp(24px, 4vw, 36px);
+}
+
+.of__side-title {
+  font-size: 1.375rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+}
+
+.of__side-text {
+  margin-top: 14px;
+  margin-bottom: 26px;
+  color: var(--of-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+}
+
+.of__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--of-red);
+  color: #fff;
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-align: left; /* <button> centers by default; the landing's <a> doesn't */
+  cursor: pointer;
+  touch-action: manipulation;
+  box-shadow: 0 8px 28px rgba(224, 16, 32, 0.35);
+  transition: transform 0.2s var(--of-ease-out), box-shadow 0.2s var(--of-ease-out);
+}
+
+.of__btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.of__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(224, 16, 32, 0.45);
+}
+
+.of__btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.of__btn:focus-visible {
+  outline: 3px solid var(--of-red);
+  outline-offset: 3px;
+}
+
+.of__hint {
+  margin-top: 14px;
+  color: var(--of-dim);
+  font-size: 0.8125rem;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .of__btn {
+    transition: none;
+  }
+}

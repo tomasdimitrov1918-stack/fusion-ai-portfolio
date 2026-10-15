@@ -69,7 +69,7 @@ export function MidCtaSection() {
             className="relative overflow-hidden text-[10px] font-bold tracking-[3px] uppercase px-10 py-4 text-white whitespace-nowrap"
             style={{ background: '#B01020' }}
             onClick={() => {
-              track('Lead', { content_name: 'contact_page', placement: 'mid_cta' })
+              track('Contact', { content_name: 'contact_page', placement: 'mid_cta' })
               window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
             }}
           >

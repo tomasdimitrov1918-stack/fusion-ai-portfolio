@@ -5,7 +5,9 @@ import { useLanguage } from '../context/LanguageContext'
 import { Contacts } from './Contacts'
 import { track, trackCustom } from '../lib/track'
 
-export function CtaSection() {
+// `contactsOnly` (hero version 2): just the "write to us directly" block on the page
+// background, placed under the LeadForm; the "Реален растеж" CTA is left out.
+export function CtaSection({ contactsOnly = false }: { contactsOnly?: boolean }) {
   const { tr } = useLanguage()
   const sectionRef = useRef<HTMLElement>(null)
 
@@ -24,6 +26,14 @@ export function CtaSection() {
     observer.observe(el)
     return () => observer.disconnect()
   }, [])
+
+  if (contactsOnly) {
+    return (
+      <section ref={sectionRef} id="contact" className="relative z-[2] px-6 pb-24 text-center">
+        <Contacts className="" />
+      </section>
+    )
+  }
 
   return (
     <section
@@ -74,7 +84,7 @@ export function CtaSection() {
           href={tr.cta.contactUrl}
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => track('Lead', { content_name: 'contact_page', placement: 'cta_section' })}
+          onClick={() => track('Contact', { content_name: 'contact_page', placement: 'cta_section' })}
           className="inline-block text-[11px] font-bold tracking-[3px] uppercase px-12 py-4 text-white"
           style={{ background: '#B01020' }}
           animate={{

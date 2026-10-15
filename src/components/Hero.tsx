@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 import type React from 'react'
 import { useLanguage } from '../context/LanguageContext'
-import { track } from '../lib/track'
+import { track, trackCustom } from '../lib/track'
 
 // ── Constants ────────────────────────────────────────────────────────────────
 const HERO_LINES: { text: string; red?: boolean }[] = [
@@ -176,7 +176,7 @@ export function Hero() {
             className="relative overflow-hidden text-[10px] font-bold tracking-[3px] uppercase px-8 py-3.5 text-white"
             style={{ background: '#B01020' }}
             onClick={() => {
-              track('Lead', { content_name: 'contact_page', placement: 'hero' })
+              track('Contact', { content_name: 'contact_page', placement: 'hero' })
               window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
             }}
           >
@@ -203,7 +203,10 @@ export function Hero() {
               style={{ borderColor: '#E01020', background: 'rgba(13,14,20,0.75)', boxShadow: '0 0 22px rgba(224,16,32,0.35)' }}
               onMouseEnter={(e) => { e.currentTarget.style.background = '#E01020' }}
               onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(13,14,20,0.75)' }}
-              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => {
+                trackCustom('HeroClick', { button: id })
+                document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+              }}
             >
               {label}
             </button>

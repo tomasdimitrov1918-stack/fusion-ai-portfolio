@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/api/lead", "destination": "https://aiads.fusioncreative.net/api/lead" }
+  ]
+}
