@@ -188,7 +188,8 @@ hero buttons, the form or the contacts are on screen; V1 keeps the old "Заяв
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
 
 ## Lead form + `/api/lead`
-- Store field accepts a website **or Instagram** ("Линк към сайт или Instagram", URL or bare `@handle`); three steps
+- Store field is **optional** ("(по желание)"), accepts a website **or Instagram** (URL or bare `@handle`), validated only
+  when filled; the backend then says "ще ти се обадим" instead of "разглеждаме <site>". Three steps
   (Попълваш → Обаждаме ти се → До 48 часа…) sit right above the submit button.
 - `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field, **no budget
   and no videos-per-month** selects, and a "Пиши ни във Viber" link (Tomas's Viber, pixel `Contact` placement `form`).

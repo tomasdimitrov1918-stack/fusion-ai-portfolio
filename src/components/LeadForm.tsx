@@ -29,11 +29,13 @@ const PHONE_RE = /^\+?[\d\s()./-]{6,}$/
 type Field = 'store_url' | 'name' | 'email' | 'phone'
 type Status = 'idle' | 'sending' | 'success' | 'error'
 
-const REQUIRED: Field[] = ['store_url', 'name', 'email', 'phone']
+const FIELDS: Field[] = ['store_url', 'name', 'email', 'phone']
+// Website / Instagram is optional: checked only when something was typed
+const OPTIONAL: Field[] = ['store_url']
 
 function isValid(field: Field, raw: string) {
   const value = raw.trim()
-  if (!value) return false
+  if (!value) return OPTIONAL.includes(field)
   if (field === 'email') return EMAIL_RE.test(value)
   if (field === 'store_url') return URL_RE.test(value) || HANDLE_RE.test(value)
   if (field === 'phone') return PHONE_RE.test(value) && value.replace(/\D/g, '').length >= 6
@@ -115,7 +117,7 @@ export function LeadForm() {
     e.preventDefault()
     if (status === 'sending' || status === 'success') return
 
-    const firstInvalid = REQUIRED.filter((field) => !validate(field))[0]
+    const firstInvalid = FIELDS.filter((field) => !validate(field))[0]
     if (firstInvalid) {
       document.getElementById(`lf-${firstInvalid}`)?.focus()
       return
@@ -129,7 +131,7 @@ export function LeadForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          ...Object.fromEntries(REQUIRED.map((field) => [field, values[field].trim()])),
+          ...Object.fromEntries(FIELDS.map((field) => [field, values[field].trim()])),
           hero_variant: String(heroVariant),
           source: 'portfolio',
           event_id: eventId,
@@ -215,9 +217,9 @@ export function LeadForm() {
           >
             <div className="lf__field">
               <label className="lf__label" htmlFor="lf-store_url">
-                {f.storeLabel} <span className="lf__required" aria-hidden="true">*</span>
+                {f.storeLabel} <span className="lf__optional">{f.optional}</span>
               </label>
-              <input {...inputProps('store_url')} type="text" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} required />
+              <input {...inputProps('store_url')} type="text" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} />
               <p className="lf__hint">{f.storeHint}</p>
               {errorText('store_url')}
             </div>

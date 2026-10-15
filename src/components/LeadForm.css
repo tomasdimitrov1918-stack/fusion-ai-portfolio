@@ -93,6 +93,11 @@
   letter-spacing: 0.01em;
 }
 
+.lf__optional {
+  color: var(--lf-dim);
+  font-weight: 400;
+}
+
 .lf__required {
   color: var(--lf-red);
 }
