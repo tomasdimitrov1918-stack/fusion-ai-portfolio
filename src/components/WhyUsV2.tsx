@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import { motion } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
+import { trackCustom } from '../lib/track'
+import { scrollToLeadForm } from '../lib/variant'
 import './WhyUsV2.css'
 
 // "Why brands switch" value props, shown only on ?v=2 (under the brands marquee).
@@ -73,6 +75,30 @@ export function WhyUsV2() {
             </motion.div>
           ))}
         </div>
+
+        {/* Early path to the form: ad visitors shouldn't have to scroll the whole portfolio */}
+        <motion.div
+          className="wv2__cta"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: REVEAL_DURATION_S, ease: EASE_OUT }}
+        >
+          <p className="wv2__cta-line">{w.ctaLine}</p>
+          <button
+            type="button"
+            className="wv2__cta-btn"
+            onClick={() => {
+              trackCustom('GoToForm', { placement: 'why_us' })
+              scrollToLeadForm()
+            }}
+          >
+            {w.cta}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        </motion.div>
       </div>
     </section>
   )

@@ -21,6 +21,9 @@ const GRID_CLASSES: Record<Section['gridLayout'], string> = {
   '2-col': 'grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3',
 }
 
+// Sentinel chip key for the hand-picked best videos
+const FEATURED = '__featured'
+
 const FILTER_STYLES = `
   .video-filter-chip {
     display: flex; align-items: center; gap: 10px; min-height: 52px;
@@ -70,13 +73,22 @@ const FILTER_STYLES = `
 export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProps) {
   const { ref, x } = useParallax()
   const { tr } = useLanguage()
-  const [activeSub, setActiveSub] = useState<string | null>(null)
+  // FEATURED = the hand-picked best videos (default when the section has `featured`);
+  // null = all videos; any other string = one style.
+  const [activeSub, setActiveSub] = useState<string | null>(section.featured?.length ? FEATURED : null)
   const description = tr.sections[section.id as keyof typeof tr.sections] ?? section.description
 
   const subs = section.subcategories
-  const visibleItems = activeSub ? section.items.filter((v) => v.sub === activeSub) : section.items
+  const featuredItems = (section.featured ?? [])
+    .map((n) => section.items.find((v) => Number(v.label) === n))
+    .filter((v): v is VideoItem => !!v)
+  const visibleItems =
+    activeSub === FEATURED ? featuredItems : activeSub ? section.items.filter((v) => v.sub === activeSub) : section.items
   const chips = subs
     ? [
+        ...(featuredItems.length
+          ? [{ key: FEATURED, label: tr.videoFilter.best, count: featuredItems.length, poster: featuredItems[0]?.poster }]
+          : []),
         { key: null, label: tr.videoFilter.all, count: section.items.length, poster: section.items[0]?.poster },
         ...subs.map((sub) => {
           const items = section.items.filter((v) => v.sub === sub)
@@ -180,7 +192,10 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
             <div className="flex items-center gap-3 mt-5">
               <div className="h-px w-5 shrink-0" style={{ background: '#B01020' }} />
               <p className="text-[10px] tracking-[3px] uppercase m-0" style={{ color: 'rgba(255,255,255,0.45)' }}>
-                {tr.videoFilter.showing}: <span style={{ color: '#fff' }}>{activeSub ?? tr.videoFilter.all}</span>
+                {tr.videoFilter.showing}:{' '}
+                <span style={{ color: '#fff' }}>
+                  {activeSub === FEATURED ? tr.videoFilter.best : activeSub ?? tr.videoFilter.all}
+                </span>
                 {' · '}{visibleItems.length} {tr.videoFilter.videos}
               </p>
             </div>
@@ -201,6 +216,25 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Best picks shown by default; the full library is one click away */}
+        {activeSub === FEATURED && (
+          <div className="flex justify-center mt-10">
+            <button
+              type="button"
+              onClick={() => {
+                trackCustom('FilterStyle', { section: section.id, style: 'show_all' })
+                setActiveSub(null)
+              }}
+              className="video-filter-chip"
+              style={{ paddingLeft: 22, paddingRight: 22 }}
+            >
+              <span className="video-filter-label">
+                {tr.videoFilter.showAll} {section.items.length} {tr.videoFilter.videos} ↓
+              </span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   )

@@ -18,6 +18,8 @@ export interface Section {
   gridLayout: GridLayout
   items: VideoItem[]
   subcategories?: string[]
+  // Video numbers shown by default ("Най-добрите"), in this order; the rest sit behind "Виж всички"
+  featured?: number[]
 }
 
 const CDN = 'https://fusion-creative-assets.b-cdn.net'
@@ -87,6 +89,7 @@ export const sections: Section[] = [
       return v
     }), ANIMATED_SUBS),
     subcategories: Object.keys(ANIMATED_SUBS),
+    featured: [2, 7, 5, 31, 39, 52, 67, 69, 79, 80, 84, 91],
   },
   {
     id: 'ugc-ads',
@@ -96,6 +99,7 @@ export const sections: Section[] = [
     gridLayout: '4-col',
     items: assignSubs(makeVideos('ugc', 'ugc', 40), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
+    featured: [2, 18, 22, 21, 30, 32, 31, 33, 37, 25],
   },
   {
     id: 'product-ads',

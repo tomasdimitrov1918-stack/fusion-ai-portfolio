@@ -3,8 +3,12 @@ import { ADS, CONCEPTS, type AdConcept } from '../data/staticAds'
 import { useLanguage } from '../context/LanguageContext'
 import { track } from '../lib/track'
 
+// Ads shown per concept before "Покажи всички" (keeps the page short for ad traffic)
+const PREVIEW_COUNT = 8
+
 export function StaticAdsSection() {
   const [activeConcept, setActiveConcept] = useState<AdConcept>(CONCEPTS[0])
+  const [expanded, setExpanded] = useState(false)
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const { tr } = useLanguage()
   const s = tr.staticAds
@@ -32,7 +36,7 @@ export function StaticAdsSection() {
     return counts
   }, [])
 
-  useEffect(() => { setLightboxIndex(null) }, [activeConcept])
+  useEffect(() => { setLightboxIndex(null); setExpanded(false) }, [activeConcept])
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
   const prev = useCallback(() => setLightboxIndex(i => (i !== null && i > 0 ? i - 1 : i)), [])
@@ -55,10 +59,14 @@ export function StaticAdsSection() {
   }, [lightboxIndex])
 
   let globalIdx = 0
-  const brandGroupsWithIdx = brandGroups.map(([brand, srcs]) => ({
-    brand,
-    images: srcs.map(src => ({ src, idx: globalIdx++ })),
-  }))
+  const brandGroupsWithIdx = brandGroups
+    .map(([brand, srcs]) => ({
+      brand,
+      images: srcs
+        .map(src => ({ src, idx: globalIdx++ }))
+        .filter(({ idx }) => expanded || idx < PREVIEW_COUNT),
+    }))
+    .filter(({ images }) => images.length > 0)
 
   const totalVisible = allImages.length
 
@@ -237,6 +245,29 @@ export function StaticAdsSection() {
               </div>
             </div>
           ))
+        )}
+
+        {!expanded && allImages.length > PREVIEW_COUNT && (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <button
+              type="button"
+              onClick={() => setExpanded(true)}
+              style={{
+                padding: '14px 26px',
+                borderRadius: 999,
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: '2px',
+                textTransform: 'uppercase',
+                cursor: 'pointer',
+                color: '#fff',
+                border: '1.5px solid rgba(255,255,255,0.22)',
+                background: 'rgba(255,255,255,0.05)',
+              }}
+            >
+              {s.showAll} {allImages.length} {s.countPlural} ↓
+            </button>
+          </div>
         )}
       </div>
 

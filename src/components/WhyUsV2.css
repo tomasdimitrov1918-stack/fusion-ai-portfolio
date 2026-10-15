@@ -126,7 +126,68 @@
   line-height: 1.65;
 }
 
+/* CTA under the cards → scrolls to the lead form */
+.wv2__cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(36px, 5vw, 56px);
+  text-align: center;
+}
+
+.wv2__cta-line {
+  color: var(--wv2-muted);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.wv2__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 16px 32px;
+  border: 0;
+  border-radius: 12px;
+  background: var(--wv2-red);
+  color: #fff;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 28px rgba(224, 16, 32, 0.35);
+  transition: transform 0.2s var(--wv2-ease-out), box-shadow 0.2s var(--wv2-ease-out);
+}
+
+.wv2__cta-btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.wv2__cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(224, 16, 32, 0.45);
+}
+
+.wv2__cta-btn:focus-visible {
+  outline: 3px solid var(--wv2-red);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .wv2__cta-btn {
+    width: 100%;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .wv2__cta-btn {
+    transition: none;
+  }
+
   .wv2__card,
   .wv2__card::after {
     transition: none;

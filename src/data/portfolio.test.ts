@@ -35,6 +35,19 @@ describe('portfolio data', () => {
   })
 })
 
+describe('featured (best picks) videos', () => {
+  it('animated has 12 and ugc has 10 featured picks, all existing videos, no duplicates', () => {
+    const expected: Record<string, number> = { 'animated-ads': 12, 'ugc-ads': 10 }
+    for (const [id, count] of Object.entries(expected)) {
+      const s = byId(id)
+      expect(s.featured).toHaveLength(count)
+      expect(new Set(s.featured).size).toBe(count)
+      const numbers = s.items.map((v) => Number(v.label))
+      s.featured!.forEach((n) => expect(numbers).toContain(n))
+    }
+  })
+})
+
 describe('video subcategories', () => {
   it('every animated and ugc video belongs to one of its section subcategories', () => {
     for (const id of ['animated-ads', 'ugc-ads']) {

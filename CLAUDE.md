@@ -150,6 +150,9 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
   per style, read straight from the maps. Re-run after any re-assignment — it finds files wherever they are and removes emptied folders.
 - **Adding a video:** after bumping the count, add its number to one sub list — `src/data/portfolio.test.ts` fails if any
   animated/ugc video has no sub, and asserts per-sub counts (update those too).
+- **Best picks (default view):** `Section.featured` (video numbers, in display order) — animated 12, ugc 10, picked by the owner
+  (2026-10-15). The first chip "Най-добрите" is active by default; "Всички" and a "Виж всички N видеа" button under the grid show
+  the full library. `portfolio.test.ts` checks the picks exist. Static ads show 8 per concept + "Покажи всички" (`PREVIEW_COUNT`).
 - **Skip to UGC:** the animated-ads chip grid ends with a red "Прескочи към UGC" chip (`tr.videoFilter.skipToUgc`, both versions)
   → `scrollToSection('ugc-ads')` + custom pixel `SkipToUgc`. Portfolio sections have `scroll-mt-12` to clear the fixed nav.
 - **UI:** chips are deliberately loud (bouncing red ↓ prompt, 52px pills with poster thumb + count, solid red glowing active
@@ -172,7 +175,12 @@ hero buttons, the form or the contacts are on screen; V1 keeps the old "Заяв
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
 
 ## Lead form + `/api/lead`
-- `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field and **no budget** select.
+- `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field, **no budget
+  and no videos-per-month** selects, and a "Пиши ни във Viber" link (Tomas's Viber, pixel `Contact` placement `form`).
+- One promise, same words everywhere (hero hook, why-us CTA, offer card, form, confirmation email): **"Безплатна примерна реклама
+  от 10 до 15 секунди, до 48 часа"**. Keep it identical when editing copy.
+- `OfferV2` shows a price hint **350 до 400 € / месец за 10 видеа до 35 секунди** (offer PDF 2026: 4-15 tier, ≤35 s,
+  Animated 35 €, UGC 40 €). Update it if the PDF prices change.
 - It POSTs JSON (with `source: 'portfolio'`, `hero_variant`) to `/api/lead`, which `vercel.json` **rewrites to
   `https://aiads.fusioncreative.net/api/lead`** — the landing project's function, which owns the Resend key (marked sensitive
   in Vercel, so it can't be copied here). That function emails the lead (incl. phone + V1/V2) to office@ and sends the visitor

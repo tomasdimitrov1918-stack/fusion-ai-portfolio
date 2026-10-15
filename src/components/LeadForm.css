@@ -1,6 +1,6 @@
 /* Lead form at the bottom of the page (both versions) — a port of section 7 on
    aiads.fusioncreative.net (~/Fusion/fusion-creative-landing, css/styles.css
-   "Lead form"), with a phone field and without the budget select. Scoped under .lf. */
+   "Lead form"), with a phone field, without the budget / videos-per-month selects, plus a Viber link. Scoped under .lf. */
 
 .lf {
   --lf-red: #E01020;
@@ -128,28 +128,6 @@
   opacity: 0.6;
 }
 
-.lf__select-wrap {
-  position: relative;
-}
-
-.lf__select {
-  appearance: none;
-  -webkit-appearance: none;
-  padding-right: 44px;
-  cursor: pointer;
-}
-
-.lf__chevron {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: var(--lf-dim);
-  pointer-events: none;
-}
-
 .lf__hint {
   color: var(--lf-dim);
   font-size: 0.8125rem;
@@ -211,6 +189,20 @@
   color: var(--lf-dim);
   font-size: 0.8125rem;
   text-align: center;
+}
+
+.lf__viber {
+  color: var(--lf-muted);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.lf__viber a {
+  color: #A79BFF; /* Viber purple, lifted for contrast on the dark card */
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .lf__status {

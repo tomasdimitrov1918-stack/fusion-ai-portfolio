@@ -7,12 +7,16 @@ import { heroVariant } from '../lib/variant'
 import './LeadForm.css'
 
 // Lead form at the very bottom (both versions), above the footer. A port of
-// section 7 on aiads.fusioncreative.net with a phone field and no budget select.
+// section 7 on aiads.fusioncreative.net with a phone field, no budget / videos-per-month selects,
+// and a Viber link for people who'd rather message.
 // POSTs to /api/lead, which vercel.json proxies to the landing page's function
 // (aiads.fusioncreative.net/api/lead → Resend emails; it already holds the key).
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const
 const REVEAL_DURATION_S = 0.6
+
+// Same Viber chat as the Tomas button in Contacts.tsx
+const VIBER_TOMAS = 'viber://chat?number=%2B359896718015'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 // Accept bare domains too ("twoiamagazin.bg") — visitors won't type the protocol
@@ -39,7 +43,6 @@ export function LeadForm() {
   const f = tr.leadForm
 
   const [values, setValues] = useState<Record<Field, string>>({ store_url: '', name: '', email: '', phone: '' })
-  const [videos, setVideos] = useState('not-sure')
   const [invalid, setInvalid] = useState<Partial<Record<Field, boolean>>>({})
   const [status, setStatus] = useState<Status>('idle')
   const sectionRef = useRef<HTMLElement>(null)
@@ -124,7 +127,6 @@ export function LeadForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           ...Object.fromEntries(REQUIRED.map((field) => [field, values[field].trim()])),
-          videos_per_month: videos,
           hero_variant: String(heroVariant),
           source: 'portfolio',
         }),
@@ -211,27 +213,6 @@ export function LeadForm() {
             {errorText('phone')}
           </div>
 
-          <div className="lf__field">
-            <label className="lf__label" htmlFor="lf-videos">{f.videosLabel}</label>
-            <div className="lf__select-wrap">
-              <select
-                className="lf__input lf__select"
-                id="lf-videos"
-                name="videos_per_month"
-                value={videos}
-                disabled={status === 'success'}
-                onChange={(e) => setVideos(e.target.value)}
-              >
-                {f.videosOptions.map((o) => (
-                  <option key={o.value} value={o.value}>{o.label}</option>
-                ))}
-              </select>
-              <svg className="lf__chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="m6 9 6 6 6-6" />
-              </svg>
-            </div>
-          </div>
-
           <button
             className={`lf__submit${status === 'success' ? ' is-success' : ''}`}
             type="submit"
@@ -241,6 +222,17 @@ export function LeadForm() {
           </button>
 
           <p className="lf__footnote">{f.footnote}</p>
+
+          {/* For people who'd rather message than fill in a form */}
+          <p className="lf__viber">
+            {f.viberPrompt}{' '}
+            <a
+              href={VIBER_TOMAS}
+              onClick={() => track('Contact', { content_name: 'viber_tomas', placement: 'form', channel: 'viber' })}
+            >
+              {f.viberLink}
+            </a>
+          </p>
 
           <p className={`lf__status${status === 'error' ? ' is-error' : ''}`} role="status" aria-live="polite">
             {status === 'success' ? f.successStatus : status === 'error' ? f.errorStatus : ''}

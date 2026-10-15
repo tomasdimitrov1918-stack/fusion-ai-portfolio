@@ -56,6 +56,12 @@ export function OfferV2() {
           </div>
 
           <aside className="of__side">
+            {/* Price hint: filters out time-wasters, reassures serious buyers */}
+            <div className="of__price">
+              <p className="of__price-label">{o.priceLabel}</p>
+              <p className="of__price-value">{o.price}</p>
+              <p className="of__price-note">{o.priceNote}</p>
+            </div>
             <h3 className="of__side-title">{o.sideTitle}</h3>
             <p className="of__side-text">{o.sideText}</p>
             <button
