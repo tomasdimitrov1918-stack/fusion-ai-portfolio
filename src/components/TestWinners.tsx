@@ -23,11 +23,11 @@ const TIER_SCALE = [2.4, 1.6, 1]
 type Step = { tested: number; cleared: boolean; delay: number }
 
 function buildSteps(): Step[] {
-  const steps: Step[] = [{ tested: 0, cleared: false, delay: 700 }]
-  for (let n = 1; n <= 8; n++) steps.push({ tested: n, cleared: false, delay: n === 8 ? 700 : 380 })
-  for (let n = 9; n <= 18; n++) steps.push({ tested: n, cleared: false, delay: n === 18 ? 700 : 170 })
-  for (let n = 19; n <= TOTAL; n++) steps.push({ tested: n, cleared: false, delay: n === TOTAL ? 900 : 75 })
-  steps.push({ tested: TOTAL, cleared: true, delay: 3000 })
+  const steps: Step[] = [{ tested: 0, cleared: false, delay: 550 }]
+  for (let n = 1; n <= 8; n++) steps.push({ tested: n, cleared: false, delay: n === 8 ? 550 : 280 })
+  for (let n = 9; n <= 18; n++) steps.push({ tested: n, cleared: false, delay: n === 18 ? 550 : 125 })
+  for (let n = 19; n <= TOTAL; n++) steps.push({ tested: n, cleared: false, delay: n === TOTAL ? 700 : 55 })
+  steps.push({ tested: TOTAL, cleared: true, delay: 2400 })
   return steps
 }
 
@@ -114,7 +114,7 @@ export function TestWinners() {
               <motion.div
                 className="tw__grid"
                 animate={{ scale: TIER_SCALE[tier] }}
-                transition={{ duration: 0.9, ease: [0.65, 0, 0.35, 1] }}
+                transition={{ duration: 0.7, ease: [0.65, 0, 0.35, 1] }}
               >
                 {TEST_GRID_ADS.slice(0, TOTAL).map((ad, cell) => {
                   const rank = RANK_BY_CELL[cell]
@@ -128,7 +128,7 @@ export function TestWinners() {
                         className={`tw__tile is-${state}`}
                         initial={{ rotateY: 90, opacity: 0, scale: 0.85 }}
                         animate={{ rotateY: 0, opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                       >
                         {state === 'empty' ? (
                           <span className="tw__placeholder">{t.placeholder}</span>

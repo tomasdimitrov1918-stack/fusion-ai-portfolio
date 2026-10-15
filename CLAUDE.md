@@ -236,8 +236,8 @@ light red, answer fades in after 0.45 s. Counter = solved rows. Reduced motion: 
 placement `problems`) + "Виж как работим" → `#process`. Copy in `tr.problems` (never invent numbers; 48 h is the hero stat).
 
 ## TestWinners mechanics
-Step list (`buildSteps`): reset → 1..8 tested (380 ms each, zoom 2.4) → 9..18 (170 ms, zoom 1.6) → 19..40 (75 ms, zoom 1)
-→ losers flip back to blank, 9 winners stay lit (3 s) → loop. Reveal order = square rings from the top-left corner so the
+Step list (`buildSteps`): reset → 1..8 tested (280 ms each, zoom 2.4) → 9..18 (125 ms, zoom 1.6) → 19..40 (55 ms, zoom 1)
+→ losers flip back to blank, 9 winners stay lit (2.4 s) → loop. ~9 s per loop (sped up ~25% on owner request). Reveal order = square rings from the top-left corner so the
 zoomed corner fills first; `WINNER_RANKS` gives 1/4/9 winners at 8/18/40. Tier label + pill + bar colour follow the count
 (<10 / 10-19 / 20+). Runs only while the card is in view; reduced motion shows one still frame. No ROAS scores or
 third-party stats on purpose (footnote says the counts are illustrative). New static ads → re-run
