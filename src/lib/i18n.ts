@@ -123,6 +123,7 @@ export const t = {
       all: 'Всички',
       showing: 'Показани',
       videos: 'видеа',
+      skipToUgc: 'Прескочи към UGC',
     },
     staticAds: {
       portfolioLabel: 'Портфолио',
@@ -300,6 +301,7 @@ export const t = {
       all: 'All',
       showing: 'Showing',
       videos: 'videos',
+      skipToUgc: 'Skip to UGC',
     },
     staticAds: {
       portfolioLabel: 'Portfolio',

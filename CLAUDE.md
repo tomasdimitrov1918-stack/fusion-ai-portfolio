@@ -150,6 +150,8 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
   per style, read straight from the maps. Re-run after any re-assignment — it finds files wherever they are and removes emptied folders.
 - **Adding a video:** after bumping the count, add its number to one sub list — `src/data/portfolio.test.ts` fails if any
   animated/ugc video has no sub, and asserts per-sub counts (update those too).
+- **Skip to UGC:** the animated-ads chip grid ends with a red "Прескочи към UGC" chip (`tr.videoFilter.skipToUgc`, both versions)
+  → `scrollToSection('ugc-ads')` + custom pixel `SkipToUgc`. Portfolio sections have `scroll-mt-12` to clear the fixed nav.
 - **UI:** chips are deliberately loud (bouncing red ↓ prompt, 52px pills with poster thumb + count, solid red glowing active
   state, 2-col grid on mobile). Chip names stay English; prompt/"All"/"Showing" come from `tr.videoFilter`.
 - Playwright clicks on chips can miss because Lenis moves the page mid-click — click via `el.click()` in `evaluate` when testing,

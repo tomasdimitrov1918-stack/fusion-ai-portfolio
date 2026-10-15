@@ -7,6 +7,7 @@ import { cardContainerVariants, cardItemVariants } from '../lib/animations'
 import { useParallax } from '../hooks/useParallax'
 import { useLanguage } from '../context/LanguageContext'
 import { trackCustom } from '../lib/track'
+import { scrollToSection } from '../lib/variant'
 
 interface PortfolioSectionProps {
   section: Section
@@ -40,6 +41,11 @@ const FILTER_STYLES = `
     border: 1.5px solid rgba(255,255,255,0.25); background: #191B26;
   }
   .video-filter-label { flex: 1; line-height: 1.2; }
+  .video-filter-jump-icon {
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    width: 40px; height: 40px; border-radius: 50%; font-size: 18px;
+    border: 1.5px solid rgba(255,255,255,0.35); background: rgba(255,255,255,0.14);
+  }
   .video-filter-count {
     font-size: 11px; padding: 3px 8px; border-radius: 999px; letter-spacing: 0;
     background: rgba(255,255,255,0.1);
@@ -53,7 +59,7 @@ const FILTER_STYLES = `
   @keyframes vf-bounce { 0%,100% { transform: translateY(0) } 50% { transform: translateY(4px) } }
   @media (max-width: 639px) {
     .video-filter-chip { font-size: 10.5px; letter-spacing: 0.4px; min-height: 48px; gap: 8px; padding-right: 10px; }
-    .video-filter-thumb { width: 34px; height: 34px; }
+    .video-filter-thumb, .video-filter-jump-icon { width: 34px; height: 34px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .video-filter-pointer { animation: none; }
@@ -83,7 +89,7 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
     <section
       id={section.id}
       ref={ref as React.RefObject<HTMLElement>}
-      className="relative px-4 sm:px-12 py-16 sm:py-24 overflow-hidden border-t"
+      className="relative px-4 sm:px-12 py-16 sm:py-24 overflow-hidden border-t scroll-mt-12"
       style={{ borderColor: 'rgba(255,255,255,0.04)' }}
     >
       {/* Parallax ghost text */}
@@ -154,6 +160,21 @@ export function PortfolioSection({ section, onVideoClick }: PortfolioSectionProp
                   </button>
                 )
               })}
+
+              {/* Shortcut past the long animated grid to the UGC videos (red like the active chip) */}
+              {section.id === 'animated-ads' && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    trackCustom('SkipToUgc')
+                    scrollToSection('ugc-ads')
+                  }}
+                  className="video-filter-chip is-active"
+                >
+                  <span className="video-filter-jump-icon" aria-hidden>↓</span>
+                  <span className="video-filter-label">{tr.videoFilter.skipToUgc}</span>
+                </button>
+              )}
             </div>
 
             <div className="flex items-center gap-3 mt-5">
