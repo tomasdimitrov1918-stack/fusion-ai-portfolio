@@ -35,7 +35,7 @@ export const t = {
     // "Why brands switch" section, ?v=2 only, ported from the aiads landing page
     whyV2: {
       eyebrow: 'Защо брандовете преминават към нас',
-      title: 'Реклами на ниво агенция, без агенцийската цена и\u00a0чакане.',
+      title: 'Реклами на ниво агенция, без чакането и цената на\u00a0агенция.',
       cards: [
         { title: 'Доставка за дни', text: 'Докато традиционната продукция още уточнява графика за снимки, твоята реклама вече се върти в Meta. AI продукцията ни позволява да минем от бриф до готово видео за дни и да тестваме нови варианти веднага.' },
         { title: 'На част от цената', text: 'Без снимачен екип, студио, актьори и наеми на локации. Премахваме най-скъпата част от продукцията и ти получаваш същото качество на екрана, но на цена, която позволява да тестваш повече креативи.' },
@@ -212,7 +212,7 @@ export const t = {
     // "Why brands switch" section, ?v=2 only, ported from the aiads landing page
     whyV2: {
       eyebrow: 'Why brands switch to us',
-      title: 'Agency-level ads, without the agency price and\u00a0wait.',
+      title: 'Agency-level ads, without the agency wait and\u00a0price.',
       cards: [
         { title: 'Delivered in days', text: 'While a traditional production is still scheduling the shoot, your ad is already running on Meta. AI production lets us go from brief to finished video in days and test new variations right away.' },
         { title: 'A fraction of the price', text: 'No film crew, studio, actors or location fees. We cut the most expensive part of production, so you get the same on-screen quality at a price that lets you test more creatives.' },

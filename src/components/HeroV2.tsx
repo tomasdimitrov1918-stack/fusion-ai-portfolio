@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion, useScroll, useTransform } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
-import { track, trackCustom } from '../lib/track'
+import { trackCustom } from '../lib/track'
+import { scrollToLeadForm } from '../lib/variant'
 import './HeroV2.css'
 
 // Hero version 2, shown on ?v=2 (see lib/variant.ts). A port of the hero on
@@ -93,8 +94,8 @@ export function HeroV2() {
             <button
               className="hv2__btn hv2__btn--primary"
               onClick={() => {
-                track('Contact', { content_name: 'contact_page', placement: 'hero' })
-                window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
+                trackCustom('GoToForm', { placement: 'hero' })
+                scrollToLeadForm()
               }}
             >
               {h.ctaPrimary}

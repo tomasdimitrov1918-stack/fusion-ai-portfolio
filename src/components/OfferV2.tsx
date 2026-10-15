@@ -1,6 +1,7 @@
 import { motion } from 'motion/react'
 import { useLanguage } from '../context/LanguageContext'
-import { track } from '../lib/track'
+import { trackCustom } from '../lib/track'
+import { scrollToLeadForm } from '../lib/variant'
 import './OfferV2.css'
 
 // Monthly plan offer card, shown only on ?v=2, right under AboutUs.
@@ -60,8 +61,8 @@ export function OfferV2() {
             <button
               className="of__btn"
               onClick={() => {
-                track('Contact', { content_name: 'contact_page', placement: 'offer' })
-                window.open(tr.cta.contactUrl, '_blank', 'noopener,noreferrer')
+                trackCustom('GoToForm', { placement: 'offer' })
+                scrollToLeadForm()
               }}
             >
               {o.cta}

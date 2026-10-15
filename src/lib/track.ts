@@ -24,9 +24,10 @@ export function track(event: 'Lead' | 'Contact' | 'ViewContent', params?: FbqPar
 //   ReachedForm    — lead form scrolled into view (once per page view)
 //   FormStart      — first time a visitor focuses any lead-form field
 //   HeroClick      — hero scroll buttons (see work / animation / UGC), to compare V1 vs V2
+//   GoToForm       — a V2 CTA that scrolls down to the lead form (param: placement)
 //   FilterStyle    — style filter chip clicked in a video section
 export function trackCustom(
-  event: 'ReachedContact' | 'ReachedForm' | 'FormStart' | 'HeroClick' | 'FilterStyle',
+  event: 'ReachedContact' | 'ReachedForm' | 'FormStart' | 'HeroClick' | 'GoToForm' | 'FilterStyle',
   params?: FbqParams,
 ) {
   if (typeof window === 'undefined' || typeof window.fbq !== 'function') return

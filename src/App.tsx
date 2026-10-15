@@ -51,9 +51,9 @@ export default function App() {
         <FloatingDots />
         <Nav />
         {heroVariant === 2 ? <HeroV2 /> : <Hero />}
-        <ToolsMarquee />
         <BrandsMarquee />
         {heroVariant === 2 && <WhyUsV2 />}
+        <ToolsMarquee />
         {sections.map((section) => (
           <PortfolioSection
             key={section.id}

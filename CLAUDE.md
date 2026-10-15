@@ -114,8 +114,8 @@ scripts/
 
 ## Page layout order (App.tsx)
 1. `<Hero />` — full-screen hero
-2. `<ToolsMarquee />` — AI tools chips
-3. `<BrandsMarquee />` — client logos
+2. `<BrandsMarquee />` — client logos (V2: `<WhyUsV2 />` follows)
+3. `<ToolsMarquee />` — AI tools chips, right above AI Animated Ads
 4. `{sections.map(...)}` — 3× `<PortfolioSection />` (animated, ugc, product)
 5. `<ProcessSection />` — how we work, 6 steps
 6. `<MidCtaSection />` — compact CTA bar
@@ -159,6 +159,10 @@ Animated and UGC sections have filter chips ("All" + one per style); Product has
 Every event carries `hero_variant` (1|2). Standard: `Lead` = successful form submit ONLY; `Contact` = contact-page buttons
 (hero/mid_cta/cta_section/offer) + Viber/Facebook clicks; `ViewContent` = video/static-ad lightbox opens.
 Custom: `ReachedForm`, `FormStart`, `ReachedContact`, `HeroClick` (button), `FilterStyle`. Never fire `Lead` on clicks.
+
+## V2 CTAs → on-page form
+On `?v=2` the hero CTA, MidCta button and OfferV2 button call `scrollToLeadForm()` (`lib/variant.ts`, self-correcting smooth
+scroll — lazy content shifts the form mid-scroll) and fire custom `GoToForm` {placement}. V1 keeps the external contact page.
 
 ## V2 bottom of page
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
