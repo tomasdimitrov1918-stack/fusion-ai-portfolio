@@ -29,7 +29,7 @@ export const t = {
       stats: [
         { value: 400, suffix: '+', label: 'Доставени видео реклами' },
         { value: 48, suffix: 'ч', label: 'Средно време за доставка' },
-        { value: 50, suffix: '+', label: 'DTC бранда ни се довериха' },
+        { value: 50, suffix: '+', label: 'Бранда ни се довериха' },
       ],
     },
     // "Why brands switch" section, ?v=2 only, ported from the aiads landing page
@@ -215,7 +215,7 @@ export const t = {
       stats: [
         { value: 400, suffix: '+', label: 'Video ads delivered' },
         { value: 48, suffix: 'h', label: 'Average delivery time' },
-        { value: 50, suffix: '+', label: 'DTC brands trusted us' },
+        { value: 50, suffix: '+', label: 'Brands trusted us' },
       ],
     },
     // "Why brands switch" section, ?v=2 only, ported from the aiads landing page
