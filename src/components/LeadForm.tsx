@@ -9,8 +9,7 @@ import './LeadForm.css'
 // Lead form at the very bottom (both versions), above the footer. A port of
 // section 7 on aiads.fusioncreative.net with a phone field, no budget / videos-per-month selects,
 // and a Viber link for people who'd rather message.
-// POSTs to /api/lead, which vercel.json proxies to the landing page's function
-// (aiads.fusioncreative.net/api/lead → Resend emails; it already holds the key).
+// POSTs to /api/lead (api/lead.js in this repo → Resend emails + Meta Conversions API).
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const
 const REVEAL_DURATION_S = 0.6
@@ -133,7 +132,6 @@ export function LeadForm() {
         body: JSON.stringify({
           ...Object.fromEntries(FIELDS.map((field) => [field, values[field].trim()])),
           hero_variant: String(heroVariant),
-          source: 'portfolio',
           event_id: eventId,
           ...metaBrowserIds(),
           page_url: window.location.href,

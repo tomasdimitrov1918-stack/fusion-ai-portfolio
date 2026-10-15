@@ -15,7 +15,7 @@ declare global {
 //   Contact     — clicks that start a conversation: contact-page buttons, Viber, Facebook
 //   ViewContent — opening a video or static ad in the lightbox
 // `eventId` pairs a browser event with the same event sent server-side (Conversions API,
-// see the landing's api/lead.js) so Meta counts it once.
+// see api/lead.js) so Meta counts it once.
 export function track(event: 'Lead' | 'Contact' | 'ViewContent', params?: FbqParams, eventId?: string) {
   if (typeof window === 'undefined' || typeof window.fbq !== 'function') return
   window.fbq('track', event, { ...params, hero_variant: heroVariant }, ...(eventId ? [{ eventID: eventId }] : []))

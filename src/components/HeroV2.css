@@ -1,7 +1,7 @@
 /* Hero version 2 (?v=2) — a port of the hero on aiads.fusioncreative.net
    (~/Fusion/fusion-creative-landing, css/styles.css "Hero" + buttons + eyebrow-pill
    + entrance animation). Everything is scoped under .hv2 so it can't leak into the
-   rest of the portfolio. Keep in sync by hand if the landing hero changes. */
+   rest of the portfolio. (The landing was retired on 2026-10-15; this is now the only copy.) */
 
 .hv2 {
   --hv2-red: #E01020;

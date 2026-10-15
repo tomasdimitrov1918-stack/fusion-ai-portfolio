@@ -63,7 +63,7 @@ src/
     WhyUsV2.tsx/.css       — ?v=2 "Защо брандовете…" 3 value cards + CTA to the form (scoped .wv2)
     AboutUs.tsx/.css       — "Кои сме ние" founders section, both versions (scoped .ab)
     OfferV2.tsx/.css       — ?v=2 "Месечен план" card with price hint (scoped .of)
-    LeadForm.tsx/.css      — Lead form + thank-you screen, both versions (scoped .lf), posts to /api/lead
+    LeadForm.tsx/.css      — Lead form + thank-you screen, both versions (scoped .lf), posts to /api/lead (api/lead.js)
     ProblemsSolved.tsx/.css — "Най-големите ти проблеми… решени." 6 problem rows struck through on scroll + 00/06 counter,
                              both versions (scoped .ps); design/mechanics adapted from larven.ai's "Why Larven AI" section
     TestWinners.tsx/.css   — "Повече тестове намират повече печеливши" looping 8×5 ad grid (zoom, flip-in, winners lit),
@@ -132,7 +132,7 @@ public/
     ugc/01-40.mp4          — (original 30 listed; now 1-40 on the CDN) (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-04.mp4      — 4 AI Product Ads
-vercel.json                — rewrites /api/lead → https://aiads.fusioncreative.net/api/lead (landing project's function)
+api/lead.js                — Vercel serverless function behind the lead form (Resend emails + Meta Conversions API)
 scripts/
   make-test-grid-thumbs.mjs — picks 40 static ads round-robin by brand → public/test-grid/NN.webp (240px) + src/data/testGrid.ts
   organize-videos.mjs      — sorts local public/videos/{animated,ugc} into style subfolders (see Video subcategories)
@@ -205,44 +205,23 @@ hero buttons, the form or the contacts are on screen; V1 keeps the old "Заяв
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
 
 ## Lead form + `/api/lead`
-- Store field is **optional** ("(по желание)"), accepts a website **or Instagram** (URL or bare `@handle`), validated only
-  when filled; the backend then says "ще ти се обадим" instead of "разглеждаме <site>". Three steps
-  (Попълваш → Обаждаме ти се → До 48 часа…) sit right above the submit button.
-- `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field, **no budget
-  and no videos-per-month** selects, and a "Пиши ни във Viber" link (Tomas's Viber, pixel `Contact` placement `form`).
-- One promise, same words everywhere (hero hook, why-us CTA, offer card, form, confirmation email): **"Безплатна примерна реклама
-  от 10 до 15 секунди, до 48 часа"**. Keep it identical when editing copy.
-- `OfferV2` shows a price hint **350 до 400 € / месец за 10 видеа до 35 секунди** (offer PDF 2026: 4-15 tier, ≤35 s,
+- `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`): required name / email / **phone**, optional website or
+  Instagram (URL or `@handle`), three next-steps above the submit, a Viber link, and a thank-you screen after submit.
+- Posts JSON to `/api/lead` → **`api/lead.js` in this repo** (moved here 2026-10-15 when the aiads landing was deleted):
+  1. notification email to `LEAD_INBOX` (name, phone, email, site, V1/V2), critical: failure → 502;
+  2. Meta Conversions API `Lead` with the same `event_id` as the browser pixel → deduped (verified in Test Events);
+  3. visitor confirmation email ("безплатна примерна реклама от 10 до 15 секунди… до 48 часа").
+  Steps 2-3 never fail the lead. No `RESEND_API_KEY` → 503 (form shows its error state, never a fake success).
+- Vercel env (Production) on **fusion-ai-portfolio**: `RESEND_API_KEY` (sensitive), `SENDER_EMAIL`
+  (`Fusion Creative <office@fusioncreative.net>`, domain verified in Resend), `LEAD_INBOX` (office@fusioncreative.net),
+  `META_CAPI_TOKEN`. Changing env vars needs a redeploy.
+- One promise, same words everywhere: **"Безплатна примерна реклама от 10 до 15 секунди, до 48 часа"**.
+- `OfferV2` price hint **350 до 400 € / месец за 10 видеа до 35 секунди** (offer PDF 2026: 4-15 tier, ≤35 s,
   Animated 35 €, UGC 40 €). Update it if the PDF prices change.
-- It POSTs JSON (with `source: 'portfolio'`, `hero_variant`) to `/api/lead`, which `vercel.json` **rewrites to
-  `https://aiads.fusioncreative.net/api/lead`** — the landing project's function, which owns the Resend key (marked sensitive
-  in Vercel, so it can't be copied here). That function emails the lead (incl. phone + V1/V2) to office@ and sends the visitor
-  confirmation. Changes to lead emails happen in `~/Fusion/fusion-creative-landing/api/lead.js`.
-- This project has no email env vars of its own (3 empty RESEND_API_KEY/SENDER_EMAIL/LEAD_INBOX entries may exist — unused).
-- `npx vite` does not apply the rewrite — locally the form lands in its error state; test on a deploy.
+- `npx vite` does not run `/api` — use `vercel dev`, or `vercel deploy --prod --skip-domain` + `vercel curl /api/lead
+  --deployment <url>` (staged builds sit behind Vercel auth) to test before publishing.
+- Test the Conversions API with `?meta_test=TEST12345` (code from Events Manager → Test Events).
 - Pixel `Lead` (placement `form`) fires only after a successful submit.
-- After submit the form is replaced by a thank-you screen: name, "we'll call you shortly on {phone}", the 48 h promise and a
-  big purple "Пиши ни директно във Viber" button (pixel `Contact` placement `form_success`).
-- **Conversions API:** the form sends `event_id` (+ `_fbp`/`_fbc`, page URL) and fires the browser `Lead` with the same
-  `eventID`; the landing's function sends the server-side `Lead` (token `META_CAPI_TOKEN` on fusion-creative-landing).
-  Test with `?meta_test=TEST12345` (code from Events Manager → Test Events).
-- Instant lead alerts go to Telegram from the landing's function (env `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` on the
-  **fusion-creative-landing** Vercel project).
-
-## ProblemsSolved mechanics
-A row gets `.is-solved` while its top is above 60% of the viewport (`SOLVE_LINE`), computed on scroll via rAF, so scrolling
-back up un-solves it. Solved = red 2px strike grows across the problem (background-size 0 → 100%), text greys, index turns
-light red, answer fades in after 0.45 s. Counter = solved rows. Reduced motion: all rows start solved. CTAs: form (`GoToForm`
-placement `problems`) + "Виж как работим" → `#process`. Copy in `tr.problems` (never invent numbers; 48 h is the hero stat).
-
-## TestWinners mechanics
-Step list (`buildSteps`): reset → 1..8 tested (280 ms each, zoom 2.4) → 9..18 (125 ms, zoom 1.6) → 19..40 (55 ms, zoom 1)
-→ losers flip back to blank, 9 winners stay lit (2.4 s) → loop. ~9 s per loop (sped up ~25% on owner request). Reveal order = square rings from the top-left corner so the
-zoomed corner fills first; `WINNER_RANKS` gives 1/4/9 winners at 8/18/40. Tier label + pill + bar colour follow the count
-(<10 / 10-19 / 20+). Runs only while the card is in view; reduced motion shows one still frame. Tiles show an
-**illustrative** ROAS badge (owner asked, like larven): winners 2.1x to 4.4x in red, the rest 0.4x to 1.8x (`ROAS_BY_RANK`);
-the footnote must keep saying these are examples, not measured results. No third-party stats (larven's "65%"). New static ads → re-run
-`node scripts/make-test-grid-thumbs.mjs`.
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).
