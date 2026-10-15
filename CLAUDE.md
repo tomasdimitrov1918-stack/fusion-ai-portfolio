@@ -11,6 +11,12 @@ whole block only once it has shipped.
   HeroV2 / PortfolioSection read it; pixel events get a `niche` param; unknown slug → default page. Keep `v` and `lang`
   params intact on the language toggle.
 
+# Where we left off (last session: 2026-10-15)
+- Live: portfolio.fusioncreative.net (V1 `/`, V2 `?v=2` = the Meta-ads funnel). Everything is deployed and pushed.
+- The aiads landing (aiads.fusioncreative.net / repo `fusion-creative-landing`) was **deleted** at the owner's request;
+  its lead backend now lives here in `api/lead.js`. Owner still has to remove the GoDaddy DNS record `aiads → 76.76.21.21`.
+- Next up: the `?niche=` reminder above, then the "Still open" list near the end of this file.
+
 # Fusion AI Portfolio — Project Context
 
 ## What this project is
@@ -441,9 +447,10 @@ redirect (`fusioncreative.net/kontakti`) — on-page Viber/Facebook contacts wer
 - All marquee logos normalised to white/monochrome (see Higgsfield recipe).
 
 ### Done (Oct 2026 session)
-On-page lead form (+ phone, Viber link, thank-you screen), Conversions API with dedup (verified in Test Events), V2 funnel
-(landing hero/sections, CTAs → form), best-picks video view, static-ads preview, price hint, one sample-ad promise
-everywhere, no dashes, "за бизнеса ти" instead of DTC.
+On-page lead form (+ phone, optional site/Instagram, 3 next-steps, Viber link, thank-you screen), own `api/lead.js`
+backend, Conversions API with dedup (verified in Test Events), V2 funnel (CTAs → form, mobile sticky CTA), best-picks
+video view (12 + 12), static-ads preview, price hint, one sample-ad promise everywhere, no dashes, "за бизнеса ти" instead
+of DTC, larven.ai-inspired `ProblemsSolved` + `TestWinners` sections, aiads landing retired.
 
 ### Still open (highest impact first)
 - **`?niche=` per-ad-set page matching** — see the PENDING block at the top of this file (owner wants a reminder each session).
@@ -452,8 +459,8 @@ everywhere, no dashes, "за бизнеса ти" instead of DTC.
 - **Two-step form** (name + phone first, then site/email) and a lighter offer for not-ready visitors ("5 идеи за реклами").
 - **FAQ** near the form ("Позволява ли Meta AI реклами?", timing, revisions, "имам само лого", price).
 - **UTM links** in Meta ads (`?v=2&utm_source=meta&utm_campaign=…`); retarget ReachedForm/FormStart non-submitters.
-- **Instant lead alerts**: Telegram code exists in the landing function (env-gated, unused). Owner declined Telegram and
-  Pushover; Viber bots cost €100/month. Current plan: Gmail notifications on office@.
+- **Instant lead alerts**: owner declined Telegram and Pushover; Viber bots cost €100/month. Current plan: Gmail push
+  notifications on office@fusioncreative.net (nothing to build).
 - **SEO meta gaps in `index.html`**: `lang="en"` hardcoded (site defaults BG), no canonical, no hreflang for `?lang=en`,
   no robots.txt/sitemap, no Organization JSON-LD.
 - **`prefers-reduced-motion`** only covers CSS marquee/dots — not Framer Motion reveals, card tilt, or Lenis.
