@@ -10,6 +10,7 @@ import { AboutUs } from './components/AboutUs'
 import { OfferV2 } from './components/OfferV2'
 import { LeadForm } from './components/LeadForm'
 import { ProblemsSolved } from './components/ProblemsSolved'
+import { TestWinners } from './components/TestWinners'
 import { ToolsMarquee } from './components/ToolsMarquee'
 import { PortfolioSection } from './components/PortfolioSection'
 import { BrandsMarquee } from './components/BrandsMarquee'
@@ -73,6 +74,7 @@ export default function App() {
         <ProcessSection />
         <MidCtaSection />
         <StaticAdsSection />
+        <TestWinners />
         <AboutUs />
         {heroVariant === 2 && <OfferV2 />}
         {heroVariant === 2 ? (

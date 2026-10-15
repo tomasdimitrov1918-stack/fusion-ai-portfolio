@@ -105,6 +105,24 @@ export const t = {
       cta: 'Вземи безплатна примерна реклама',
       ctaSecondary: 'Виж как работим',
     },
+    // "More tests, more winners" animated grid (both versions, after static ads); idea from larven.ai
+    tests: {
+      eyebrow: 'Защо повече реклами',
+      title: 'Повече тестове намират',
+      titleMuted: 'повече печеливши.',
+      body1: 'Не всяка реклама печели. Печелят брандовете, които тестват повече: всеки нов креатив е още един шанс за следващия победител.',
+      body2: 'Слабите реклами се спират, преди да изгорят бюджета, а печелившите получават парите. С AI продукция тестваш много повече креативи всеки месец, без нито една нова снимачна сесия.',
+      tiers: ['Под 10 реклами на месец', '10 до 19 реклами на месец', '20+ реклами на месец'],
+      tierPills: ['Малко тестове', 'Повече тестове', 'Повече победители'],
+      tested: 'реклами тествани',
+      winners: 'печеливши',
+      winner: 'печеливша',
+      placeholder: 'Fusion',
+      note: 'Илюстрация с наши реални реклами. Броят тестове и победители е примерен.',
+      ariaLabel: 'Анимация: нови реклами се появяват една по една, докато 40 са тествани и 9 са печеливши. Колкото повече тестове, толкова повече победители.',
+      cta: 'Вземи безплатна примерна реклама',
+      ctaPlan: 'Виж месечния план',
+    },
     // Lead form at the bottom (both versions), ported from the aiads landing page + phone
     leadForm: {
       eyebrow: 'Безплатна примерна реклама',
@@ -311,6 +329,24 @@ export const t = {
       ],
       cta: 'Get your free sample ad',
       ctaSecondary: 'See how we work',
+    },
+    // "More tests, more winners" animated grid (both versions, after static ads); idea from larven.ai
+    tests: {
+      eyebrow: 'Why more ads',
+      title: 'More tests find',
+      titleMuted: 'more winners.',
+      body1: "Not every ad wins. The brands that win are the ones that test more: every new creative is one more shot at the next winner.",
+      body2: 'Weak ads get switched off before they burn budget, and the winners get the money. With AI production you test far more creatives every month, without a single new shoot.',
+      tiers: ['Under 10 ads a month', '10 to 19 ads a month', '20+ ads a month'],
+      tierPills: ['Few tests', 'More tests', 'More winners'],
+      tested: 'ads tested',
+      winners: 'winners',
+      winner: 'winner',
+      placeholder: 'Fusion',
+      note: 'Illustration using our real ads. The number of tests and winners is an example.',
+      ariaLabel: 'Animation: new ads appear one by one until 40 are tested and 9 are winners. The more tests, the more winners.',
+      cta: 'Get your free sample ad',
+      ctaPlan: 'See the monthly plan',
     },
     // Lead form at the bottom (both versions), ported from the aiads landing page + phone
     leadForm: {

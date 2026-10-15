@@ -66,6 +66,8 @@ src/
     LeadForm.tsx/.css      — Lead form + thank-you screen, both versions (scoped .lf), posts to /api/lead
     ProblemsSolved.tsx/.css — "Най-големите ти проблеми… решени." 6 problem rows struck through on scroll + 00/06 counter,
                              both versions (scoped .ps); design/mechanics adapted from larven.ai's "Why Larven AI" section
+    TestWinners.tsx/.css   — "Повече тестове намират повече печеливши" looping 8×5 ad grid (zoom, flip-in, winners lit),
+                             both versions after static ads (scoped .tw); code rebuild of larven.ai's 10 s test-volume video
     ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
     BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
     PortfolioSection.tsx   — Section wrapper with parallax ghost text + style filter chips + video grid
@@ -132,6 +134,7 @@ public/
     product/01-04.mp4      — 4 AI Product Ads
 vercel.json                — rewrites /api/lead → https://aiads.fusioncreative.net/api/lead (landing project's function)
 scripts/
+  make-test-grid-thumbs.mjs — picks 40 static ads round-robin by brand → public/test-grid/NN.webp (240px) + src/data/testGrid.ts
   organize-videos.mjs      — sorts local public/videos/{animated,ugc} into style subfolders (see Video subcategories)
 ```
 
@@ -146,6 +149,7 @@ scripts/
 | 5b | `<ProblemsSolved />` (`#problems`) | same |
 | 6 | `<ProcessSection />` (`#process`), `<MidCtaSection />` | same (MidCta button → form) |
 | 7 | `<StaticAdsSection />` | same |
+| 7b | `<TestWinners />` (`#more-tests`) | same (+ "Виж месечния план" → `#offer`) |
 | 8 | `<AboutUs />` | `<AboutUs />`, then `<OfferV2 />` |
 | 9 | `<CtaSection />` ("Реален растеж" + contacts) | `<LeadForm />` |
 | 10 | `<LeadForm />` | `<CtaSection contactsOnly />` (Viber/FB only) |
@@ -230,6 +234,14 @@ A row gets `.is-solved` while its top is above 60% of the viewport (`SOLVE_LINE`
 back up un-solves it. Solved = red 2px strike grows across the problem (background-size 0 → 100%), text greys, index turns
 light red, answer fades in after 0.45 s. Counter = solved rows. Reduced motion: all rows start solved. CTAs: form (`GoToForm`
 placement `problems`) + "Виж как работим" → `#process`. Copy in `tr.problems` (never invent numbers; 48 h is the hero stat).
+
+## TestWinners mechanics
+Step list (`buildSteps`): reset → 1..8 tested (380 ms each, zoom 2.4) → 9..18 (170 ms, zoom 1.6) → 19..40 (75 ms, zoom 1)
+→ losers flip back to blank, 9 winners stay lit (3 s) → loop. Reveal order = square rings from the top-left corner so the
+zoomed corner fills first; `WINNER_RANKS` gives 1/4/9 winners at 8/18/40. Tier label + pill + bar colour follow the count
+(<10 / 10-19 / 20+). Runs only while the card is in view; reduced motion shows one still frame. No ROAS scores or
+third-party stats on purpose (footnote says the counts are illustrative). New static ads → re-run
+`node scripts/make-test-grid-thumbs.mjs`.
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).
