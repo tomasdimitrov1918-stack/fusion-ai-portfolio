@@ -39,7 +39,7 @@ export const t = {
       cards: [
         { title: 'Доставка за дни', text: 'Докато традиционната продукция още уточнява графика за снимки, твоята реклама вече се върти в Meta. AI продукцията ни позволява да минем от бриф до готово видео за дни и да тестваме нови варианти веднага.' },
         { title: 'На част от цената', text: 'Без снимачен екип, студио, актьори и наеми на локации. Премахваме най-скъпата част от продукцията и ти получаваш същото качество на екрана, но на цена, която позволява да тестваш повече креативи.' },
-        { title: 'Създадени за DTC', text: 'Хук в първите 3 секунди, продуктът в действие, ясен призив за покупка. Всяко видео е изградено по структурите, които доказано конвертират студен трафик в Meta и TikTok, а не просто по „красиво видео“.' },
+        { title: 'Създадени за бизнеса ти', text: 'Хук в първите 3 секунди, продуктът в действие, ясен призив за покупка. Всяко видео е изградено по структурите, които доказано конвертират студен трафик в Meta и TikTok, а не просто по „красиво видео“.' },
       ],
       ctaLine: 'Безплатна примерна реклама от 10 до 15 секунди, до 48 часа.',
       cta: 'Вземи безплатна примерна реклама',
@@ -225,7 +225,7 @@ export const t = {
       cards: [
         { title: 'Delivered in days', text: 'While a traditional production is still scheduling the shoot, your ad is already running on Meta. AI production lets us go from brief to finished video in days and test new variations right away.' },
         { title: 'A fraction of the price', text: 'No film crew, studio, actors or location fees. We cut the most expensive part of production, so you get the same on-screen quality at a price that lets you test more creatives.' },
-        { title: 'Built for DTC', text: 'A hook in the first 3 seconds, the product in action, a clear call to buy. Every video follows structures proven to convert cold traffic on Meta and TikTok, not just a "pretty video".' },
+        { title: 'Built for your business', text: 'A hook in the first 3 seconds, the product in action, a clear call to buy. Every video follows structures proven to convert cold traffic on Meta and TikTok, not just a "pretty video".' },
       ],
       ctaLine: 'A free 10 to 15 second sample ad, within 48 hours.',
       cta: 'Get your free sample ad',
