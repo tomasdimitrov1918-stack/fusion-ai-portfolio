@@ -163,6 +163,8 @@ Custom: `ReachedForm`, `FormStart`, `ReachedContact`, `HeroClick` (button), `Fil
 ## V2 CTAs → on-page form
 On `?v=2` the hero CTA, MidCta button and OfferV2 button call `scrollToLeadForm()` (`lib/variant.ts`, self-correcting smooth
 scroll — lazy content shifts the form mid-scroll) and fire custom `GoToForm` {placement}. V1 keeps the external contact page.
+`MobileCta` on V2 shows the hero's button (same look/text) → form (`GoToForm` placement `mobile_sticky`) and hides while the
+hero buttons, the form or the contacts are on screen; V1 keeps the old "Заяви оферта" pill → #contact.
 
 ## V2 bottom of page
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
