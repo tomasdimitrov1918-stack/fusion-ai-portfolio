@@ -1,0 +1,364 @@
+/* "Problems solved" rows (both versions, after the video sections). Design and mechanics
+   adapted from the "Why Larven AI" section on larven.ai, re-skinned to the Fusion brand:
+   Montserrat, red accent instead of blue. Scoped under .ps.
+   A row gets .is-solved once its top passes 60% of the viewport (ProblemsSolved.tsx):
+   the red strike sweeps across the problem, the text greys out, the answer fades in. */
+
+.ps {
+  --ps-red: #E01020;
+  --ps-red-light: #FF6B76;
+  --ps-muted: #9A9CA8;
+  --ps-dim: #6A6C78;
+  --ps-border: rgba(255, 255, 255, 0.08);
+  --ps-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  position: relative;
+  z-index: 2; /* above the fixed FloatingDots */
+  overflow: hidden;
+  padding-block: clamp(56px, 10vw, 128px);
+  font-family: "Montserrat", "Segoe UI", system-ui, sans-serif;
+  color: #fff;
+}
+
+/* Hairline at the top + soft red haze behind the heading */
+.ps__line {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(224, 16, 32, 0.3), transparent);
+}
+
+.ps__haze {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 520px;
+  pointer-events: none;
+  background: radial-gradient(55% 60% at 15% 0, rgba(224, 16, 32, 0.12), rgba(224, 16, 32, 0) 70%);
+}
+
+.ps__container {
+  position: relative;
+  width: 100%;
+  max-width: 1140px;
+  margin-inline: auto;
+  padding-inline: clamp(20px, 5vw, 40px);
+}
+
+/* ── Header ── */
+.ps__head {
+  display: grid;
+  gap: 32px;
+}
+
+@media (min-width: 1024px) {
+  .ps__head {
+    grid-template-columns: 8fr 4fr;
+    align-items: end;
+    gap: 64px;
+  }
+}
+
+.ps__eyebrow {
+  color: var(--ps-red);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.ps__title {
+  font-size: clamp(2.125rem, 5vw, 3.75rem); /* Bulgarian runs longer than larven's English */
+  font-weight: 400;
+  line-height: 1.04;
+  letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+
+.ps__title-muted {
+  color: rgba(212, 212, 216, 0.6);
+}
+
+.ps__intro {
+  color: var(--ps-muted);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+}
+
+.ps__intro + .ps__intro {
+  margin-top: 16px;
+}
+
+@media (min-width: 1024px) {
+  .ps__intros {
+    padding-bottom: 8px;
+  }
+}
+
+/* ── Table ── */
+.ps__table {
+  margin-top: clamp(56px, 8vw, 96px);
+}
+
+.ps__cols {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ps-border);
+  color: var(--ps-dim);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ps__cols-solution {
+  display: none;
+}
+
+.ps__counter {
+  color: var(--ps-red-light);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+@media (min-width: 1024px) {
+  .ps__cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+  }
+
+  .ps__cols-right {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .ps__cols-solution {
+    display: inline;
+  }
+}
+
+.ps__list {
+  list-style: none;
+}
+
+.ps__row {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  column-gap: 16px;
+  row-gap: 16px;
+  padding-block: 32px;
+  border-bottom: 1px solid var(--ps-border);
+}
+
+@media (min-width: 640px) {
+  .ps__row {
+    grid-template-columns: 3.5rem 1fr;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ps__row {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 64px;
+    padding-block: 44px;
+  }
+
+  .ps__row-left {
+    display: flex;
+    align-items: flex-start;
+    gap: 32px;
+  }
+}
+
+/* Mobile: index and problem sit in the grid directly; answer goes under the problem */
+@media (max-width: 1023px) {
+  .ps__row-left {
+    display: contents;
+  }
+
+  .ps__answer {
+    grid-column: 2;
+  }
+}
+
+/* Soft red wash on hover */
+.ps__wash {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(60% 120% at 30% 100%, rgba(224, 16, 32, 0.1), rgba(224, 16, 32, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.ps__row:hover .ps__wash {
+  opacity: 1;
+}
+
+.ps__index {
+  padding-top: 6px;
+  color: var(--ps-dim);
+  font-size: 0.875rem;
+  font-variant-numeric: tabular-nums;
+  transition: color 0.5s;
+}
+
+@media (min-width: 640px) {
+  .ps__index {
+    padding-top: 10px;
+  }
+}
+
+.ps__problem-heading {
+  font-size: clamp(1.5rem, 3vw, 2.1rem);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+/* The strike: a 2px red line drawn as a background, grown from 0 to full width */
+.ps__problem {
+  background-image: linear-gradient(var(--ps-red), var(--ps-red));
+  background-position: 0 58%;
+  background-repeat: no-repeat;
+  background-size: 0 2px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: #fff;
+  transition: background-size 0.9s cubic-bezier(0.65, 0, 0.35, 1), color 0.9s;
+}
+
+.ps__answer {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.7s 0.45s, transform 0.7s var(--ps-ease-out) 0.45s;
+}
+
+@media (min-width: 1024px) {
+  .ps__answer {
+    padding-top: 6px;
+    max-width: 30rem;
+  }
+}
+
+.ps__solved-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  color: var(--ps-red-light);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ps__solved-label svg {
+  width: 14px;
+  height: 14px;
+}
+
+.ps__solution {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: clamp(1rem, 1.6vw, 1.125rem);
+  line-height: 1.65;
+}
+
+/* Solved state */
+.ps__row.is-solved .ps__problem {
+  background-size: 100% 2px;
+  color: #737373;
+}
+
+.ps__row.is-solved .ps__index {
+  color: var(--ps-red-light);
+}
+
+.ps__row.is-solved .ps__answer {
+  opacity: 1;
+  transform: none;
+}
+
+/* ── CTAs ── */
+.ps__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 56px;
+}
+
+.ps__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 16px 32px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 800;
+  cursor: pointer;
+  text-decoration: none;
+  transition: transform 0.2s var(--ps-ease-out), box-shadow 0.2s var(--ps-ease-out),
+              background-color 0.2s var(--ps-ease-out), border-color 0.2s var(--ps-ease-out);
+}
+
+.ps__btn svg {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.ps__btn--primary {
+  border: 0;
+  background: var(--ps-red);
+  color: #fff;
+  box-shadow: 0 8px 28px rgba(224, 16, 32, 0.35);
+}
+
+.ps__btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 36px rgba(224, 16, 32, 0.45);
+}
+
+.ps__btn--ghost {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.ps__btn--ghost:hover {
+  border-color: rgba(255, 255, 255, 0.32);
+  transform: translateY(-2px);
+}
+
+.ps__btn:focus-visible {
+  outline: 3px solid var(--ps-red);
+  outline-offset: 3px;
+}
+
+@media (max-width: 480px) {
+  .ps__btn {
+    width: 100%;
+  }
+}
+
+/* No JS / reduced motion: everything shown in its solved state, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .ps__problem,
+  .ps__answer,
+  .ps__index,
+  .ps__wash,
+  .ps__btn {
+    transition: none;
+  }
+}

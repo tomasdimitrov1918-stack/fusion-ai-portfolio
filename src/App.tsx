@@ -9,6 +9,7 @@ import { WhyUsV2 } from './components/WhyUsV2'
 import { AboutUs } from './components/AboutUs'
 import { OfferV2 } from './components/OfferV2'
 import { LeadForm } from './components/LeadForm'
+import { ProblemsSolved } from './components/ProblemsSolved'
 import { ToolsMarquee } from './components/ToolsMarquee'
 import { PortfolioSection } from './components/PortfolioSection'
 import { BrandsMarquee } from './components/BrandsMarquee'
@@ -68,6 +69,7 @@ export default function App() {
             }}
           />
         ))}
+        <ProblemsSolved />
         <ProcessSection />
         <MidCtaSection />
         <StaticAdsSection />

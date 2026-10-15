@@ -83,6 +83,28 @@ export const t = {
       price: '350 до 400 €',
       priceNote: 'на месец за 10 видеа до 35 секунди',
     },
+    // "Problems solved" rows (both versions, after the videos); design adapted from larven.ai
+    problems: {
+      eyebrow: 'Защо Fusion',
+      title: 'Най-големите ти проблеми с видео рекламите,',
+      titleMuted: 'решени.',
+      intro: 'Всеки растящ бранд се блъска в едни и същи стени. Ето как минаваме през всяка от тях.',
+      intro2: 'Едно студио за всичките шест: AI видео реклами, направени за твоя продукт и готови за дни.',
+      colProblem: 'Проблемът',
+      colSolution: 'Как го решаваме',
+      solved: 'решени',
+      solvedLabel: 'Решено',
+      rows: [
+        { problem: 'Седмици чакане за една реклама', solution: 'Готово видео за дни, не за седмици. Средното ни време за доставка е 48 часа.' },
+        { problem: 'Снимки, които струват колкото рекламния бюджет', solution: 'Без снимачен екип, студио, актьори и локации. Същото качество на екрана на част от цената.' },
+        { problem: 'Рекламите „умират“ след седмица', solution: 'Всеки месец получаваш свежи креативи, за да тестваш постоянно и кампаниите да не изгарят.' },
+        { problem: 'Видеа, които никой не догледа', solution: 'Хук в първите 3 секунди, продуктът в действие и ясен призив. Структури, които работят в Meta и TikTok.' },
+        { problem: 'Нямаш време да пишеш сценарии', solution: 'Пишем ги ние, или ти пишеш, а ние поемаме всичко останало. Изборът е твой.' },
+        { problem: 'Същият стил, който всички вече са виждали', solution: 'Анимация, глина, UGC, кинематографичен стил: тестваш различни подходи за един и същ продукт.' },
+      ],
+      cta: 'Вземи безплатна примерна реклама',
+      ctaSecondary: 'Виж как работим',
+    },
     // Lead form at the bottom (both versions), ported from the aiads landing page + phone
     leadForm: {
       eyebrow: 'Безплатна примерна реклама',
@@ -267,6 +289,28 @@ export const t = {
       priceLabel: 'Approximate price',
       price: '€350 to €400',
       priceNote: 'per month for 10 videos up to 35 seconds',
+    },
+    // "Problems solved" rows (both versions, after the videos); design adapted from larven.ai
+    problems: {
+      eyebrow: 'Why Fusion',
+      title: 'Your biggest video ad problems,',
+      titleMuted: 'solved.',
+      intro: "Every growing brand hits the same walls. Here's exactly how we break through each one.",
+      intro2: 'One studio for all six: AI video ads made for your product and ready in days.',
+      colProblem: 'The problem',
+      colSolution: 'How we solve it',
+      solved: 'solved',
+      solvedLabel: 'Solved',
+      rows: [
+        { problem: 'Waiting weeks for a single ad', solution: 'A finished video in days, not weeks. Our average delivery time is 48 hours.' },
+        { problem: 'Shoots that cost as much as the ad budget', solution: 'No film crew, studio, actors or locations. The same on-screen quality at a fraction of the price.' },
+        { problem: 'Ads that burn out after a week', solution: 'Fresh creatives every month, so you keep testing and campaigns never go stale.' },
+        { problem: 'Videos nobody watches to the end', solution: 'A hook in the first 3 seconds, the product in action, a clear call to act. Structures that work on Meta and TikTok.' },
+        { problem: 'No time to write scripts', solution: 'We write them, or you write and we handle everything else. Your choice.' },
+        { problem: 'The same style everyone has already seen', solution: 'Animation, claymation, UGC, cinematic: test different approaches for the same product.' },
+      ],
+      cta: 'Get your free sample ad',
+      ctaSecondary: 'See how we work',
     },
     // Lead form at the bottom (both versions), ported from the aiads landing page + phone
     leadForm: {

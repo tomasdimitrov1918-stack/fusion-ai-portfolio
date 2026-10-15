@@ -64,6 +64,8 @@ src/
     AboutUs.tsx/.css       — "Кои сме ние" founders section, both versions (scoped .ab)
     OfferV2.tsx/.css       — ?v=2 "Месечен план" card with price hint (scoped .of)
     LeadForm.tsx/.css      — Lead form + thank-you screen, both versions (scoped .lf), posts to /api/lead
+    ProblemsSolved.tsx/.css — "Най-големите ти проблеми… решени." 6 problem rows struck through on scroll + 00/06 counter,
+                             both versions (scoped .ps); design/mechanics adapted from larven.ai's "Why Larven AI" section
     ToolsMarquee.tsx       — Scroll-triggered typewriter + border-draw chip animation per tool
     BrandsMarquee.tsx      — Infinite marquee of brand logos (clients)
     PortfolioSection.tsx   — Section wrapper with parallax ghost text + style filter chips + video grid
@@ -141,7 +143,8 @@ scripts/
 | 3 | | `<WhyUsV2 />` (cards + CTA → form) |
 | 4 | `<ToolsMarquee />` | `<ToolsMarquee />` |
 | 5 | 3× `<PortfolioSection />` (animated, ugc, product) | same |
-| 6 | `<ProcessSection />`, `<MidCtaSection />` | same (MidCta button → form) |
+| 5b | `<ProblemsSolved />` (`#problems`) | same |
+| 6 | `<ProcessSection />` (`#process`), `<MidCtaSection />` | same (MidCta button → form) |
 | 7 | `<StaticAdsSection />` | same |
 | 8 | `<AboutUs />` | `<AboutUs />`, then `<OfferV2 />` |
 | 9 | `<CtaSection />` ("Реален растеж" + contacts) | `<LeadForm />` |
@@ -221,6 +224,12 @@ On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSe
   Test with `?meta_test=TEST12345` (code from Events Manager → Test Events).
 - Instant lead alerts go to Telegram from the landing's function (env `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID` on the
   **fusion-creative-landing** Vercel project).
+
+## ProblemsSolved mechanics
+A row gets `.is-solved` while its top is above 60% of the viewport (`SOLVE_LINE`), computed on scroll via rAF, so scrolling
+back up un-solves it. Solved = red 2px strike grows across the problem (background-size 0 → 100%), text greys, index turns
+light red, answer fades in after 0.45 s. Counter = solved rows. Reduced motion: all rows start solved. CTAs: form (`GoToForm`
+placement `problems`) + "Виж как работим" → `#process`. Copy in `tr.problems` (never invent numbers; 48 h is the hero stat).
 
 ## Video CDN — Bunny.net
 Videos are hosted on Bunny CDN (NOT Vercel — too large).

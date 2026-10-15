@@ -116,7 +116,7 @@ export function ProcessSection() {
   ]
 
   return (
-    <section style={{ background: '#0D0E14', padding: '80px 48px' }}>
+    <section id="process" style={{ background: '#0D0E14', padding: '80px 48px' }}>
       <div style={{ maxWidth: 760, margin: '0 auto' }}>
 
         {/* Heading */}
