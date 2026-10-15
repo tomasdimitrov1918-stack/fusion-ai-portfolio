@@ -1,3 +1,16 @@
+# ⏰ PENDING — remind the owner at the START of every session until done
+
+**Match the page to each Meta ad set (`?niche=`).** Agreed 2026-10-15, postponed. At the start of every session on this
+project, before anything else, tell the owner in one line that this is still open and ask if today is the day. Delete this
+whole block only once it has shipped.
+
+- Each ad set links to its niche, e.g. `?v=2&niche=kozmetika`. The param changes the V2 hero headline/sub (e.g. „Видео
+  реклами за козметични брандове…") and puts that niche's videos first in the best-picks view; everything else stays.
+- Needs from the owner: the niche list (slugs + headline per niche) and which videos belong to each niche.
+- Implementation sketch: `lib/variant.ts` reads `niche` like `v`; a `NICHES` map (slug → copy + featured video numbers);
+  HeroV2 / PortfolioSection read it; pixel events get a `niche` param; unknown slug → default page. Keep `v` and `lang`
+  params intact on the language toggle.
+
 # Fusion AI Portfolio — Project Context
 
 ## What this project is
@@ -175,6 +188,8 @@ hero buttons, the form or the contacts are on screen; V1 keeps the old "Заяв
 On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSection contactsOnly />` (just the Viber/FB block, keeps `id="contact"`) → `<Footer blend />`, all on the page background.
 
 ## Lead form + `/api/lead`
+- Store field accepts a website **or Instagram** ("Линк към сайт или Instagram", URL or bare `@handle`); three steps
+  (Попълваш → Обаждаме ти се → До 48 часа…) sit right above the submit button.
 - `LeadForm.tsx` (+ `.css`, scoped `.lf`, copy in `tr.leadForm`) is the landing's form with a required **phone** field, **no budget
   and no videos-per-month** selects, and a "Пиши ни във Viber" link (Tomas's Viber, pixel `Contact` placement `form`).
 - One promise, same words everywhere (hero hook, why-us CTA, offer card, form, confirmation email): **"Безплатна примерна реклама

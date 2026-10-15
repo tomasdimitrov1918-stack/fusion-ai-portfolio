@@ -140,6 +140,48 @@
   font-weight: 600;
 }
 
+.lf__steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  list-style: none;
+}
+
+.lf__step {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--lf-border);
+  border-radius: 10px;
+  background: var(--lf-surface);
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.lf__step-num {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--lf-red-soft);
+  border: 1px solid rgba(224, 16, 32, 0.3);
+  color: #FF8A92;
+  font-size: 0.8125rem;
+  font-weight: 800;
+}
+
+@media (max-width: 600px) {
+  .lf__steps {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
 .lf__submit {
   display: inline-flex;
   align-items: center;

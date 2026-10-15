@@ -21,6 +21,8 @@ const VIBER_TOMAS = 'viber://chat?number=%2B359896718015'
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 // Accept bare domains too ("twoiamagazin.bg") — visitors won't type the protocol
 const URL_RE = /^(https?:\/\/)?[^\s.]+\.[^\s]{2,}$/i
+// …or a bare Instagram handle ("@brand")
+const HANDLE_RE = /^@[\w.]{2,30}$/
 // Digits plus common separators; at least 6 digits in total
 const PHONE_RE = /^\+?[\d\s()./-]{6,}$/
 
@@ -33,7 +35,7 @@ function isValid(field: Field, raw: string) {
   const value = raw.trim()
   if (!value) return false
   if (field === 'email') return EMAIL_RE.test(value)
-  if (field === 'store_url') return URL_RE.test(value)
+  if (field === 'store_url') return URL_RE.test(value) || HANDLE_RE.test(value)
   if (field === 'phone') return PHONE_RE.test(value) && value.replace(/\D/g, '').length >= 6
   return true
 }
@@ -215,7 +217,7 @@ export function LeadForm() {
               <label className="lf__label" htmlFor="lf-store_url">
                 {f.storeLabel} <span className="lf__required" aria-hidden="true">*</span>
               </label>
-              <input {...inputProps('store_url')} type="url" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} required />
+              <input {...inputProps('store_url')} type="text" inputMode="url" autoComplete="url" placeholder={f.storePlaceholder} required />
               <p className="lf__hint">{f.storeHint}</p>
               {errorText('store_url')}
             </div>
@@ -245,6 +247,16 @@ export function LeadForm() {
               <p className="lf__hint">{f.phoneHint}</p>
               {errorText('phone')}
             </div>
+
+            {/* What happens next: removes the fear of a hard sales call */}
+            <ol className="lf__steps">
+              {f.steps.map((step, i) => (
+                <li key={step} className="lf__step">
+                  <span className="lf__step-num" aria-hidden="true">{i + 1}</span>
+                  {step}
+                </li>
+              ))}
+            </ol>
 
             <button
               className="lf__submit"
