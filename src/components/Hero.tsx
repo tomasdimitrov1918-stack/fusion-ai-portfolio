@@ -125,7 +125,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'easeOut' }}
         >
-          Portfolio 2026 — Monika &amp; Tomas
+          Portfolio 2026 · Monika &amp; Tomas
         </motion.p>
 
         {/* Headline — letter-by-letter blur reveal.
@@ -237,7 +237,7 @@ export function Hero() {
       >
         <motion.img
           src="/founders.webp"
-          alt="Monika & Tomas — Fusion AI Creative"
+          alt="Monika & Tomas, Fusion AI Creative"
           className="founders-img"
           style={{
             objectFit: 'contain',

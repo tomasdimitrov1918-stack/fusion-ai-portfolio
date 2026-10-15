@@ -96,7 +96,7 @@ function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProp
         <ContactButton
           href={viber}
           label={viberLabel}
-          ariaLabel={`${viberLabel} — ${name}`}
+          ariaLabel={`${viberLabel}, ${name}`}
           color={VIBER_PURPLE}
           onTrack={lead('viber')}
         >
@@ -105,7 +105,7 @@ function Person({ name, viber, facebook, viberLabel, facebookLabel }: PersonProp
         <ContactButton
           href={facebook}
           label={facebookLabel}
-          ariaLabel={`${facebookLabel} — ${name}`}
+          ariaLabel={`${facebookLabel}, ${name}`}
           color={FB_BLUE}
           external
           onTrack={lead('facebook')}

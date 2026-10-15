@@ -284,6 +284,8 @@ const { lang, toggle, tr } = useLanguage()
 - `tr.process` — eyebrow, line1, line2, steps[], statDeadlineLabel/Value, statCapacityLabel/Value, statRevisionsLabel/Value
 
 ## Key conventions
+- **No dashes in visitor copy** (owner rule, 2026-10-15): no em dash (—), en dash (–) or `--` anywhere a visitor can read,
+  incl. `<title>`, meta tags, alt and aria-labels. Use a comma, colon, period, `·` or `|`. Within-word hyphens are fine.
 - Named exports only (no default exports except App)
 - All animation timing values as named constants in `lib/animations.ts`
 - Import from `motion/react` — never `framer-motion`

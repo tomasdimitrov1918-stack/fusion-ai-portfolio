@@ -77,7 +77,7 @@ export const sections: Section[] = [
     id: 'animated-ads',
     number: '01',
     title: 'AI Animated Ads',
-    description: 'Кинематографични, динамични реклами — създадени изцяло с AI.',
+    description: 'Кинематографични, динамични реклами, създадени изцяло с AI.',
     gridLayout: '5-col',
     items: assignSubs(makeVideos('animated', 'animated', 91, MOVED_ELSEWHERE).map((v) => {
       if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
@@ -95,7 +95,7 @@ export const sections: Section[] = [
     id: 'ugc-ads',
     number: '02',
     title: 'AI UGC Ads',
-    description: 'Реклами с усещане за истинско съдържание от потребители — без заснемане.',
+    description: 'Реклами с усещане за истинско съдържание от потребители, без заснемане.',
     gridLayout: '4-col',
     items: assignSubs(makeVideos('ugc', 'ugc', 40), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
