@@ -28,6 +28,7 @@ const BRANDS = [
   { src: '/logos/maitreya-fields.webp', alt: 'Maitreya Fields', h: 32 },
   { src: '/logos/body-fuel.webp',  alt: 'Body Fuel',     h: 34 },
   { src: '/logos/yummy.webp',      alt: 'Yummy',         h: 48 },
+  { src: '/logos/parfen.webp',     alt: 'Parfen Perfumes', h: 44 },
   { src: '/logos/dostaviam.webp',  alt: 'Dostaviam',     h: 36 },
 ]
 
