@@ -86,7 +86,7 @@ src/
     Contacts.tsx           — Centered Viber + Facebook buttons for Tomas & Monika (viber:// deep link + FB profile)
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections (83 animated shown of CDN 1-91, 40 ugc, 6 product), featured picks, VideoItem/Section types
+    portfolio.ts           — 3 sections (83 animated shown of CDN 1-91, 44 ugc, 8 product), featured picks, VideoItem/Section types
     staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
@@ -137,7 +137,7 @@ public/
     animated/35-poster.webp
     ugc/01-40.mp4          — (original 30 listed; now 1-40 on the CDN) (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
-    product/01-04.mp4      — 4 AI Product Ads
+    product/01-08.mp4      — 8 AI Product Ads
 api/lead.js                — Vercel serverless function behind the lead form (Resend emails + Meta Conversions API)
 scripts/
   make-test-grid-thumbs.mjs — picks 40 static ads round-robin by brand → public/test-grid/NN.webp (240px) + src/data/testGrid.ts
@@ -174,7 +174,7 @@ scripts/
 |---|-----|-------|---------|------|
 | 01 | animated-ads | AI Animated Ads | 83 (12 best picks shown first) | 5-col |
 | 02 | ugc-ads | AI UGC Ads | 40 (12 best picks shown first) | 4-col |
-| 03 | product-ads | AI Product Ads | 6 | 2-col |
+| 03 | product-ads | AI Product Ads | 8 (07 perfume, 08 candle) | 2-col |
 
 ## Video subcategories (style filter chips)
 Animated and UGC sections have filter chips ("All" + one per style); Product has none (too few videos).
