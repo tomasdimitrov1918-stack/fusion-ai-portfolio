@@ -40,9 +40,9 @@ const ANIMATED_SUBS: Record<string, number[]> = {
 }
 
 const UGC_SUBS: Record<string, number[]> = {
-  Testimonials: [3, 8, 10, 12, 15, 28, 29, 30],
+  Testimonials: [3, 8, 10, 12, 15, 28, 29, 30, 41, 42],
   'Expert / Doctor': [16, 17, 18, 21, 23, 33],
-  'Skits & TV Formats': [2, 7, 19, 20, 22, 24, 25, 26, 27, 31, 32, 34, 35, 36, 37],
+  'Skits & TV Formats': [2, 7, 19, 20, 22, 24, 25, 26, 27, 31, 32, 34, 35, 36, 37, 43, 44],
   'Lifestyle & Product': [1, 4, 5, 6, 9, 11, 13, 14, 38, 39, 40],
 }
 
@@ -97,7 +97,7 @@ export const sections: Section[] = [
     title: 'AI UGC Ads',
     description: 'Реклами с усещане за истинско съдържание от потребители, без заснемане.',
     gridLayout: '4-col',
-    items: assignSubs(makeVideos('ugc', 'ugc', 40), UGC_SUBS),
+    items: assignSubs(makeVideos('ugc', 'ugc', 44), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
     featured: [2, 18, 22, 21, 30, 32, 31, 33, 37, 25, 27, 28],
   },
