@@ -193,7 +193,7 @@ export const t = {
       bullet1: 'Мислим преди да действаме.',
       bullet2: 'Без компромис с качеството.',
       button: 'Разкажи ни за бизнеса ти →',
-      contactUrl: 'https://fusioncreative.net/kontakti',
+      contactUrl: 'https://fusioncreative.net/uslugi/ai-studio#kontakt',
     },
     midCta: {
       eyebrow: 'Харесва ли ви?',
@@ -418,7 +418,7 @@ export const t = {
       bullet1: 'We think before we act.',
       bullet2: 'No compromise on quality.',
       button: 'Tell us about your business →',
-      contactUrl: 'https://fusioncreative.net/en/contacts',
+      contactUrl: 'https://fusioncreative.net/en/services/ai-studio#kontakt',
     },
     midCta: {
       eyebrow: 'Like what you see?',
