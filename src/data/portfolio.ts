@@ -107,6 +107,6 @@ export const sections: Section[] = [
     title: 'AI Product Ads',
     description: 'Висококачествени продуктови реклами, създадени от една-единствена снимка.',
     gridLayout: '2-col',
-    items: makeVideos('product', 'product', 6),
+    items: makeVideos('product', 'product', 8),
   },
 ]

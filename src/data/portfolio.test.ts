@@ -18,12 +18,12 @@ describe('portfolio data', () => {
     expect(byId('animated-ads').items).toHaveLength(83)
   })
 
-  it('ugc-ads section has 40 items', () => {
-    expect(byId('ugc-ads').items).toHaveLength(40)
+  it('ugc-ads section has 44 items', () => {
+    expect(byId('ugc-ads').items).toHaveLength(44)
   })
 
-  it('product-ads section has 6 items', () => {
-    expect(byId('product-ads').items).toHaveLength(6)
+  it('product-ads section has 8 items', () => {
+    expect(byId('product-ads').items).toHaveLength(8)
   })
 
   it('every item has a non-empty videoUrl', () => {
@@ -74,9 +74,9 @@ describe('video subcategories', () => {
 
   it('ugc subcategory counts match the review', () => {
     expect(countBySub('ugc-ads')).toEqual({
-      Testimonials: 8,
+      Testimonials: 10,
       'Expert / Doctor': 6,
-      'Skits & TV Formats': 15,
+      'Skits & TV Formats': 17,
       'Lifestyle & Product': 11,
     })
   })

@@ -42,12 +42,6 @@ function escapeHtml(value) {
     .replace(/"/g, "&quot;");
 }
 
-// Website, full URL or a bare Instagram handle ("@brand")
-function storeHref(store) {
-  if (store.startsWith("@")) return "https://instagram.com/" + store.slice(1);
-  return store.startsWith("http") ? store : "https://" + store;
-}
-
 /* Confirmation email — owner-approved Bulgarian template, filled from the form */
 function confirmationEmail(name, storeUrl) {
   const safeName = escapeHtml(name);
@@ -80,7 +74,7 @@ function confirmationEmail(name, storeUrl) {
     <p style="margin:0 0 16px;">Получихме заявката ти, благодарим.</p>
     <p style="margin:0 0 16px;">
       ${safeStore
-        ? `Ето какво следва: разглеждаме <a href="${storeHref(safeStore)}" style="color:#E01020;">${safeStore}</a>
+        ? `Ето какво следва: разглеждаме <strong>${safeStore}</strong>
       и подготвяме ${SAMPLE_AD}, направена конкретно за твоя продукт.`
         : `Ето какво следва: ще ти се обадим, за да научим повече за продукта ти, и подготвяме ${SAMPLE_AD}, направена конкретно за него.`}
       Ще я получиш до 48 часа, директно от нас.
