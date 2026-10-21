@@ -58,14 +58,21 @@ function assignSubs(items: VideoItem[], groups: Record<string, number[]>): Video
 }
 
 // `skip` lists numbers that exist on the CDN under this folder but are shown in another section.
+// Re-exported videos keep their number but live under a new file name, because the CDN
+// caches a path for 30 days and ignores query strings (no account key to purge).
+const FILE_OVERRIDES: Record<string, string> = {
+  'ugc/41': '41-v2',
+}
+
 function makeVideos(category: Category, folder: string, count: number, skip: number[] = []): VideoItem[] {
   return Array.from({ length: count }, (_, i) => i + 1).filter((num) => !skip.includes(num)).map((num) => {
     const n = String(num).padStart(2, '0')
+    const file = FILE_OVERRIDES[`${folder}/${n}`] ?? n
     return {
       id: `${category}-${n}`,
       category,
-      videoUrl: `${CDN}/${folder}/${n}.mp4`,
-      poster: `${CDN}/${folder}/${n}-poster.webp`,
+      videoUrl: `${CDN}/${folder}/${file}.mp4`,
+      poster: `${CDN}/${folder}/${file}-poster.webp`,
       label: `${n}`,
     }
   })
