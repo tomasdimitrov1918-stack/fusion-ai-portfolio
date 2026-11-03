@@ -1,3 +1,8 @@
+# RETIRED 3 Nov 2026
+portfolio.fusioncreative.net now redirects to fusioncreative.net (see vercel.json). Do NOT add videos, logos or copy
+here; edit ~/FUSION WEBSITE/fusion-website instead. Video upload recipe and Bunny CDN notes below still apply.
+The ?niche= reminder below moves to the main site.
+
 # ⏰ PENDING — remind the owner at the START of every session until done
 
 **Match the page to each Meta ad set (`?niche=`).** Agreed 2026-10-15, postponed. At the start of every session on this
