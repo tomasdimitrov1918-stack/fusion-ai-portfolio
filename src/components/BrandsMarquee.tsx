@@ -30,6 +30,8 @@ const BRANDS = [
   { src: '/logos/yummy.webp',      alt: 'Yummy',         h: 48 },
   { src: '/logos/parfen.webp',     alt: 'Parfen Perfumes', h: 44 },
   { src: '/logos/dostaviam.webp',  alt: 'Dostaviam',     h: 36 },
+  { src: '/logos/jellyvita.webp',  alt: 'JellyVita',     h: 38 },
+  { src: '/logos/noxera.webp',     alt: 'Noxera',        h: 26 },
 ]
 
 export function BrandsMarquee() {
