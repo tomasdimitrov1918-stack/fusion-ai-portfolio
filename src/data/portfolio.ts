@@ -30,7 +30,7 @@ const ANIMATED_SUBS: Record<string, number[]> = {
   'Talking Products': [4, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 22, 27, 28, 29, 35, 46, 48, 49, 64, 80, 86],
   'Ingredients & Body': [2, 3, 5, 19, 20, 24, 25, 26, 31, 32, 36, 37, 38, 47, 56, 57, 59, 63, 65, 95, 97],
   'Story-Driven': [1, 7, 15, 21, 23, 33, 34, 39, 40, 41, 42, 43, 44, 45, 55, 58, 69, 70, 92, 96, 106],
-  'Song Ads': [100, 101, 93, 104, 105, 102, 103],
+  'Song Ads': [100, 101, 93, 104, 105, 102, 103, 107, 108],
   'Clay & Stop-Motion': [60, 61, 62, 66, 67, 68, 94],
   '2D Videos': [11, 30, 71, 89, 90],
   'Cinematic Premium': [50, 51, 52, 53, 54, 75, 76, 79],
@@ -87,7 +87,7 @@ export const sections: Section[] = [
     title: 'AI Animated Ads',
     description: 'Кинематографични, динамични реклами, създадени изцяло с AI.',
     gridLayout: '5-col',
-    items: assignSubs(makeVideos('animated', 'animated', 106, MOVED_ELSEWHERE).map((v) => {
+    items: assignSubs(makeVideos('animated', 'animated', 108, MOVED_ELSEWHERE).map((v) => {
       if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
       if (v.id === 'animated-31') return { ...v, poster: `${CDN}/animated/31-poster.webp` }
       if (v.id === 'animated-32') return { ...v, poster: `${CDN}/animated/32-poster.webp` }

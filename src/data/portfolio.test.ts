@@ -14,8 +14,8 @@ describe('portfolio data', () => {
     expect(sections).toHaveLength(3)
   })
 
-  it('animated-ads section has 98 items', () => {
-    expect(byId('animated-ads').items).toHaveLength(98)
+  it('animated-ads section has 100 items', () => {
+    expect(byId('animated-ads').items).toHaveLength(100)
   })
 
   it('ugc-ads section has 51 items', () => {
@@ -62,7 +62,7 @@ describe('video subcategories', () => {
       'Talking Products': 22,
       'Ingredients & Body': 21,
       'Story-Driven': 21,
-      'Song Ads': 7,
+      'Song Ads': 9,
       'Clay & Stop-Motion': 7,
       '2D Videos': 5,
       'Cinematic Premium': 8,
