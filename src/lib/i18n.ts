@@ -69,19 +69,19 @@ export const t = {
       title: 'Твоят месечен двигател за рекламни\u00a0креативи.',
       sub: 'Продуктизиран месечен абонамент: всеки месец получаваш готови за пускане видео реклами, без брифове по 10 страници и без луди бюджети.',
       checklist: [
-        'Фиксиран брой конвертиращи видео реклами всеки месец. Постоянен поток от свежи креативи за тестване.',
-        'Изцяло done-for-you продукция: сценарий, AI продукция, монтаж и брандирани субтитри.',
+        'Една цена за всички стилове: анимирани, UGC, cinematic, clay или продуктови видеа. Цената зависи само от дължината и общия брой видеа за месеца.',
+        'Изцяло done-for-you продукция: сценарий, AI продукция, монтаж и брандирани субтитри. Скриптът е твой или наш, на същата цена.',
         'Създадени специално за бизнеса ти: продукт, оферта и призив за покупка във всяко видео.',
-        'Ревизии, включени в плана. Доуточняваме всяко видео, докато не заработи за твоя бранд.',
+        'До 3 корекции, включени във всяко видео. Готово за качване в Meta, TikTok и YouTube.',
       ],
       sideTitle: 'Виж го първо върху твоя\u00a0продукт',
       sideText: 'Разкажи ни за бранда си и ще получиш безплатна примерна реклама от 10 до 15 секунди, до 48 часа, направена за твой реален продукт, преди да платиш каквото и да е.',
       cta: 'Искам примерна реклама',
       hint: 'Безплатно. Без ангажимент. До 48 часа.',
-      // From the 2026 offer PDF: 4 to 15 videos/month tier, up to 35 s: Animated 35 €, UGC 40 € per video
+      // From the unified November 2026 offer PDF (same price for every style): 4 to 15 videos/month tier, up to 35 s = 40 € per video
       priceLabel: 'Ориентировъчна цена',
-      price: '350 до 400 €',
-      priceNote: 'на месец за 10 видеа до 35 секунди',
+      price: '400 €',
+      priceNote: 'на месец за 10 видеа до 35 секунди, във всеки стил',
     },
     // "Problems solved" rows (both versions, after the videos); design adapted from larven.ai
     problems: {
@@ -207,7 +207,7 @@ export const t = {
       steps: [
         { num: '01', title: 'Избираш кой пише скрипта', tag: 'Твоят избор', body: 'Ти пишеш скрипта и ние поемаме продукцията. Или ни даваш булети и ние пишем скрипта с твое одобрение.' },
         { num: '02', title: 'Предаваш материала', tag: '5 минути от теб', body: 'Готов скрипт, референтно видео или само няколко идеи. Каквото имаш, толкова е нужно, за да започнем.' },
-        { num: '03', title: 'Одобряваш скрипта', tag: 'Само при Оферта 2', body: 'Ако пишем ние, получаваш скрипта за преглед. Без твоето "да" не почваме продукцията.' },
+        { num: '03', title: 'Одобряваш скрипта', tag: 'Ако пишем ние', body: 'Ако пишем ние, получаваш скрипта за преглед. Без твоето "да" не почваме продукцията.' },
         { num: '04', title: 'Ние правим всичко', tag: '1-2 работни дни', body: 'AI аватар, анимация, монтаж, b-roll кадри, брандирани субтитри. Ти не правиш нищо.' },
         { num: '05', title: 'Корекции ако е нужно', tag: 'До 3 включени', body: 'До 3 корекции включени в цената. Без доплащане, без преговори.' },
         { num: '06', title: 'Готово за публикуване', tag: 'Готов за използване', body: 'Получаваш финалния файл, готов за Meta, TikTok или където трябва.' },
@@ -295,18 +295,18 @@ export const t = {
       title: 'Your monthly engine for ad\u00a0creatives.',
       sub: 'A productized monthly subscription: every month you get ready-to-run video ads, without 10-page briefs and without crazy budgets.',
       checklist: [
-        'A fixed number of converting video ads every month. A steady stream of fresh creatives to test.',
-        'Fully done-for-you production: script, AI production, editing and branded subtitles.',
+        'One price for every style: animated, UGC, cinematic, clay or product videos. The price depends only on length and your total videos for the month.',
+        'Fully done-for-you production: script, AI production, editing and branded subtitles. Your script or ours, same price.',
         'Built specifically for your business: product, offer and a call to buy in every video.',
-        'Revisions included in the plan. We refine every video until it works for your brand.',
+        'Up to 3 revisions included in every video. Ready to upload to Meta, TikTok and YouTube.',
       ],
       sideTitle: 'See it on your product\u00a0first',
       sideText: "Tell us about your brand and you'll get a free 10 to 15 second sample ad, within 48 hours, made for your real product, before you pay anything.",
       cta: 'I want a sample ad',
       hint: 'Free. No commitment. Within 48 hours.',
       priceLabel: 'Approximate price',
-      price: '€350 to €400',
-      priceNote: 'per month for 10 videos up to 35 seconds',
+      price: '€400',
+      priceNote: 'per month for 10 videos up to 35 seconds, in any style',
     },
     // "Problems solved" rows (both versions, after the videos); design adapted from larven.ai
     problems: {
@@ -432,7 +432,7 @@ export const t = {
       steps: [
         { num: '01', title: 'You choose who writes the script', tag: 'Your call', body: 'You write the script and we handle production. Or give us bullet points and we write it with your approval.' },
         { num: '02', title: 'You hand over the brief', tag: '5 minutes from you', body: 'A ready script, a reference video, or just a few ideas. Whatever you have is enough to get started.' },
-        { num: '03', title: 'You approve the script', tag: 'Option 2 only', body: "If we write it, you get the script for review. We don't start production without your green light." },
+        { num: '03', title: 'You approve the script', tag: 'If we write it', body: "If we write it, you get the script for review. We don't start production without your green light." },
         { num: '04', title: 'We handle everything', tag: '1-2 business days', body: 'AI avatar, animation, editing, b-roll footage, branded subtitles. You do nothing.' },
         { num: '05', title: 'Revisions if needed', tag: 'Up to 3 included', body: 'Up to 3 revisions included in the price. No extra charges, no negotiations.' },
         { num: '06', title: 'Ready to publish', tag: 'Ready to use', body: 'You receive the final file, ready for Meta, TikTok, or wherever you need it.' },
