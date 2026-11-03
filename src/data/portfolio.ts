@@ -98,7 +98,7 @@ export const sections: Section[] = [
       return v
     }), ANIMATED_SUBS),
     subcategories: Object.keys(ANIMATED_SUBS),
-    featured: [2, 7, 5, 31, 39, 52, 67, 69, 79, 80, 84, 91],
+    featured: [2, 93, 7, 100, 5, 31, 103, 39, 52, 67, 69, 79, 80, 84, 91],
   },
   {
     id: 'ugc-ads',
