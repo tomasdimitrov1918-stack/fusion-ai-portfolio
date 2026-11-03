@@ -14,12 +14,12 @@ describe('portfolio data', () => {
     expect(sections).toHaveLength(3)
   })
 
-  it('animated-ads section has 83 items', () => {
-    expect(byId('animated-ads').items).toHaveLength(83)
+  it('animated-ads section has 98 items', () => {
+    expect(byId('animated-ads').items).toHaveLength(98)
   })
 
-  it('ugc-ads section has 44 items', () => {
-    expect(byId('ugc-ads').items).toHaveLength(44)
+  it('ugc-ads section has 51 items', () => {
+    expect(byId('ugc-ads').items).toHaveLength(51)
   })
 
   it('product-ads section has 8 items', () => {
@@ -60,24 +60,25 @@ describe('video subcategories', () => {
   it('animated subcategory counts match the review', () => {
     expect(countBySub('animated-ads')).toEqual({
       'Talking Products': 22,
-      'Ingredients & Body': 19,
-      'Story-Driven': 18,
-      'Clay & Stop-Motion': 6,
+      'Ingredients & Body': 21,
+      'Story-Driven': 21,
+      'Song Ads': 7,
+      'Clay & Stop-Motion': 7,
       '2D Videos': 5,
       'Cinematic Premium': 8,
       'GTA Ads': 1,
       'Papercut Ads': 1,
       'Miniature Ads': 2,
-      'Zack D Ads': 1,
+      'Zack D Ads': 3,
     })
   })
 
   it('ugc subcategory counts match the review', () => {
     expect(countBySub('ugc-ads')).toEqual({
-      Testimonials: 10,
-      'Expert / Doctor': 6,
+      Testimonials: 14,
+      'Expert / Doctor': 8,
       'Skits & TV Formats': 17,
-      'Lifestyle & Product': 11,
+      'Lifestyle & Product': 12,
     })
   })
 

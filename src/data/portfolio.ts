@@ -28,22 +28,23 @@ const CDN = 'https://fusion-creative-assets.b-cdn.net'
 // Order of keys = order of the filter chips.
 const ANIMATED_SUBS: Record<string, number[]> = {
   'Talking Products': [4, 6, 8, 9, 10, 12, 13, 14, 16, 17, 18, 22, 27, 28, 29, 35, 46, 48, 49, 64, 80, 86],
-  'Ingredients & Body': [2, 3, 5, 19, 20, 24, 25, 26, 31, 32, 36, 37, 38, 47, 56, 57, 59, 63, 65],
-  'Story-Driven': [1, 7, 15, 21, 23, 33, 34, 39, 40, 41, 42, 43, 44, 45, 55, 58, 69, 70],
-  'Clay & Stop-Motion': [60, 61, 62, 66, 67, 68],
+  'Ingredients & Body': [2, 3, 5, 19, 20, 24, 25, 26, 31, 32, 36, 37, 38, 47, 56, 57, 59, 63, 65, 95, 97],
+  'Story-Driven': [1, 7, 15, 21, 23, 33, 34, 39, 40, 41, 42, 43, 44, 45, 55, 58, 69, 70, 92, 96, 106],
+  'Song Ads': [100, 101, 93, 104, 105, 102, 103],
+  'Clay & Stop-Motion': [60, 61, 62, 66, 67, 68, 94],
   '2D Videos': [11, 30, 71, 89, 90],
   'Cinematic Premium': [50, 51, 52, 53, 54, 75, 76, 79],
   'GTA Ads': [87],
   'Papercut Ads': [85],
   'Miniature Ads': [83, 84],
-  'Zack D Ads': [91],
+  'Zack D Ads': [91, 98, 99],
 }
 
 const UGC_SUBS: Record<string, number[]> = {
-  Testimonials: [3, 8, 10, 12, 15, 28, 29, 30, 41, 42],
-  'Expert / Doctor': [16, 17, 18, 21, 23, 33],
+  Testimonials: [3, 8, 10, 12, 15, 28, 29, 30, 41, 42, 45, 49, 50, 51],
+  'Expert / Doctor': [16, 17, 18, 21, 23, 33, 47, 48],
   'Skits & TV Formats': [2, 7, 19, 20, 22, 24, 25, 26, 27, 31, 32, 34, 35, 36, 37, 43, 44],
-  'Lifestyle & Product': [1, 4, 5, 6, 9, 11, 13, 14, 38, 39, 40],
+  'Lifestyle & Product': [1, 4, 5, 6, 9, 11, 13, 14, 38, 39, 40, 46],
 }
 
 // Animated numbers re-filed into other sections (72, 73, 74, 88 -> ugc/34-37; 77, 78 -> ugc/38-39; 81, 82 -> product/05-06 on the CDN);
@@ -86,13 +87,14 @@ export const sections: Section[] = [
     title: 'AI Animated Ads',
     description: 'Кинематографични, динамични реклами, създадени изцяло с AI.',
     gridLayout: '5-col',
-    items: assignSubs(makeVideos('animated', 'animated', 91, MOVED_ELSEWHERE).map((v) => {
+    items: assignSubs(makeVideos('animated', 'animated', 106, MOVED_ELSEWHERE).map((v) => {
       if (v.id === 'animated-13') return { ...v, poster: `${CDN}/animated/13-poster.webp` }
       if (v.id === 'animated-31') return { ...v, poster: `${CDN}/animated/31-poster.webp` }
       if (v.id === 'animated-32') return { ...v, poster: `${CDN}/animated/32-poster.webp` }
       if (v.id === 'animated-33') return { ...v, poster: `${CDN}/animated/33-poster.webp` }
       if (v.id === 'animated-34') return { ...v, poster: `${CDN}/animated/34-poster.webp` }
       if (v.id === 'animated-35') return { ...v, poster: `${CDN}/animated/35-poster.webp` }
+      if (v.id === 'animated-100') return { ...v, poster: `${CDN}/animated/100-poster-v2.webp` }
       return v
     }), ANIMATED_SUBS),
     subcategories: Object.keys(ANIMATED_SUBS),
@@ -104,7 +106,7 @@ export const sections: Section[] = [
     title: 'AI UGC Ads',
     description: 'Реклами с усещане за истинско съдържание от потребители, без заснемане.',
     gridLayout: '4-col',
-    items: assignSubs(makeVideos('ugc', 'ugc', 44), UGC_SUBS),
+    items: assignSubs(makeVideos('ugc', 'ugc', 51), UGC_SUBS),
     subcategories: Object.keys(UGC_SUBS),
     featured: [2, 18, 22, 44, 30, 32, 31, 33, 37, 25, 27, 41],
   },

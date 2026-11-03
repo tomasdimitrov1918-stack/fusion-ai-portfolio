@@ -9,7 +9,7 @@ import path from 'node:path'
 
 const root = path.resolve(import.meta.dirname, '..')
 const source = fs.readFileSync(path.join(root, 'src/data/portfolio.ts'), 'utf8')
-const FILE_RE = /^\d{2}(-poster\.webp|\.mp4)$/
+const FILE_RE = /^\d{2,3}(-poster\.webp|\.mp4)$/
 
 function parseSubs(constName) {
   const block = source.match(new RegExp(`const ${constName}[^{]*\\{([\\s\\S]*?)\\n\\}`))?.[1]

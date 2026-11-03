@@ -86,7 +86,7 @@ src/
     Contacts.tsx           — Centered Viber + Facebook buttons for Tomas & Monika (viber:// deep link + FB profile)
     Footer.tsx             — Logo + copyright
   data/
-    portfolio.ts           — 3 sections (83 animated shown of CDN 1-91, 44 ugc, 8 product), featured picks, VideoItem/Section types
+    portfolio.ts           — 3 sections (98 animated shown of CDN 1-106, 51 ugc, 8 product), featured picks, VideoItem/Section types
     staticAds.ts           — 152 static ads across 11 brands, AdConcept type, CONCEPTS array, ADS array
   hooks/
     useTilt.ts             — 3D tilt + shine for VideoCard
@@ -128,14 +128,14 @@ public/
                              animated/ + ugc/ are sorted into STYLE SUBFOLDERS (e.g. animated/Talking Products/04.mp4,
                              ugc/Expert - Doctor/16.mp4) by `node scripts/organize-videos.mjs` — Bunny stays flat.
                              product/ stays flat. The NN numbering below is unchanged.
-    animated/01-91.mp4     — (list below is the original 71; the CDN now has 1-91, 8 re-filed elsewhere, see MOVED_ELSEWHERE) (36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
+    animated/01-91.mp4     — (list below is the original 71; the CDN now has 1-106, 8 re-filed elsewhere, see MOVED_ELSEWHERE) (92=OXYBEETS Skeleton, 93=OXYBEETS Song, 94=OXYBEETS Claymation, 95=OXYBEETS 3D explainer, 96=OXYBEETS Pixar Doctor, 97=JellyVita Doctor green screen, 98-99=OXYBEETS Zack D, 100=Mazzo song, 101=Nashenci song, 102=SPNutrition Christmas song, 103=Vitaminita song, 104=Luxarmy Grandpa Shreds song, 105=Luxarmy Smooth on the Marina song, 106=Butika story; 36=Cirelle, 37=Oros, 38=Zehira, 39=Pampersi s1, 40=Pampersi bg, 41=TestoFuel, 42-44=Gifto, 45=Leya Sleep, 46-49=BrainChai, 50-54=Bioline, 55=Cat Paws, 56-59=Flora, 60-62=Leya, 63-70=Nutrizma, 71=Yummy; H.264 web-optimized)
     animated/13-poster.webp — Custom posters (first frame was black)
     animated/31-poster.webp
     animated/32-poster.webp
     animated/33-poster.webp
     animated/34-poster.webp
     animated/35-poster.webp
-    ugc/01-40.mp4          — (original 30 listed; now 1-40 on the CDN) (14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
+    ugc/01-40.mp4          — (original 30 listed; now 1-51 on the CDN) (45=JellyVita UGC 1, 46=JellyVita UGC 3 hands, 47-48=OXYBEETS UGC doctors, 49-51=Dostaviam s7/s9/s10; 14=Gifto unboxing, 15=Leya Sleep, 16-18=SS skincare, 19-30=Biolek)
     ugc/13-poster.webp     — Custom poster for ugc/13
     product/01-08.mp4      — 8 AI Product Ads
 api/lead.js                — Vercel serverless function behind the lead form (Resend emails + Meta Conversions API)
