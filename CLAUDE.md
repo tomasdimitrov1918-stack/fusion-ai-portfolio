@@ -222,8 +222,8 @@ On `?v=2` the "Реален растеж" CTA is dropped: `LeadForm` → `<CtaSe
   (`Fusion Creative <office@fusioncreative.net>`, domain verified in Resend), `LEAD_INBOX` (office@fusioncreative.net),
   `META_CAPI_TOKEN`. Changing env vars needs a redeploy.
 - One promise, same words everywhere: **"Безплатна примерна реклама от 10 до 15 секунди, до 48 часа"**.
-- `OfferV2` price hint **350 до 400 € / месец за 10 видеа до 35 секунди** (offer PDF 2026: 4-15 tier, ≤35 s,
-  Animated 35 €, UGC 40 €). Update it if the PDF prices change.
+- `OfferV2` price hint **400 € / месец за 10 видеа до 35 секунди, във всеки стил** (unified November 2026 offer PDF, ~/Desktop/FUSION ALL OFFERS: one price for every style; 4-15 tier, ≤35 s = 40 € per video;
+  script by the client or by us, same price). Update it if the PDF prices change.
 - `npx vite` does not run `/api` — use `vercel dev`, or `vercel deploy --prod --skip-domain` + `vercel curl /api/lead
   --deployment <url>` (staged builds sit behind Vercel auth) to test before publishing.
 - Test the Conversions API with `?meta_test=TEST12345` (code from Events Manager → Test Events).

@@ -1,0 +1,30 @@
+{
+  "redirects": [
+    {
+      "source": "/",
+      "has": [
+        { "type": "query", "key": "v", "value": "2" },
+        { "type": "query", "key": "lang", "value": "en" }
+      ],
+      "destination": "https://fusioncreative.net/en/services/ai-video-ads",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "v", "value": "2" }],
+      "destination": "https://fusioncreative.net/uslugi/ai-video-reklami",
+      "permanent": false
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "query", "key": "lang", "value": "en" }],
+      "destination": "https://fusioncreative.net/en/portfolio",
+      "permanent": false
+    },
+    {
+      "source": "/((?!api/).*)",
+      "destination": "https://fusioncreative.net/portfolio",
+      "permanent": false
+    }
+  ]
+}
